@@ -3,5 +3,6 @@
 --
 -- See the kickstart.nvim README for more information
 return {
+  "neanias/everforest-nvim"
   -- Need to add theme plugins here
 }
