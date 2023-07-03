@@ -40,5 +40,6 @@ vim.keymap.set('n', '<leader>co', open_config, { desc = '[C]onfig [O]pen' })
 vim.keymap.set('n', '<leader>cg', open_global_config, { desc = '[C]onfig [G]lobal open' })
 vim.keymap.set('n', '<leader>cp', open_plugins, { desc = '[C]onfig [P]lugins open' })
 vim.keymap.set('n', '<leader>cs', require('telescope.builtin').colorscheme, { desc = '[C]olor[S]cheme select' })
+vim.keymap.set('n', '<leader>t', function () vim.cmd(":Telescope") end, { desc = 'Open [T]elescope' })
 
 
