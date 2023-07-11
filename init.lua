@@ -88,6 +88,14 @@ require('lazy').setup({
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
+
+      -- rust
+      'neovim/nvim-lspconfig',
+      'simrat39/rust-tools.nvim',
+
+      -- Debugging
+      'nvim-lua/plenary.nvim',
+      'mfussenegger/nvim-dap',
     },
   },
 
@@ -203,6 +211,10 @@ require('lazy').setup({
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   { import = 'custom.plugins' },
+  'm4xshen/autoclose.nvim',
+  "f-person/auto-dark-mode.nvim",
+  'ggandor/leap.nvim',
+  'ap/vim-css-color',
 }, {})
 
 -- [[ Setting options ]]
@@ -274,8 +286,8 @@ require('telescope').setup {
   defaults = {
     mappings = {
       i = {
-        ['<C-u>'] = false,
         ['<C-d>'] = false,
+        ['<C-u>'] = false,
       },
     },
   },
@@ -340,19 +352,19 @@ require('nvim-treesitter.configs').setup {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
       goto_next_start = {
-        [']m'] = '@function.outer',
+        [']f'] = '@function.outer',
         [']]'] = '@class.outer',
       },
       goto_next_end = {
-        [']M'] = '@function.outer',
+        [']F'] = '@function.outer',
         [']['] = '@class.outer',
       },
       goto_previous_start = {
-        ['[m'] = '@function.outer',
+        ['[f'] = '@function.outer',
         ['[['] = '@class.outer',
       },
       goto_previous_end = {
-        ['[M'] = '@function.outer',
+        ['[F'] = '@function.outer',
         ['[]'] = '@class.outer',
       },
     },
