@@ -215,6 +215,17 @@ require('lazy').setup({
   "f-person/auto-dark-mode.nvim",
   'ggandor/leap.nvim',
   'ap/vim-css-color',
+  -- {'neoclide/coc.nvim', branch = 'release'},
+  'windwp/nvim-ts-autotag',
+  {
+    "roobert/tailwindcss-colorizer-cmp.nvim",
+    -- optionally, override the default options:
+    config = function()
+      require("tailwindcss-colorizer-cmp").setup({
+        color_square_width = 2,
+      })
+    end
+  }
 }, {})
 
 -- [[ Setting options ]]
@@ -233,7 +244,7 @@ vim.o.mouse = 'a'
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.o.clipboard = 'unnamedplus'
+-- vim.o.clipboard = 'unnamedplus'
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -438,9 +449,9 @@ end
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
   -- clangd = {},
-  -- gopls = {},
+  gopls = {},
   -- pyright = {},
-  -- rust_analyzer = {},
+  rust_analyzer = {},
   -- tsserver = {},
 
   lua_ls = {
@@ -474,6 +485,10 @@ mason_lspconfig.setup_handlers {
     }
   end,
 }
+
+require"lspconfig".rust_analyzer.setup({
+
+})
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
