@@ -1,0 +1,6 @@
+{
+	"Vim keymap": {
+		"prefix": "vks",
+		"body": "vim.keymap.set('${1:mode}', '${2:keys}', ${3:command}, { desc = '${4:description}' })"
+	}
+}

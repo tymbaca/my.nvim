@@ -1,0 +1,6 @@
+{
+	"New snippet": {
+		"prefix": "snip",
+		"body": "\"${1:Name}\": {\n\t\"prefix\": \"${2:prefix}\"\n\"body\": \"${3:body}\"}"
+	}
+}
