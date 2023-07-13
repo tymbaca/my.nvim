@@ -16,6 +16,9 @@ lsp.ensure_installed({
 
 lsp.setup()
 
+
+
+
 -- You need to setup `cmp` after lsp-zero
 local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
@@ -44,3 +47,10 @@ cmp.setup({
 		{ name = 'buffer' }
 	})
 })
+
+
+-- Keymap
+-- For more default keymap go to https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#default_keymapsopts
+vim.keymap.set('n', '<leader>r', function()
+    vim.lsp.buf.rename(vim.fn.input("Rename symbol: ", vim.fn.expand("<cword>")))
+end, { desc = "[R]ename the symbol" })

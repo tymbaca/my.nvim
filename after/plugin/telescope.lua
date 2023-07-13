@@ -2,6 +2,7 @@ local builtin = require("telescope.builtin")
 
 -- Single key
 vim.keymap.set('n', '<leader>f', builtin.find_files, { desc = "Find [F]iles" })
+vim.keymap.set('n', '<leader>t', vim.cmd.Telescope, { desc = "Open [T]elescope" })
 
 -- [P]roject
 vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = "Find [F]iles" })
