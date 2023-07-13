@@ -10,11 +10,16 @@ return require("packer").startup(function(use)
 		requires = { {'nvim-lua/plenary.nvim'} }
 	}
 
+	-- Tree-sitter
 	use { 
 		'nvim-treesitter/nvim-treesitter', 
-		run = ':TSUpdate' }
+		run = ':TSUpdate' 
+	}
+	use 'nvim-treesitter/playground'
 	
 	-- Autoclose
 	use 'm4xshen/autoclose.nvim'
 	use 'windwp/nvim-ts-autotag'
+	use 'ThePrimeagen/harpoon'
+	use 'mbbill/undotree'
 end)
