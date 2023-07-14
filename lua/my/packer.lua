@@ -31,6 +31,9 @@ return require("packer").startup(function(use)
     requires = "nvim-tree/nvim-web-devicons"
   }
 
+  use 'lervag/vimtex'
+  -- TODO: auto dark mode
+
 	-- LSP
 	use {
 		'VonHeikemen/lsp-zero.nvim',
