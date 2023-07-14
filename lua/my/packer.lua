@@ -17,11 +17,19 @@ return require("packer").startup(function(use)
 	}
 	use 'nvim-treesitter/playground'
 
+
 	-- Autoclose
 	use 'm4xshen/autoclose.nvim'
 	use 'windwp/nvim-ts-autotag'
-	use 'ThePrimeagen/harpoon'
+	-- use 'ThePrimeagen/harpoon'
 	use 'mbbill/undotree'
+
+  -- TODO's and Trouble
+  use "folke/todo-comments.nvim"
+  use {
+    "folke/trouble.nvim",
+    requires = "nvim-tree/nvim-web-devicons"
+  }
 
 	-- LSP
 	use {
@@ -45,6 +53,8 @@ return require("packer").startup(function(use)
 		}
 	}
 
+  use 'mfussenegger/nvim-dap' -- DAP (Debugging)
+
 	-- Preconfigured Snippets
 	use "rafamadriz/friendly-snippets"
 	use 'ggandor/leap.nvim'
@@ -66,4 +76,6 @@ return require("packer").startup(function(use)
             }
         end
     }
+
+    use 'simrat39/rust-tools.nvim'
 end)
