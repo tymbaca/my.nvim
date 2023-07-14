@@ -11,13 +11,13 @@ local dap = require("dap")
 --   name = "rt_lldb",
 -- }
 
-dap.configurations.rust = {
-  {
-    type = 'rt_lld',
-    request = 'launch',
-    name = 'Launch Rust debug session'
-  }
-}
+-- dap.configurations.rust = {
+--   {
+--     type = 'rt_lld',
+--     request = 'launch',
+--     name = 'Launch Rust debug session'
+--   }
+-- }
 
 
 vim.keymap.set('n', '<leader>Dc', dap.continue, { desc = '[C]ontinue debugging (or start)' })
