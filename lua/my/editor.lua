@@ -1,3 +1,4 @@
+vim.opt.guicursor = "" -- Cursor Block style always
 vim.wo.relativenumber = true
 
 vim.opt.tabstop = 4

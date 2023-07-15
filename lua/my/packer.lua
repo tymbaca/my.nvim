@@ -17,6 +17,7 @@ return require("packer").startup(function(use)
 	}
 	use 'nvim-treesitter/playground'
 
+  use 'airblade/vim-gitgutter'
 
 	-- Autoclose
 	use 'm4xshen/autoclose.nvim'
@@ -32,8 +33,11 @@ return require("packer").startup(function(use)
   }
 
   use 'lervag/vimtex'
+
+  -- THEMES
   use 'f-person/auto-dark-mode.nvim'
   use 'morhetz/gruvbox'
+  use 'sainnhe/everforest'
 
 	-- LSP
 	use {
