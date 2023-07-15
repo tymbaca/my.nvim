@@ -21,7 +21,7 @@ return require("packer").startup(function(use)
 	-- Autoclose
 	use 'm4xshen/autoclose.nvim'
 	use 'windwp/nvim-ts-autotag'
-	-- use 'ThePrimeagen/harpoon'
+	use 'ThePrimeagen/harpoon'
 	use 'mbbill/undotree'
 
   -- TODO's and Trouble
@@ -32,7 +32,8 @@ return require("packer").startup(function(use)
   }
 
   use 'lervag/vimtex'
-  -- TODO: auto dark mode
+  use 'f-person/auto-dark-mode.nvim'
+  use 'morhetz/gruvbox'
 
 	-- LSP
 	use {
