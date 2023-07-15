@@ -1,4 +1,4 @@
-vim.cmd.colorscheme('gruvbox')
+vim.cmd.colorscheme('everforest')
 
 local auto_dark_mode = require('auto-dark-mode')
 auto_dark_mode.setup({

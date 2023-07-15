@@ -17,11 +17,14 @@ return require("packer").startup(function(use)
 	}
 	use 'nvim-treesitter/playground'
 
-  use 'airblade/vim-gitgutter'
 
 	-- Autoclose
 	use 'm4xshen/autoclose.nvim'
 	use 'windwp/nvim-ts-autotag'
+
+  use 'christoomey/vim-tmux-navigator'
+  use 'rhysd/conflict-marker.vim'
+  use 'lewis6991/gitsigns.nvim'
 	use 'ThePrimeagen/harpoon'
 	use 'mbbill/undotree'
 
