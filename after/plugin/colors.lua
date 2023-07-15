@@ -1,4 +1,4 @@
-vim.cmd.colorscheme('habamax')
+vim.cmd.colorscheme('gruvbox')
 
 local auto_dark_mode = require('auto-dark-mode')
 auto_dark_mode.setup({
