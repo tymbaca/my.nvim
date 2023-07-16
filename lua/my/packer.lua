@@ -41,6 +41,7 @@ return require("packer").startup(function(use)
   use 'f-person/auto-dark-mode.nvim'
   use 'morhetz/gruvbox'
   use 'sainnhe/everforest'
+  use 'AlexvZyl/nordic.nvim'
 
 	-- LSP
 	use {
