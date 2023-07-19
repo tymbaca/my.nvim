@@ -52,6 +52,7 @@ cmp.setup({
 	})
 })
 
+vim.cmd("set pumheight=10") -- Limit CMP list
 
 -- Keymap
 -- For more default keymap go to https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#default_keymapsopts
@@ -59,3 +60,5 @@ vim.keymap.set('n', '<leader>r', function()
     vim.lsp.buf.rename(vim.fn.input("Rename symbol: ", vim.fn.expand("<cword>")))
 end, { desc = "[R]ename the symbol" })
 vim.keymap.set('n', '<leader>dh', vim.diagnostic.open_float, { desc = '[D]iagnotics [H]over' })
+vim.keymap.set('n', '<leader>de', vim.diagnostic.enable, { desc = '[D]iagnotics [E]nable' })
+vim.keymap.set('n', '<leader>dd', vim.diagnostic.disable, { desc = '[D]iagnotics [D]isable' })
