@@ -1,4 +1,5 @@
 local lsp = require('lsp-zero').preset({})
+local telescope_builtin = require('telescope.builtin')
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -56,9 +57,19 @@ vim.cmd("set pumheight=10") -- Limit CMP list
 
 -- Keymap
 -- For more default keymap go to https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#default_keymapsopts
-vim.keymap.set('n', '<leader>r', function()
-    vim.lsp.buf.rename(vim.fn.input("Rename symbol: ", vim.fn.expand("<cword>")))
-end, { desc = "[R]ename the symbol" })
 vim.keymap.set('n', '<leader>dh', vim.diagnostic.open_float, { desc = '[D]iagnotics [H]over' })
 vim.keymap.set('n', '<leader>de', vim.diagnostic.enable, { desc = '[D]iagnotics [E]nable' })
 vim.keymap.set('n', '<leader>dd', vim.diagnostic.disable, { desc = '[D]iagnotics [D]isable' })
+
+vim.keymap.set('n', '<leader>r', function()
+  vim.lsp.buf.rename(vim.fn.input("Rename symbol: ", vim.fn.expand("<cword>")))
+end, { desc = "[R]ename the symbol" })
+
+vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = "Go to declaration" })
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = "Go to definition" })
+vim.keymap.set('n', 'gr', function ()
+  telescope_builtin.lsp_references()
+end, { desc = "List all references" })
+vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { desc = "Go to implementation" })
+vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = "Hover documentation" })
+
