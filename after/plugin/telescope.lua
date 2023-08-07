@@ -1,8 +1,13 @@
 local builtin = require("telescope.builtin")
+require("telescope").load_extension("recent_files")
+
 
 -- Single key
 vim.keymap.set('n', '<leader>f', builtin.find_files, { desc = "Find [F]iles" })
 vim.keymap.set('n', '<leader>T', vim.cmd.Telescope, { desc = "Open [T]elescope" })
+vim.api.nvim_set_keymap("n", "<Leader><Leader>",
+  [[<cmd>lua require('telescope').extensions.recent_files.pick()<CR>]],
+  {noremap = true, silent = true})
 
 -- [P]roject
 vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = "Find [F]iles" })
