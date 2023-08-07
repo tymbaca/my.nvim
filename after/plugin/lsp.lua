@@ -10,9 +10,6 @@ require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
 -- Ensure Language Server installed
 lsp.ensure_installed({
-	'tsserver',
-	'eslint',
-	'rust_analyzer'
 })
 
 lsp.setup()
