@@ -100,7 +100,8 @@ return require("packer").startup(function(use)
   --   },
   -- }
 
-  use 'fatih/vim-go'
+  -- use 'fatih/vim-go'
+  use "lukas-reineke/lsp-format.nvim"
   use 'iamcco/markdown-preview.nvim'
   use({
         "andrewferrier/wrapping.nvim",
