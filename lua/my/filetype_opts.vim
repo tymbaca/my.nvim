@@ -23,6 +23,7 @@ autocmd FileType css setlocal softtabstop=2
 autocmd FileType css setlocal shiftwidth=2
 
 autocmd FileType markdown setlocal wrap
+autocmd FileType markdown setlocal formatoptions=tcqjwa
 
 autocmd FileType lua setlocal tabstop=2
 autocmd FileType lua setlocal softtabstop=2

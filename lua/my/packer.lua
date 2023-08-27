@@ -92,4 +92,21 @@ return require("packer").startup(function(use)
     end
   }
 
+  -- use {
+  --   "olexsmir/gopher.nvim",
+  --   requires = { -- dependencies
+  --   "nvim-lua/plenary.nvim",
+  --   "nvim-treesitter/nvim-treesitter",
+  --   },
+  -- }
+
+  use 'fatih/vim-go'
+  use 'iamcco/markdown-preview.nvim'
+  use({
+        "andrewferrier/wrapping.nvim",
+        config = function()
+            require("wrapping").setup()
+        end,
+    })
+
 end)
