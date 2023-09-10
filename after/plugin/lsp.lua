@@ -72,3 +72,4 @@ vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = "Hover documentation" })
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Jump to prev [D]iagnostic" })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Jump to next [D]iagnostic" })
 
+vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = "[C]ode [A]ctions" })
