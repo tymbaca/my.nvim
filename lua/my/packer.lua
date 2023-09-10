@@ -110,4 +110,7 @@ return require("packer").startup(function(use)
       })
     end
   }
+
+  use({'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" }})
+
 end)
