@@ -1,6 +1,6 @@
 let @s = 'O{ddjddkP>>'
 
-set keymap=russian-jcukenwin
+" set keymap=russian-jcukenwin
 inoremap <C-l> <C-^>
 set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 
