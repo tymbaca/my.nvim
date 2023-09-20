@@ -25,4 +25,8 @@ map({"n", "v"}, "<leader>y", [["+y]])
 map("n", "<leader>Y", [["+Y]])
 
 map("n", "<leader>s{", [[@s]])
+
+map("n", "<leader>w", "<cmd>write<cr>")
+map("i", "<C-w>", "<cmd>write<cr>")
+
 vim.cmd [[source ~/.config/nvim/lua/my/mappings.vim]]

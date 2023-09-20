@@ -24,6 +24,8 @@ autocmd FileType css setlocal shiftwidth=2
 
 autocmd FileType markdown setlocal wrap
 autocmd FileType markdown setlocal formatoptions=tcqjwa
+autocmd FileType vimwiki setlocal wrap
+autocmd FileType vimwiki setlocal formatoptions=tcqjwa
 
 autocmd FileType lua setlocal tabstop=2
 autocmd FileType lua setlocal softtabstop=2
