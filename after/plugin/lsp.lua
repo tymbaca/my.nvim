@@ -19,7 +19,6 @@ lsp.setup()
 
 -- You need to setup `cmp` after lsp-zero
 local cmp = require('cmp')
-local cmp_action = require('lsp-zero').cmp_action()
 
 cmp.setup({
 	mapping = {
@@ -32,10 +31,6 @@ cmp.setup({
     -- Navigate with tabs
     ['<Tab>'] = cmp.mapping.select_next_item(),
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-
-		-- Navigate between snippet placeholder
-		['<C-f>'] = cmp_action.luasnip_jump_forward(),
-		['<C-b>'] = cmp_action.luasnip_jump_backward(),
 	},
 	snippet = {
 		expand = function(args)

@@ -1,0 +1,6 @@
+{
+    "If err not nil": {
+        "prefix": ["iferr", "ie"],
+        "body": "if err != nil {\n\t$0\n}"
+    }
+}
