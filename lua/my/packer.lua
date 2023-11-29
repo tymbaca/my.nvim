@@ -65,7 +65,12 @@ return require("packer").startup(function(use)
 			{'L3MON4D3/LuaSnip'},     -- Required
 		}
 	}
-
+  use {
+    'hrsh7th/nvim-cmp',
+    requires = {
+      'saadparwaiz1/cmp_luasnip'
+    }
+  }
   use 'mfussenegger/nvim-dap' -- DAP (Debugging)
   use 'leoluz/nvim-dap-go'
   use 'simrat39/rust-tools.nvim'
@@ -78,7 +83,7 @@ return require("packer").startup(function(use)
     run = "make install_jsregexp"
   }
 
-  -- use { 'saadparwaiz1/cmp_luasnip' }
+  use { 'saadparwaiz1/cmp_luasnip' }
 
   -- Preconfigured Snippets
   -- use "rafamadriz/friendly-snippets"
