@@ -180,17 +180,13 @@ end
 -------------------------------------------------------------------------------
 
 ls.add_snippets("go", {
-  s("ie", fmta("if err != nil {\n\treturn <cursor>\n}", { cursor = i(0)})),
-
-  s("iee", fmta("if err != nil {\n\t<cursor>\n}", { cursor = i(0)})),
-
   s("trig", c(1, {
     t("Ugh boring, a text node"),
     i(nil, "At least I can edit something now..."),
     f(function(args) return "Still only counts as text!!" end, {})
   })),
 
-  s("ch", fmta("<val>, <err> := <fn>\nif <err_rep> != nil {\n\treturn <ret>\n}\n<final>", {
+  s("v", fmta("<val>, <err> := <fn>\nif <err_rep> != nil {\n\treturn <ret>\n}\n<final>", {
     val = i(1, "val"),
     err = i(2, "err"),
     fn = i(3, "fn"),
