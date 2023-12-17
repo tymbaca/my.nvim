@@ -199,6 +199,16 @@ ls.add_snippets("go", {
     err = i(1, "err"),
     ret = d(2, go_ret_vals_now_func, { 1 }),
     final = i(0)
+  })),
+
+  s("ie", fmta("if err != nil {\n\t<ret>\n}\n<final>", {
+    ret = i(1),
+    final = i(0)
+  })),
+
+  s("iee", fmta("if err != nil {\n\t<ret>\n}\n<final>", {
+    ret = i(1),
+    final = i(0)
   }))
 })
 
