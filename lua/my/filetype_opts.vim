@@ -14,6 +14,10 @@ autocmd FileType go setlocal tabstop=8
 autocmd FileType go setlocal softtabstop=8
 autocmd FileType go setlocal shiftwidth=8
 
+autocmd FileType templ setlocal tabstop=8
+autocmd FileType templ setlocal softtabstop=8
+autocmd FileType templ setlocal shiftwidth=8
+
 autocmd FileType html setlocal tabstop=2
 autocmd FileType html setlocal softtabstop=2
 autocmd FileType html setlocal shiftwidth=2

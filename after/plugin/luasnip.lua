@@ -206,6 +206,10 @@ ls.add_snippets("go", {
     final = i(0)
   })),
 
+  s("iep", fmta("if err != nil {\n\tpanic(err)\n}\n<final>", {
+    final = i(0)
+  })),
+
   s("iee", fmta("if err != nil {\n\t<ret>\n}\n<final>", {
     ret = i(1),
     final = i(0)

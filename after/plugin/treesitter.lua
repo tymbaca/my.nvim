@@ -10,7 +10,8 @@ require'nvim-treesitter.configs'.setup {
 		"query", 
 		"go",
 		"python",
-		"rust"
+		"rust",
+    "templ"
 	},
 
 	-- Install parsers synchronously (only applied to `ensure_installed`)
