@@ -1,9 +1,18 @@
 local zen = require("zen-mode")
 
+
 vim.keymap.set("n", "<leader>z", function ()
-  require("zen-mode").toggle({
+  zen.toggle({
   window = {
-    width = .65 -- width will be 85% of the editor width
-  }
+    backdrop = 1,
+    width = 90,
+    options = {
+      signcolumn = "no",
+      number = false,
+      relativenumber = false,
+    }
+  },
 })
+  -- vim.cmd"set number!"
+  -- vim.cmd"set relativenumber!"
 end)

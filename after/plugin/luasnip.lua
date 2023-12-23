@@ -178,6 +178,8 @@ local go_ret_vals_now_func = function(args)
 end
 
 -------------------------------------------------------------------------------
+--------------------------------- SNIPPETS ------------------------------------
+-------------------------------------------------------------------------------
 
 ls.add_snippets("go", {
   s("trig", c(1, {
@@ -195,11 +197,11 @@ ls.add_snippets("go", {
     final = i(0)
   })),
 
-  s("i", fmta("if <err> != nil {\n\treturn <ret>\n}\n<final>", {
-    err = i(1, "err"),
-    ret = d(2, go_ret_vals_now_func, { 1 }),
-    final = i(0)
-  })),
+  -- s("i", fmta("if <err> != nil {\n\treturn <ret>\n}\n<final>", {
+  --   err = i(1, "err"),
+  --   ret = d(2, go_ret_vals_now_func, { 1 }),
+  --   final = i(0)
+  -- })),
 
   s("ie", fmta("if err != nil {\n\t<ret>\n}\n<final>", {
     ret = i(1),
@@ -213,7 +215,17 @@ ls.add_snippets("go", {
   s("iee", fmta("if err != nil {\n\t<ret>\n}\n<final>", {
     ret = i(1),
     final = i(0)
-  }))
+  })),
+
+  s("i", fmta("for i := 0; i << <count>; i++ {\n\t<cur>\n}", {
+    count = i(1, "10"),
+    cur = i(0),
+  })),
+
+  s("t", fmta("func Test_<fn>(t *testing.T) {\n\t<cur>\n}", {
+    fn = i(1, "fn"),
+    cur = i(0),
+  })),
 })
 
 
