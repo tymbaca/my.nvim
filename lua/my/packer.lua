@@ -130,5 +130,6 @@ return require("packer").startup(function(use)
   use({'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" }})
 
   use "joerdav/templ.vim"
+  use "folke/zen-mode.nvim"
 
 end)
