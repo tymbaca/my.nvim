@@ -8,6 +8,7 @@ map('n', 'gp', function() vim.cmd("b#") end) -- Jump to previous buffer
 
 -- Fast escape from normal mode
 map('i', 'jk', function () vim.cmd("stopinsert") end)
+map('i', 'ол', function () vim.cmd("stopinsert") end)
 
 -- Move selected lines
 map("v", "J", ":m '>+1<CR>gv=gv")
@@ -27,8 +28,11 @@ map("n", "<leader>Y", [["+Y]])
 map("n", "<leader>s{", [[@s]])
 
 map("n", "<leader>w", "<cmd>write<cr>")
+map("n", "<leader>ц", "<cmd>write<cr>")
 map({"n", "i"}, "<C-w>", "<cmd>write<cr>")
 
 map("i", "<S-CR>", "<ESC>O")
+
+map("n", "Ж", ":")
 
 vim.cmd [[source ~/.config/nvim/lua/my/mappings.vim]]

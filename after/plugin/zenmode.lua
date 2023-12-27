@@ -5,7 +5,7 @@ vim.keymap.set("n", "<leader>z", function ()
   zen.toggle({
   window = {
     backdrop = 1,
-    width = 90,
+    width = 0.7,
     options = {
       signcolumn = "no",
       number = false,
