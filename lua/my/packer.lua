@@ -132,4 +132,13 @@ return require("packer").startup(function(use)
   use "joerdav/templ.vim"
   use "folke/zen-mode.nvim"
 
+  use({
+    'Wansmer/sibling-swap.nvim',
+    requires = { 'nvim-treesitter' },
+    config = function()
+      require('sibling-swap').setup({
+        use_default_keymaps = false,
+      })
+    end,
+  })
 end)
