@@ -9,3 +9,12 @@
 --     end,
 --     group = autocmd_group,
 -- })
+
+vim.keymap.set("n", "<leader>TG", function ()
+  local file = vim.fn.expand('%')
+  if vim.bo.filetype ~= "go" then
+    return
+  end
+  -- "tail -n +3" will remove first 2 lines with "Generated ..."
+  vim.cmd("!gotests -all -w " .. file)
+end)
