@@ -226,6 +226,53 @@ ls.add_snippets("go", {
     fn = i(1, "fn"),
     cur = i(0),
   })),
+
+  s("f", fmta("func <fn>(<args>) <ret> {\n\t<cur>\n}", {
+    fn = i(1, "fn"),
+    args = i(2, ""),
+    ret = i(3, ""),
+    cur = i(0),
+  })),
+
+  s("ff", fmta("func <fn>(<args>) (<ret>, <ret2>) {\n\t<cur>\n}", {
+    fn = i(1, "fn"),
+    args = i(2, ""),
+    ret = i(3, "typ"),
+    ret2 = i(3, "typ"),
+    cur = i(0),
+  })),
+
+  s("fe", fmta("func <fn>(<args>) (<ret>, error) {\n\t<cur>\n}", {
+    fn = i(1, "fn"),
+    args = i(2, ""),
+    ret = i(3, "typ"),
+    cur = i(0),
+  })),
+
+  s("m", fmta("func (<cls>) <fn>(<args>) <ret> {\n\t<cur>\n}", {
+    cls = i(1, "cls"),
+    fn = i(2, "fn"),
+    args = i(3, ""),
+    ret = i(4, ""),
+    cur = i(0),
+  })),
+
+  s("mm", fmta("func (<cls>) <fn>(<args>) (<ret>, <ret2>) {\n\t<cur>\n}", {
+    cls = i(1, "cls"),
+    fn = i(2, "fn"),
+    args = i(3, ""),
+    ret = i(4, "typ"),
+    ret2 = i(5, "typ"),
+    cur = i(0),
+  })),
+
+  s("me", fmta("func (<cls>) <fn>(<args>) (<ret>, error) {\n\t<cur>\n}", {
+    cls = i(1, "cls"),
+    fn = i(2, "fn"),
+    args = i(3, ""),
+    ret = i(4, "typ"),
+    cur = i(0),
+  })),
 })
 
 

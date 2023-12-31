@@ -135,10 +135,8 @@ return require("packer").startup(function(use)
   use({
     'Wansmer/sibling-swap.nvim',
     requires = { 'nvim-treesitter' },
-    config = function()
-      require('sibling-swap').setup({
-        use_default_keymaps = false,
-      })
-    end,
+    config = function ()
+      require("sibling-swap").setup({})
+    end
   })
 end)
