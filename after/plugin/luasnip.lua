@@ -279,24 +279,24 @@ ls.add_snippets("go", {
 -- ----------------------------------------------------------------------------
 
 
-vim.keymap.set({ "i", "s", "n"}, "<c-k>", function ()
+vim.keymap.set("i", "<c-k>", function ()
   if ls.expand_or_jumpable() then
     ls.expand_or_jump()
   end
 end)
 
-vim.keymap.set({ "i", "s", "n"}, "<c-j>", function ()
+vim.keymap.set("i", "<c-j>", function ()
   if ls.jumpable(-1) then
     ls.jump(-1)
   end
 end)
 
-vim.keymap.set({ "i", "s", "n"}, "<c-l>", function ()
+vim.keymap.set("i", "<c-l>", function ()
   if ls.choice_active() then
     return ls.change_choice(1)
   end
 end)
-vim.keymap.set({ "i", "s", "n"}, "<c-s-l>", function ()
+vim.keymap.set("i", "<c-s-l>", function ()
   if ls.choice_active() then
     return ls.change_choice(-1)
   end
