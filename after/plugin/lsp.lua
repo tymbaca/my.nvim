@@ -64,7 +64,7 @@ vim.keymap.set('n', 'gr', function ()
 end, { desc = "List all references" })
 vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { desc = "Go to implementation" })
 vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = "Hover documentation" })
-vim.keymap.set({'n', 'i'}, '<c-h>', vim.lsp.buf.signature_help, { desc = "Signature help" })
+vim.keymap.set('i', '<c-h>', vim.lsp.buf.signature_help, { desc = "Signature help" })
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Jump to prev [D]iagnostic" })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Jump to next [D]iagnostic" })
 
