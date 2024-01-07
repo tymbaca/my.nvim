@@ -139,4 +139,7 @@ return require("packer").startup(function(use)
       require("sibling-swap").setup({})
     end
   })
+
+  use "buoto/gotests-vim"
+
 end)
