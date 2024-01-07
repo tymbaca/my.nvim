@@ -273,6 +273,12 @@ ls.add_snippets("go", {
     ret = i(4, "typ"),
     cur = i(0),
   })),
+
+  s("ap", fmta( "<slice> = append(<slice_rep>, <cur>)", {
+    slice = i(1, "slice"),
+    slice_rep = rep(1),
+    cur = i(0)
+  })),
 })
 
 
