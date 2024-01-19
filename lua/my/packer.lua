@@ -141,5 +141,7 @@ return require("packer").startup(function(use)
   })
 
   use "buoto/gotests-vim"
+  -- packer.nvim
+  use {'akinsho/git-conflict.nvim', tag = "*"}
 
 end)
