@@ -1,4 +1,5 @@
 local lsp = require('lsp-zero').preset({})
+local lspconfig = require('lspconfig')
 local telescope_builtin = require('telescope.builtin')
 
 lsp.on_attach(function(client, bufnr)
@@ -15,6 +16,10 @@ lsp.ensure_installed({
 lsp.setup()
 
 
+-- -- Clangd config
+-- lspconfig.clangd.setup {
+--   filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' },
+-- }
 
 
 -- You need to setup `cmp` after lsp-zero
