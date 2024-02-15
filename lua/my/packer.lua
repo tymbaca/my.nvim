@@ -144,5 +144,7 @@ return require("packer").startup(function(use)
   -- packer.nvim
   use {'akinsho/git-conflict.nvim', tag = "*"}
   use "hedyhli/outline.nvim"
+  use "nvim-tree/nvim-tree.lua"
+  use "nvim-tree/nvim-web-devicons"
 
 end)

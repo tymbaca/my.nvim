@@ -1,7 +1,7 @@
 local map = vim.keymap.set
 
 vim.g.mapleader = " "
-map("n", "<leader>e", vim.cmd.Ex) -- Jump to file tree
+-- map("n", "<leader>e", vim.cmd.Ex) -- Jump to file tree
 map('n', ';', vim.cmd.noh) -- Cancel search highlighting
 
 map('n', 'gp', function() vim.cmd("b#") end) -- Jump to previous buffer

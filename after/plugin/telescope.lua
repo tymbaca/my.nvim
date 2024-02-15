@@ -16,8 +16,8 @@ vim.keymap.set('n', '<leader>ps', function()
 end, { desc = "Find in [P]roject by grep [S]earch" })
 
 -- [S]earch
-vim.keymap.set('n', '<leader>sg', builtin.grep_string, { desc = "[S]earch by [G]rep" })
-vim.keymap.set('n', '<leader>sf', builtin.live_grep, { desc = "[S]earch [F]iles" })
+vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = "[S]earch by [G]rep" })
+vim.keymap.set('n', '<leader>sb', builtin.git_branches, { desc = "[S]earch by [G]rep" })
 vim.keymap.set('n', '<leader>sc', function()
 	builtin.colorscheme({ enable_preview = true })
 end, { desc = "[S]earch [C]olorschemes" })
