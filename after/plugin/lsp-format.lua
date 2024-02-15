@@ -20,3 +20,12 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
     end,
     group = autocmd_group,
 })
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+    pattern = "*.rs",
+    desc = "Format rust on save",
+    callback = function()
+      vim.lsp.buf.format({ async = true })
+    end,
+    group = autocmd_group,
+})
