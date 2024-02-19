@@ -203,7 +203,7 @@ ls.add_snippets("go", {
   --   final = i(0)
   -- })),
 
-  s("ie", fmta("if err != nil {\n\t<ret>\n}\n<final>", {
+  s("ie", fmta("if err != nil {\n\treturn <ret>\n}\n<final>", {
     ret = i(1),
     final = i(0)
   })),
@@ -212,8 +212,7 @@ ls.add_snippets("go", {
     final = i(0)
   })),
 
-  s("iee", fmta("if err != nil {\n\t<ret>\n}\n<final>", {
-    ret = i(1),
+  s("iee", fmta("if err != nil {\n\treturn err\n}\n<final>", {
     final = i(0)
   })),
 

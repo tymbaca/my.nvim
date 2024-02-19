@@ -74,3 +74,5 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Jump to prev [D]ia
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Jump to next [D]iagnostic" })
 
 vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = "[C]ode [A]ctions" })
+
+vim.keymap.set('n', '<leader>LR', "<cmd>LspRestart<cr>", { desc = "[L]SP [R]estart" })
