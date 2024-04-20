@@ -1,33 +1,33 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require("packer").startup(function(use)
-	-- Packer can manage itself
-	use 'wbthomason/packer.nvim'
+  -- Packer can manage itself
+  use 'wbthomason/packer.nvim'
 
-	-- Telescope
-	use {
-		'nvim-telescope/telescope.nvim', tag = '0.1.2',
-		requires = { {'nvim-lua/plenary.nvim'} }
-	}
+  -- Telescope
+  use {
+    'nvim-telescope/telescope.nvim', tag = '0.1.2',
+    requires = { { 'nvim-lua/plenary.nvim' } }
+  }
   use "smartpde/telescope-recent-files"
 
-	-- Tree-sitter
-	use {
-		'nvim-treesitter/nvim-treesitter',
-		run = ':TSUpdate'
-	}
-	use 'nvim-treesitter/playground'
+  -- Tree-sitter
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate'
+  }
+  use 'nvim-treesitter/playground'
 
 
-	-- Autoclose
-	use 'm4xshen/autoclose.nvim'
-	use 'windwp/nvim-ts-autotag'
+  -- Autoclose
+  use 'm4xshen/autoclose.nvim'
+  use 'windwp/nvim-ts-autotag'
 
   use 'christoomey/vim-tmux-navigator'
   use 'rhysd/conflict-marker.vim'
   use 'lewis6991/gitsigns.nvim'
-	use 'ThePrimeagen/harpoon'
-	use 'mbbill/undotree'
+  use 'ThePrimeagen/harpoon'
+  use 'mbbill/undotree'
 
   -- TODO's and Trouble
   use "folke/todo-comments.nvim"
@@ -44,27 +44,27 @@ return require("packer").startup(function(use)
   use 'sainnhe/everforest'
   use 'AlexvZyl/nordic.nvim'
 
-	-- LSP
-	use {
-		'VonHeikemen/lsp-zero.nvim',
-		branch = 'v2.x',
-		requires = {
-			-- LSP Support
-			{'neovim/nvim-lspconfig'},             -- Required
-			{                                      -- Optional
-				'williamboman/mason.nvim',
-				run = function()
-					pcall(vim.cmd, 'MasonUpdate')
-				end,
-			},
-			{'williamboman/mason-lspconfig.nvim'}, -- Optional
+  -- LSP
+  use {
+    'VonHeikemen/lsp-zero.nvim',
+    branch = 'v2.x',
+    requires = {
+      -- LSP Support
+      { 'neovim/nvim-lspconfig' }, -- Required
+      {                       -- Optional
+        'williamboman/mason.nvim',
+        run = function()
+          pcall(vim.cmd, 'MasonUpdate')
+        end,
+      },
+      { 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
-			-- Autocompletion
-			{'hrsh7th/nvim-cmp'},     -- Required
-			{'hrsh7th/cmp-nvim-lsp'}, -- Required
-			{'L3MON4D3/LuaSnip'},     -- Required
-		}
-	}
+      -- Autocompletion
+      { 'hrsh7th/nvim-cmp' }, -- Required
+      { 'hrsh7th/cmp-nvim-lsp' }, -- Required
+      { 'L3MON4D3/LuaSnip' }, -- Required
+    }
+  }
   use {
     'hrsh7th/nvim-cmp',
     requires = {
@@ -111,11 +111,11 @@ return require("packer").startup(function(use)
   use "lukas-reineke/lsp-format.nvim"
   use 'iamcco/markdown-preview.nvim'
   use({
-        "andrewferrier/wrapping.nvim",
-        config = function()
-            require("wrapping").setup()
-        end,
-    })
+    "andrewferrier/wrapping.nvim",
+    config = function()
+      require("wrapping").setup()
+    end,
+  })
 
   use {
     "kylechui/nvim-surround",
@@ -127,7 +127,7 @@ return require("packer").startup(function(use)
     end
   }
 
-  use({'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" }})
+  use({ 'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" } })
 
   use "joerdav/templ.vim"
   use "folke/zen-mode.nvim"
@@ -135,16 +135,23 @@ return require("packer").startup(function(use)
   use({
     'Wansmer/sibling-swap.nvim',
     requires = { 'nvim-treesitter' },
-    config = function ()
+    config = function()
       require("sibling-swap").setup({})
     end
   })
 
   use "buoto/gotests-vim"
   -- packer.nvim
-  use {'akinsho/git-conflict.nvim', tag = "*"}
+  use { 'akinsho/git-conflict.nvim', tag = "*" }
   use "hedyhli/outline.nvim"
   use "nvim-tree/nvim-tree.lua"
   use "nvim-tree/nvim-web-devicons"
-
+  -- use "tpope/vim-repeat"
+  use {
+    "mcchrish/zenbones.nvim",
+    -- Optionally install Lush. Allows for more configuration or extending the colorscheme
+    -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
+    -- In Vim, compat mode is turned on as Lush only works in Neovim.
+    requires = "rktjmp/lush.nvim"
+  }
 end)

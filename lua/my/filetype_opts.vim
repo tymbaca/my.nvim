@@ -39,3 +39,6 @@ autocmd FileType lua setlocal tabstop=2
 autocmd FileType lua setlocal softtabstop=2
 autocmd FileType lua setlocal shiftwidth=2
 
+autocmd FileType tsv setlocal noexpandtab
+autocmd FileType tsv setlocal tabstop=8
+autocmd FileType tsv setlocal shiftwidth=8

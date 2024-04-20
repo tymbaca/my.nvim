@@ -226,6 +226,62 @@ ls.add_snippets("go", {
     cur = i(0),
   })),
 
+  s("ti", fmta([[
+import (
+	"testing"
+
+	. "github.com/onsi/ginkgo/v2"
+	. "github.com/onsi/gomega"
+)
+
+<cur>
+]], {
+    cur = i(0),
+  })),
+
+  s("tit", fmta([[
+import (
+	"testing"
+
+	. "github.com/onsi/ginkgo/v2"
+	. "github.com/onsi/gomega"
+)
+
+func TestPackage(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "<cur>")
+}
+]], {
+    cur = i(0),
+  })),
+
+  s("tt", fmta([[
+When("<when>", func() {
+		BeforeEach(func() {
+		})
+
+		It("<it>", func() {
+      <cur>
+		})
+	})
+
+]], {
+    when = i(1, "something"),
+    it = i(2, "does something"),
+    cur = i(0),
+  })),
+
+  s("sql", fmta([[
+sql, args, err := builder.ToSql()
+if err != nil {
+	return <ret>
+}
+<cur>
+]], {
+    ret = i(1, "nil, err"),
+    cur = i(0),
+  })),
+
   s("f", fmta("func <fn>(<args>) <ret> {\n\t<cur>\n}", {
     fn = i(1, "fn"),
     args = i(2, ""),
@@ -273,7 +329,7 @@ ls.add_snippets("go", {
     cur = i(0),
   })),
 
-  s("ap", fmta( "<slice> = append(<slice_rep>, <cur>)", {
+  s("ap", fmta("<slice> = append(<slice_rep>, <cur>)", {
     slice = i(1, "slice"),
     slice_rep = rep(1),
     cur = i(0)
@@ -284,24 +340,24 @@ ls.add_snippets("go", {
 -- ----------------------------------------------------------------------------
 
 
-vim.keymap.set("i", "<c-k>", function ()
+vim.keymap.set("i", "<c-k>", function()
   if ls.expand_or_jumpable() then
     ls.expand_or_jump()
   end
 end)
 
-vim.keymap.set("i", "<c-j>", function ()
+vim.keymap.set("i", "<c-j>", function()
   if ls.jumpable(-1) then
     ls.jump(-1)
   end
 end)
 
-vim.keymap.set("i", "<c-l>", function ()
+vim.keymap.set("i", "<c-l>", function()
   if ls.choice_active() then
     return ls.change_choice(1)
   end
 end)
-vim.keymap.set("i", "<c-s-l>", function ()
+vim.keymap.set("i", "<c-s-l>", function()
   if ls.choice_active() then
     return ls.change_choice(-1)
   end
@@ -310,5 +366,3 @@ end)
 -- vim.api.nvim_set_keymap("i", "<C-S-l>", "<Plug>luasnip-prev-choice", {})
 
 ----------------
-
-
