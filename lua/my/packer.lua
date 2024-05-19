@@ -18,10 +18,16 @@ return require("packer").startup(function(use)
   }
   use 'nvim-treesitter/playground'
 
-
   -- Autoclose
-  use 'm4xshen/autoclose.nvim'
-  use 'windwp/nvim-ts-autotag'
+  -- use 'm4xshen/autoclose.nvim'
+  -- use 'windwp/nvim-ts-autotag'
+  use {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = function()
+      require("nvim-autopairs").setup {}
+    end
+  }
 
   use 'christoomey/vim-tmux-navigator'
   use 'rhysd/conflict-marker.vim'
@@ -51,7 +57,7 @@ return require("packer").startup(function(use)
     requires = {
       -- LSP Support
       { 'neovim/nvim-lspconfig' }, -- Required
-      {                       -- Optional
+      {                            -- Optional
         'williamboman/mason.nvim',
         run = function()
           pcall(vim.cmd, 'MasonUpdate')
@@ -60,9 +66,9 @@ return require("packer").startup(function(use)
       { 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
       -- Autocompletion
-      { 'hrsh7th/nvim-cmp' }, -- Required
+      { 'hrsh7th/nvim-cmp' },     -- Required
       { 'hrsh7th/cmp-nvim-lsp' }, -- Required
-      { 'L3MON4D3/LuaSnip' }, -- Required
+      { 'L3MON4D3/LuaSnip' },     -- Required
     }
   }
   use {
@@ -154,4 +160,7 @@ return require("packer").startup(function(use)
     -- In Vim, compat mode is turned on as Lush only works in Neovim.
     requires = "rktjmp/lush.nvim"
   }
+
+  use "FabijanZulj/blame.nvim"
+  use "sindrets/diffview.nvim"
 end)

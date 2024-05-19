@@ -27,4 +27,3 @@ vim.keymap.set('n', '<leader>gf', builtin.git_files, { desc = "Find [G]it [F]ile
 vim.keymap.set('n', '<leader>gc', builtin.git_bcommits, { desc = "Find [G]it this file [C]ommits" })
 vim.keymap.set('n', '<leader>gC', builtin.git_commits, { desc = "Find [G]it [C]ommits" })
 vim.keymap.set('n', '<leader>gb', builtin.git_branches, { desc = "Find [G]it [B]ranches" })
-vim.keymap.set('n', '<leader>b', builtin.git_branches, { desc = "Find [G]it [B]ranches" })

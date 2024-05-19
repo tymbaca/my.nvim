@@ -9,6 +9,13 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   end
 })
 
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = { "*.json", "*.lua", "*.rs", "*.odin" },
+  callback = function()
+    vim.lsp.buf.format({ async = true })
+  end
+})
+
 local autocmd_group = vim.api.nvim_create_augroup("Custom auto-commands", { clear = true })
 
 -- vim.api.nvim_create_autocmd({ "BufWritePost" }, {
@@ -25,14 +32,14 @@ local autocmd_group = vim.api.nvim_create_augroup("Custom auto-commands", { clea
 --   group = autocmd_group,
 -- })
 
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-  pattern = { "*.json", "*.lua", "*.rs" },
-  desc = "Format json on save",
-  callback = function()
-    vim.lsp.buf.format({ async = true })
-  end,
-  group = autocmd_group,
-})
+-- vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+--   pattern = { "*.json", "*.lua", "*.rs", "*.odin" },
+--   desc = "Format json on save",
+--   callback = function()
+--     vim.lsp.buf.format({ async = true })
+--   end,
+--   group = autocmd_group,
+-- })
 
 vim.keymap.set('n', '<leader>i', function()
   vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
