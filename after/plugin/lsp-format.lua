@@ -9,12 +9,12 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   end
 })
 
--- vim.api.nvim_create_autocmd('BufWritePre', {
---   pattern = { "*.json", "*.lua", "*.rs" },
---   callback = function()
---     vim.lsp.buf.format({ async = true })
---   end
--- })
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = { "*.json", "*.lua", "*.rs", "*.odin" },
+  callback = function()
+    vim.lsp.buf.format()
+  end
+})
 
 local autocmd_group = vim.api.nvim_create_augroup("Custom auto-commands", { clear = true })
 
