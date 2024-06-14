@@ -190,6 +190,11 @@ ls.add_snippets("odin", {
     fmta("/*\n<cur>*/", {
       cur = i(0)
     })),
+  s("ie", fmta("if err != nil {\n\treturn <ret>\n}\n<final>", {
+    ret = i(1),
+    final = i(0)
+  })),
+
 })
 
 ls.add_snippets("go", {
@@ -267,6 +272,23 @@ func TestPackage(t *testing.T) {
 	RunSpecs(t, "<cur>")
 }
 ]], {
+    cur = i(0),
+  })),
+
+  s("tdt", fmta([[
+var _ = DescribeTable("<name>",
+	func(<args>) {
+		Expect(<pass>).To(Equal(<want>))<cur>
+	},
+	Entry("<entryname>", <entryargs>),
+)
+]], {
+    name = i(1, "name"),
+    args = i(2, "arg bool, want bool"),
+    pass = i(3, "arg"),
+    want = i(4, "want"),
+    entryname = i(5),
+    entryargs = i(6, "true, true"),
     cur = i(0),
   })),
 
@@ -353,6 +375,10 @@ if err != nil {
     fmta("//--------------------------------------------------------------------------------------------------\n<cur>", {
       cur = i(0)
     })),
+
+  s("c", fmta("ctx context.Context<cur>", {
+    cur = i(0),
+  })),
 })
 
 

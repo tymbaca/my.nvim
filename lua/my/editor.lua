@@ -1,4 +1,4 @@
-vim.opt.guicursor = "" -- Cursor Block style always
+vim.opt.guicursor = "i:ver100" -- Cursor Block style always
 vim.o.nu = true
 vim.wo.relativenumber = true
 
