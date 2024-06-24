@@ -164,4 +164,5 @@ return require("packer").startup(function(use)
   use "FabijanZulj/blame.nvim"
   use "sindrets/diffview.nvim"
   use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
+  use 'RaafatTurki/hex.nvim'
 end)

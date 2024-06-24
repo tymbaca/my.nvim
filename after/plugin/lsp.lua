@@ -3,7 +3,7 @@ local lspconfig = require('lspconfig')
 local telescope_builtin = require('telescope.builtin')
 
 lsp.on_attach(function(client, bufnr)
-  lsp.default_keymaps({buffer = bufnr})
+  lsp.default_keymaps({ buffer = bufnr })
 end)
 
 -- (Optional) Configure lua language server for neovim
@@ -26,28 +26,28 @@ lsp.setup()
 local cmp = require('cmp')
 
 cmp.setup({
-	mapping = {
-		-- `Enter` key to confirm completion
-		['<CR>'] = cmp.mapping.confirm({select = false}),
+  mapping = {
+    -- `Enter` key to confirm completion
+    ['<CR>'] = cmp.mapping.confirm({ select = false }),
 
-		-- Ctrl+Space to trigger completion menu
-		['<C-Space>'] = cmp.mapping.complete(),
+    -- Ctrl+Space to trigger completion menu
+    ['<C-Space>'] = cmp.mapping.complete(),
 
     -- Navigate with tabs
     ['<Tab>'] = cmp.mapping.select_next_item(),
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-	},
-	snippet = {
-		expand = function(args)
-			require("luasnip").lsp_expand(args.body)
-		end,
-	},
-	sources = cmp.config.sources({
-		{ name = "nvim_lsp" },
-		{ name = 'luasnip' },
-	}, {
-		{ name = 'buffer' }
-	})
+  },
+  snippet = {
+    expand = function(args)
+      require("luasnip").lsp_expand(args.body)
+    end,
+  },
+  sources = cmp.config.sources({
+    { name = "nvim_lsp" },
+    { name = 'luasnip' },
+  }, {
+    { name = 'buffer' }
+  })
 })
 
 vim.cmd("set pumheight=10") -- Limit CMP list
@@ -64,7 +64,7 @@ end, { desc = "[R]ename the symbol" })
 
 vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = "Go to declaration" })
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = "Go to definition" })
-vim.keymap.set('n', 'gr', function ()
+vim.keymap.set('n', 'gr', function()
   telescope_builtin.lsp_references()
 end, { desc = "List all references" })
 vim.keymap.set('n', 'gi', telescope_builtin.lsp_implementations, { desc = "Go to implementation" })
@@ -76,3 +76,4 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Jump to next [D]ia
 vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = "[C]ode [A]ctions" })
 
 vim.keymap.set('n', '<leader>LR', "<cmd>LspRestart<cr>", { desc = "[L]SP [R]estart" })
+vim.keymap.set('n', '<leader>LS', "<cmd>LspStart<cr>", { desc = "[L]SP [S]tart" })
