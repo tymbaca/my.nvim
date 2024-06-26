@@ -1,17 +1,24 @@
 local lualine = require('lualine')
 lualine.setup()
 
-local state = true
+local showed = false
 
 vim.o.laststatus = 0
-lualine.hide({ unhide = true })
+vim.o.cmdheight = 0
+
+if showed then
+  lualine.hide({ unhide = true })
+  vim.o.cmdheight = 1
+end
 
 vim.keymap.set("n", "<leader>UL", function()
-  if state == true then
+  if showed then
     lualine.hide()
-    state = false
+    vim.o.cmdheight = 0
+    showed = false
   else
     lualine.hide({ unhide = true })
-    state = true
+    vim.o.cmdheight = 1
+    showed = true
   end
 end)
