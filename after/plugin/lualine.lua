@@ -11,6 +11,7 @@ if showed then
   vim.o.cmdheight = 1
 end
 
+vim.keymap.set("n", "<leader>Ul", "<cmd>lua require 'lualine'.hide()<cr>")
 vim.keymap.set("n", "<leader>UL", function()
   if showed then
     lualine.hide()

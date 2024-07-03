@@ -26,8 +26,8 @@ map("n", "<leader>Y", [["+Y]])
 
 map("n", "<leader>s{", [[@s]])
 
-map("n", "<leader>w", "<cmd>wall<cr>")
-map("n", "<leader>ц", "<cmd>wall<cr>")
+map("n", "<leader>w", "<cmd>w<cr>")
+map("n", "<leader>ц", "<cmd>w<cr>")
 
 map("i", "<S-CR>", "<ESC>O")
 

@@ -78,6 +78,18 @@ ls.add_snippets("odin", {
     fmta('import "core:<cur>"', {
       cur = i(0)
     })),
+  s("iv",
+    fmta('import "vendor:<cur>"', {
+      cur = i(0)
+    })),
+  s("ib",
+    fmta('import "base:<cur>"', {
+      cur = i(0)
+    })),
+  s("rl",
+    fmta('import rl "vendor:raylib"<cur>', {
+      cur = i(0)
+    })),
   s("pr",
     fmta('<fn> :: proc(<args>) <cur>', {
       fn = i(1, "fn"),
@@ -197,6 +209,32 @@ When("<when>", func() {
 ]], {
     when = i(1, "something"),
     it = i(2, "does something"),
+    cur = i(0),
+  })),
+
+  s("tmt", fmta([[
+var _ = Describe("<name>", func() {
+	var svc *service
+	var repo *mocks.Repo
+
+	BeforeEach(func() {
+		repo = mocks.NewRepo(GinkgoT())
+		svc = &service{
+			repo: repo,
+		}
+	})
+
+	When("positive case", func() {
+		It("does good", func() {
+			repo.EXPECT().GetCount(mock.Anything).Return(123, nil)
+      <cur>
+			err := svc.DoSomething(context.Background())
+			Expect(err).ToNot(HaveOccurred())
+		})
+	})
+})
+]], {
+    name = i(1),
     cur = i(0),
   })),
 
