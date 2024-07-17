@@ -145,10 +145,10 @@ ls.add_snippets("go", {
     final = i(0)
   })),
 
-  s("i", fmta("for i := 0; i << <count>; i++ {\n\t<cur>\n}", {
-    count = i(1, "10"),
-    cur = i(0),
-  })),
+  -- s("i", fmta("for i := 0; i << <count>; i++ {\n\t<cur>\n}", {
+  --   count = i(1, "10"),
+  --   cur = i(0),
+  -- })),
 
   s("t", fmta("func Test_<fn>(t *testing.T) {\n\t<cur>\n}", {
     fn = i(1, "fn"),
@@ -243,6 +243,14 @@ var _ = Describe("<name>", func() {
     cur = i(0),
   })),
 
+  s("txmock",
+    fmta(
+      [[<cur>.EXPECT().ExecInTx(mock.Anything, mock.Anything).RunAndReturn(func(ctx context.Context, fn func(context.Context) error) error {
+	return fn(ctx)
+})]], {
+        cur = i(0),
+      })),
+
   s("sql", fmta([[
 sql, args, err := builder.ToSql()
 if err != nil {
@@ -312,6 +320,20 @@ if err != nil {
     })),
 
   s("c", fmta("ctx context.Context<cur>", {
+    cur = i(0),
+  })),
+
+  s("s", fmta([[type <name> struct {
+	<cur>
+}]], {
+    name = i(1),
+    cur = i(0),
+  })),
+
+  s("i", fmta([[type <name> interface {
+	<cur>
+}]], {
+    name = i(1),
     cur = i(0),
   })),
 
