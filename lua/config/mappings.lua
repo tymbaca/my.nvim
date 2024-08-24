@@ -46,6 +46,3 @@ map({ "n", "v" }, "gk", "gg")
 map({ "n", "v" }, "gl", "g_")
 
 map("i", "<M-,>", "<><Esc>i")
-
-vim.cmd [[source ~/.config/nvim/lua/my/mappings.vim]]
-

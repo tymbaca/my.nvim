@@ -9,6 +9,7 @@ return {
     require("nvim-tree").setup {}
   end,
   keys = {
-	{"<leader>e", "<cmd>NvimTreeToggle<cr>"},
+		{"<leader>e", "<cmd>NvimTreeToggle<cr>"},
+		{"<leader>E", "<cmd>NvimTreeFindFile<cr>"},
   },
 }
