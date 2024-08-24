@@ -6,15 +6,36 @@ lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({ buffer = bufnr })
 end)
 
+lsp.setup()
+
 -- (Optional) Configure lua language server for neovim
-require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
+lspconfig.marksman.setup {}
 
 -- Ensure Language Server installed
 lsp.ensure_installed({
 })
 
-lsp.setup()
+lspconfig.zls.setup({})
+lspconfig.gleam.setup({})
+lspconfig.ocamllsp.setup({
+  cmd = { "ocamllsp" },
+  filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
+  root_dir = lspconfig.util.root_pattern("*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace"),
+})
 
+lspconfig.rust_analyser.setup({})
+
+lspconfig.gopls.setup({
+  settings = {
+    gopls = {
+      staticcheck = true,
+      gofumpt = true,
+      usePlaceholders = true,
+      completeFunctionCalls = true,
+    },
+  },
+})
 
 -- -- Clangd config
 -- lspconfig.clangd.setup {
@@ -43,7 +64,7 @@ cmp.setup({
     end,
   },
   sources = cmp.config.sources({
-    { name = "nvim_lsp" },
+    { name = "nvim_lsp", max_item_count = 50 },
     { name = 'luasnip' },
   }, {
     { name = 'buffer' }
@@ -73,7 +94,7 @@ vim.keymap.set('i', '<c-h>', vim.lsp.buf.signature_help, { desc = "Signature hel
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Jump to prev [D]iagnostic" })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Jump to next [D]iagnostic" })
 
-vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = "[C]ode [A]ctions" })
+vim.keymap.set({ 'n', 'v' }, '<leader>A', vim.lsp.buf.code_action, { desc = "Code [A]ctions" })
 
 vim.keymap.set('n', '<leader>LR', "<cmd>LspRestart<cr>", { desc = "[L]SP [R]estart" })
 vim.keymap.set('n', '<leader>LS', "<cmd>LspStart<cr>", { desc = "[L]SP [S]tart" })

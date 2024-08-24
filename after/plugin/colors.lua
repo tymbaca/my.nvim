@@ -1,5 +1,6 @@
 vim.o.termguicolors = true
 
+-- vim.cmd.colorscheme('gruvbox')
 vim.cmd.colorscheme('kanagawabones')
 -- vim.cmd.colorscheme('zenwritten')
 -- vim.cmd.colorscheme('forestbones')

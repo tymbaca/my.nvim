@@ -32,6 +32,9 @@ autocmd FileType css setlocal shiftwidth=2
 
 autocmd FileType markdown setlocal wrap
 autocmd FileType markdown setlocal formatoptions=tcqjwa
+au FileType markdown setl comments=b:*,b:-,b:+,n:>
+au FileType markdown setl formatoptions+=r
+
 autocmd FileType vimwiki setlocal wrap
 autocmd FileType vimwiki setlocal formatoptions=tcqjwa
 

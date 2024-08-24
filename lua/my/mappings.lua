@@ -29,6 +29,8 @@ map("n", "<leader>s{", [[@s]])
 map("n", "<leader>w", "<cmd>w<cr>")
 map("n", "<leader>ц", "<cmd>w<cr>")
 
+map("n", "<C-q><C-q>", "<cmd>wqall<cr>")
+
 map("i", "<S-CR>", "<ESC>O")
 
 map("n", "Ж", ":")
@@ -42,5 +44,7 @@ map({ "n", "v" }, "gh", "^")
 map({ "n", "v" }, "gj", "G")
 map({ "n", "v" }, "gk", "gg")
 map({ "n", "v" }, "gl", "g_")
+
+map("i", "<M-,>", "<><Esc>i")
 
 vim.cmd [[source ~/.config/nvim/lua/my/mappings.vim]]

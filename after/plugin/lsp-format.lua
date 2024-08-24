@@ -2,13 +2,13 @@ require("lsp-format").setup {}
 require("lspconfig").gopls.setup { on_attach = require("lsp-format").on_attach }
 
 
-local function golines()
+local function golines() -- TODO: move to go.lua
   if string.find(vim.bo.filetype, "_test") then
     return
   end
 
   local fileName = vim.api.nvim_buf_get_name(0)
-  vim.cmd(":silent !golines -w -m 100 " .. fileName)
+  vim.cmd(":silent !golines -w -m 120 " .. fileName)
 end
 vim.keymap.set("n", "<leader>GL", golines)
 
@@ -35,7 +35,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 })
 
 vim.api.nvim_create_autocmd('BufWritePre', {
-  pattern = { "*.json", "*.lua", "*.rs", "*.odin" },
+  pattern = { "*.json", "*.lua", "*.rs", "*.odin", "*.ml" },
   -- pattern = { "*.json", "*.lua", "*.rs" },
   callback = function()
     vim.lsp.buf.format()

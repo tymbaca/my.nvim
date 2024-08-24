@@ -1,5 +1,22 @@
-local zen = require("zen-mode")
+-- vim.keymap.set("n", "<leader>z", "<cmd>NoNeckPain<cr>")
 
+
+-- zen.setup({
+--   {
+--     window = {
+--       backdrop = 1,
+--       width = 0.7,
+--       options = {
+--         signcolumn = "no",
+--         -- number = false,
+--         -- relativenumber = false,
+--       }
+--     },
+--     gitsigns = { enabled = false },
+--   }
+-- })
+
+local zen = require("zen-mode")
 
 vim.keymap.set("n", "<leader>z", function()
   zen.toggle({
@@ -12,7 +29,6 @@ vim.keymap.set("n", "<leader>z", function()
         -- relativenumber = false,
       }
     },
+    gitsigns = { enabled = false },
   })
-  -- vim.cmd"set number!"
-  -- vim.cmd"set relativenumber!"
 end)

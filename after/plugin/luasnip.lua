@@ -50,6 +50,61 @@ ls.add_snippets("*", {
     })),
 })
 
+----------------------------------- OCAML -------------------------------------
+-------------------------------------------------------------------------------
+
+ls.add_snippets("ocaml", {
+  s("[|",
+    fmta("[| <cur> |", {
+      cur = i(0)
+    })),
+  s("[",
+    fmta("[ <cur> ", {
+      cur = i(0)
+    })),
+})
+
+----------------------------------- YAML --------------------------------------
+-------------------------------------------------------------------------------
+
+ls.add_snippets("yaml", {
+  s("task",
+    fmta([[version: 3
+
+tasks:
+  default: <cur>]], {
+      cur = i(0)
+    })),
+})
+
+----------------------------------- RUST --------------------------------------
+-------------------------------------------------------------------------------
+
+ls.add_snippets("rust", {
+  s("d",
+    fmta("#[derive(<cur>)]", {
+      cur = i(0),
+    })
+  ),
+  s("cmp",
+    fmta("#[derive(Component)]\nstruct <cur>", {
+      cur = i(0),
+    })
+  ),
+  s("sys",
+    fmta([[fn <name>(query: Query<<&<comp>>>) {
+    for <item> in &query {
+        <cur>
+    }
+}]], {
+      name = i(1),
+      comp = i(2),
+      item = i(3),
+      cur = i(0),
+    })
+  ),
+})
+
 ----------------------------------- ODIN --------------------------------------
 -------------------------------------------------------------------------------
 
@@ -123,9 +178,6 @@ ls.add_snippets("go", {
   --   final = i(0)
   -- })),
   --
-  s("e", fmta("if err != nil {\n\treturn err\n}\n<final>", {
-    final = i(0)
-  })),
 
   s("ie", fmta("if err != nil {\n\treturn <ret>\n}\n<final>", {
     ret = i(1),
@@ -150,7 +202,7 @@ ls.add_snippets("go", {
   --   cur = i(0),
   -- })),
 
-  s("t", fmta("func Test_<fn>(t *testing.T) {\n\t<cur>\n}", {
+  s("t", fmta("func Test<fn>(t *testing.T) {\n\t<cur>\n}", {
     fn = i(1, "fn"),
     cur = i(0),
   })),
@@ -243,6 +295,14 @@ var _ = Describe("<name>", func() {
     cur = i(0),
   })),
 
+  s("exp",
+    fmta([[<cur>.EXPECT().<fn>(mock.Anything, <arg>).Return(<ret>)]], {
+      cur = i(1),
+      fn = i(2),
+      arg = i(3),
+      ret = i(0),
+    })),
+
   s("txmock",
     fmta(
       [[<cur>.EXPECT().ExecInTx(mock.Anything, mock.Anything).RunAndReturn(func(ctx context.Context, fn func(context.Context) error) error {
@@ -258,22 +318,42 @@ if err != nil {
 }
 <cur>
 ]], {
-    ret = i(1, "nil, err"),
+    ret = i(1),
     cur = i(0),
   })),
 
-  s("f", fmta("func <fn>(<args>) <ret> {\n\t<cur>\n}", {
+  s("sql1", fmta([[
+sql, args, err := builder.ToSql()
+if err != nil {
+	return err<ret>
+}
+<cur>
+]], {
+    ret = i(1),
+    cur = i(0),
+  })),
+
+  s("sql2", fmta([[
+sql, args, err := builder.ToSql()
+if err != nil {
+	return nil, err<ret>
+}
+<cur>
+]], {
+    ret = i(1),
+    cur = i(0),
+  })),
+
+  s("f", fmta("func(<args>) <ret> {\n\t<cur>\n}", {
+    args = i(1, ""),
+    ret = i(2, ""),
+    cur = i(0),
+  })),
+
+  s("ff", fmta("func <fn>(<args>) <ret> {\n\t<cur>\n}", {
     fn = i(1, "fn"),
     args = i(2, ""),
     ret = i(3, ""),
-    cur = i(0),
-  })),
-
-  s("ff", fmta("func <fn>(<args>) (<ret>, <ret2>) {\n\t<cur>\n}", {
-    fn = i(1, "fn"),
-    args = i(2, ""),
-    ret = i(3, "typ"),
-    ret2 = i(3, "typ"),
     cur = i(0),
   })),
 
@@ -289,6 +369,20 @@ if err != nil {
     fn = i(2, "fn"),
     args = i(3, ""),
     ret = i(4, ""),
+    cur = i(0),
+  })),
+
+  s("ms", fmta("func (s *service) <fn>(<args>) <ret> {\n\t<cur>\n}", {
+    fn = i(1, "fn"),
+    args = i(2, ""),
+    ret = i(3, ""),
+    cur = i(0),
+  })),
+
+  s("mr", fmta("func (r *repo) <fn>(<args>) <ret> {\n\t<cur>\n}", {
+    fn = i(1, "fn"),
+    args = i(2, ""),
+    ret = i(3, ""),
     cur = i(0),
   })),
 
@@ -345,9 +439,30 @@ if err != nil {
     cur = i(0),
   })),
 
+  s("js", fmta([[`json:"<cur>"`]], {
+    cur = i(0),
+  })),
 
   s("mck", fmta("//go:generate mockery --dir=. --name=<name> --exported --with-expecter<cur>", {
     name = i(1, "name"),
+    cur = i(0),
+  })),
+
+  s("e", fmta([[fmt.Errorf("<cur>: %w", err)]], {
+    cur = i(0),
+  })),
+
+  s("geq", fmta([[Expect(<act>).To(Equal(<exp>))<cur>]], {
+    act = i(1),
+    exp = i(2),
+    cur = i(0),
+  })),
+
+  s("ge", fmta([[Expect(err).ToNot(HaveOccurred())<cur>]], {
+    cur = i(0),
+  })),
+
+  s("geo", fmta([[Expect(err).To(HaveOccurred())<cur>]], {
     cur = i(0),
   })),
 })

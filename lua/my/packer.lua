@@ -136,7 +136,7 @@ return require("packer").startup(function(use)
   use({ 'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" } })
 
   use "joerdav/templ.vim"
-  use "folke/zen-mode.nvim"
+  use { "folke/zen-mode.nvim", tag = "v1.4.0" }
 
   use({
     'Wansmer/sibling-swap.nvim',
@@ -166,4 +166,7 @@ return require("packer").startup(function(use)
   use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
   use 'RaafatTurki/hex.nvim'
   use 'chentoast/marks.nvim'
+  use { "shortcuts/no-neck-pain.nvim", tag = "*" }
+  use "folke/twilight.nvim"
+  use { 'stevearc/vim-vscode-snippets' }
 end)
