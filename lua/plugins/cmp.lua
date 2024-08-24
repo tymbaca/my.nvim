@@ -13,6 +13,7 @@ return {
 		"saadparwaiz1/cmp_luasnip", -- for autocompletion
 		"rafamadriz/friendly-snippets", -- useful snippets
 		"onsails/lspkind.nvim", -- vs-code like pictograms
+		"hrsh7th/cmp-nvim-lsp",
 	},
 	config = function()
 		local cmp = require("cmp")
@@ -44,6 +45,13 @@ return {
 
 		vim.cmd("set pumheight=10") -- Limit CMP list
 
+		-- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
+		local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+		-- An example for configuring `clangd` LSP to use nvim-cmp as a completion engine
+		local lspconfig = require('lspconfig')
+		lspconfig.lua_ls.setup { capabilities = capabilities }
+		lspconfig.gopls.setup { capabilities = capabilities }
 
 	end
 }
