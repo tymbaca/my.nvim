@@ -1,13 +1,11 @@
 return {
-	-- TODO:
-	-- {
-	-- 	'windwp/nvim-autopairs',
+	{
+		'windwp/nvim-autopairs',
 		-- event = "InsertEnter",
-		-- config = true,
-
-		-- use opts = {} for passing setup options
-		-- this is equivalent to setup({}) function
-	-- },
+		config = function()
+			require("nvim-autopairs").setup {}
+		end
+	},
 	{
 		"folke/trouble.nvim",
 		dependencies = "nvim-tree/nvim-web-devicons"

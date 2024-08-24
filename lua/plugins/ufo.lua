@@ -1,7 +1,8 @@
 return {
-	'kevinhwang91/nvim-ufo', 
+	'kevinhwang91/nvim-ufo', lazy = false, 
 	requires = 'kevinhwang91/promise-async',
 	config = function() 
+		require('ufo').setup()
 		vim.o.foldcolumn = '0' -- '0' is not bad
 		vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
 		vim.o.foldlevelstart = 99
@@ -26,6 +27,5 @@ return {
 				-- you can add other fields for setting up lsp server in this table
 			})
 		end
-		require('ufo').setup()
 	end
 }

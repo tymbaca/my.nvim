@@ -10,7 +10,7 @@ return {
 		{"<leader>T", "<cmd>Telescope<cr>"},
 		{"<leader>sg", "<cmd>Telescope live_grep<cr>"},
 		{"<leader>sc", function()
-			require('telescope.builtin').colorscheme({ enable_preview = false })
+			require('telescope.builtin').colorscheme({ enable_preview = true })
 		end, { desc = "[S]earch [C]olorschemes" }},
 	},
 	config = function()
