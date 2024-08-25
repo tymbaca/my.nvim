@@ -7,6 +7,32 @@ return {
       local lspconfig = require('lspconfig')
       local telescope_builtin = require('telescope.builtin')
 
+      -- (Optional) Configure lua language server for neovim
+      lspconfig.lua_ls.setup({})
+      lspconfig.marksman.setup({})
+
+      lspconfig.zls.setup({})
+      lspconfig.gleam.setup({})
+      lspconfig.ocamllsp.setup({
+        cmd = { "ocamllsp" },
+        filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
+        root_dir = lspconfig.util.root_pattern("*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace"),
+      })
+
+      lspconfig.rust_analyzer.setup({})
+
+      lspconfig.gopls.setup({
+        -- settings = {
+        --   gopls = {
+        --     staticcheck = true,
+        --     gofumpt = true,
+        --     usePlaceholders = true,
+        --     completeFunctionCalls = true,
+        --   },
+        -- },
+      })
+
+
       vim.keymap.set('n', '<leader>dh', vim.diagnostic.open_float, { desc = '[D]iagnotics [H]over' })
       vim.keymap.set('n', '<leader>de', vim.diagnostic.enable, { desc = '[D]iagnotics [E]nable' })
       vim.keymap.set('n', '<leader>dd', vim.diagnostic.disable, { desc = '[D]iagnotics [D]isable' })

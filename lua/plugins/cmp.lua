@@ -14,6 +14,7 @@ return {
 		"rafamadriz/friendly-snippets", -- useful snippets
 		"onsails/lspkind.nvim", -- vs-code like pictograms
 		"hrsh7th/cmp-nvim-lsp",
+    'neovim/nvim-lspconfig',
 	},
 	config = function()
 		local cmp = require("cmp")
@@ -27,8 +28,8 @@ return {
 				['<C-Space>'] = cmp.mapping.complete(),
 
 				-- Navigate with tabs
-				['<Tab>'] = cmp.mapping.select_next_item(),
-				['<S-Tab>'] = cmp.mapping.select_prev_item(),
+				['<C-n>'] = cmp.mapping.select_next_item(),
+				['<C-p>'] = cmp.mapping.select_prev_item(),
 			},
 			snippet = {
 				expand = function(args)

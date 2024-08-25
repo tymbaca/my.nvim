@@ -1,7 +1,3 @@
-vim.keymap.set('n', '<leader><leader>', function()
-	require('telescope').extensions['recent-files'].recent_files({})
-end, { noremap = true, silent = false })
-
 return {
 	'nvim-telescope/telescope.nvim', branch = '0.1.x',
 	dependencies = { 'nvim-lua/plenary.nvim', 'mollerhoj/telescope-recent-files.nvim' },
@@ -16,6 +12,11 @@ return {
 	config = function()
 		require('telescope').setup {}
 		require("telescope").load_extension("recent-files")
+
+    -- vim.keymap.set('n', '<leader><leader>', function()
+    --   require('telescope').extensions['recent-files'].recent_files({})
+    -- end, { noremap = true, silent = false })
+
 		
 		-- vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 		-- vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
