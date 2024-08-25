@@ -1,3 +1,16 @@
+-- vim.cmd.colorscheme('gruvbox')
+vim.cmd.colorscheme('kanagawabones')
+-- vim.cmd.colorscheme('zenwritten')
+-- vim.cmd.colorscheme('forestbones')
+-- vim.cmd.colorscheme('nordbones')
+-- vim.cmd.colorscheme('randombones')
+-- vim.cmd.colorscheme('zenburned')
+-- vim.cmd.colorscheme('neobones')
+-- vim.cmd.colorscheme('everforest')
+-- vim.cmd.colorscheme('everforest')
+-- vim.cmd.colorscheme('everforest')
+
+
 vim.opt.guicursor = "i:ver100" -- Cursor Block style always
 vim.o.nu = true
 vim.wo.relativenumber = true
