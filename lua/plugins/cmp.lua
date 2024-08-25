@@ -50,8 +50,12 @@ return {
 
 		-- An example for configuring `clangd` LSP to use nvim-cmp as a completion engine
 		local lspconfig = require('lspconfig')
-		lspconfig.lua_ls.setup { capabilities = capabilities }
-		lspconfig.gopls.setup { capabilities = capabilities }
-
+    local language_servers = lspconfig.util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
+    for _, ls in ipairs(language_servers) do
+      lspconfig[ls].setup({
+        capabilities = capabilities
+        -- you can add other fields for setting up lsp server in this table
+      })
+    end
 	end
 }
