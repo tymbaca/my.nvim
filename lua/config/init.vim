@@ -66,7 +66,6 @@ autocmd FileType vimwiki setlocal formatoptions=tcqjwa
 autocmd FileType lua setlocal tabstop=2
 autocmd FileType lua setlocal softtabstop=2
 autocmd FileType lua setlocal shiftwidth=2
-echo "hello from init.vim"
 
 autocmd FileType tsv setlocal noexpandtab
 autocmd FileType tsv setlocal tabstop=8

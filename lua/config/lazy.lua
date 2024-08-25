@@ -23,6 +23,7 @@ vim.g.maplocalleader = "\\"
 
 -- Setup lazy.nvim
 require("lazy").setup({
+  {'nvim-telescope/telescope.nvim'},
   {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
   spec = {
     -- import your plugins

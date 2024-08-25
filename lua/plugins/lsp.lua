@@ -1,8 +1,18 @@
-print("hello from lsp.lua")
 return {
-	{ 'VonHeikemen/lsp-zero.nvim', branch = 'v4.x' },
-	{
+  {
+    "folke/neodev.nvim",
+    opts = {},
+    config = function()
+      require("neodev").setup({
+        -- add any options here, or leave empty to use the default settings
+      })
+    end
+  },
+  {
     'neovim/nvim-lspconfig',
+    dependencies = {
+      "folke/neodev.nvim",
+    },
     config = function()
       local lspconfig = require('lspconfig')
       local telescope_builtin = require('telescope.builtin')
@@ -16,7 +26,8 @@ return {
       lspconfig.ocamllsp.setup({
         cmd = { "ocamllsp" },
         filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
-        root_dir = lspconfig.util.root_pattern("*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace"),
+        root_dir = lspconfig.util.root_pattern("*.opam", "esy.json", "package.json", ".git", "dune-project",
+          "dune-workspace"),
       })
 
       lspconfig.rust_analyzer.setup({})
@@ -31,7 +42,6 @@ return {
         --   },
         -- },
       })
-
 
       vim.keymap.set('n', '<leader>dh', vim.diagnostic.open_float, { desc = '[D]iagnotics [H]over' })
       vim.keymap.set('n', '<leader>de', vim.diagnostic.enable, { desc = '[D]iagnotics [E]nable' })

@@ -7,11 +7,6 @@ return {
     end
   },
   {
-    "folke/trouble.nvim",
-    dependencies = "nvim-tree/nvim-web-devicons"
-  },
-
-  {
     "folke/which-key.nvim",
     config = function()
       vim.o.timeout = true
@@ -39,8 +34,9 @@ return {
     dependencies = "rktjmp/lush.nvim"
   },
 
-  "hedyhli/outline.nvim",
   "folke/todo-comments.nvim",
   'sainnhe/everforest',
   'AlexvZyl/nordic.nvim',
+  'christoomey/vim-tmux-navigator',
+  'rhysd/conflict-marker.vim',
 }
