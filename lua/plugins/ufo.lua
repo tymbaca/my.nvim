@@ -19,6 +19,8 @@ return {
       lineFoldingOnly = true
     }
     local language_servers = require("lspconfig").util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
+
+    -- WARN: maybe bad
     for _, ls in ipairs(language_servers) do
       require('lspconfig')[ls].setup({
         capabilities = capabilities
