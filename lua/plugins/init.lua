@@ -39,4 +39,5 @@ return {
   'AlexvZyl/nordic.nvim',
   'christoomey/vim-tmux-navigator',
   'rhysd/conflict-marker.vim',
+  "sindrets/diffview.nvim",
 }

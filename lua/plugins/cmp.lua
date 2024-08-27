@@ -30,6 +30,8 @@ return {
         -- Navigate with tabs
         ['<C-n>'] = cmp.mapping.select_next_item(),
         ['<C-p>'] = cmp.mapping.select_prev_item(),
+        ['<Tab>'] = cmp.mapping.select_next_item(),
+        ['<S-Tab>'] = cmp.mapping.select_prev_item(),
       },
       snippet = {
         expand = function(args)
@@ -51,6 +53,8 @@ return {
 
     -- An example for configuring `clangd` LSP to use nvim-cmp as a completion engine
     local lspconfig = require('lspconfig')
+    lspconfig.gopls.setup({ capabilities = capabilities })
+
     local language_servers = lspconfig.util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
     for _, ls in ipairs(language_servers) do
       lspconfig[ls].setup({
