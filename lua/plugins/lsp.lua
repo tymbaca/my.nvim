@@ -12,15 +12,21 @@ return {
     'neovim/nvim-lspconfig',
     dependencies = {
       "folke/neodev.nvim",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/nvim-cmp",
     },
     config = function()
       local lspconfig = require('lspconfig')
       local telescope_builtin = require('telescope.builtin')
 
+      -- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
       -- (Optional) Configure lua language server for neovim
       lspconfig.lua_ls.setup({})
       lspconfig.marksman.setup({})
 
+      lspconfig.ols.setup({})
       lspconfig.zls.setup({})
       lspconfig.gleam.setup({})
       lspconfig.ocamllsp.setup({
@@ -32,15 +38,25 @@ return {
 
       lspconfig.rust_analyzer.setup({})
 
+      lspconfig.ccls.setup({
+        cmd = { "ccls" },
+        init_options = {
+          cache = {
+            directory = ".ccls-cache",
+          },
+        }
+      })
+
       lspconfig.gopls.setup({
-        -- settings = {
-        --   gopls = {
-        --     staticcheck = true,
-        --     gofumpt = true,
-        --     usePlaceholders = true,
-        --     completeFunctionCalls = true,
-        --   },
-        -- },
+        capabilities = capabilities,
+        settings = {
+          gopls = {
+            staticcheck = true,
+            gofumpt = true,
+            -- usePlaceholders = true,
+            completeFunctionCalls = true,
+          },
+        },
       })
 
       vim.keymap.set('n', '<leader>dh', vim.diagnostic.open_float, { desc = '[D]iagnotics [H]over' })
@@ -60,7 +76,7 @@ return {
       vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Jump to prev [D]iagnostic" })
       vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Jump to next [D]iagnostic" })
 
-      vim.keymap.set({ 'n', 'v' }, '<leader>A', vim.lsp.buf.code_action, { desc = "Code [A]ctions" })
+      vim.keymap.set({ 'n', 'v' }, '<leader>a', vim.lsp.buf.code_action, { desc = "Code [A]ctions" })
 
       vim.keymap.set('n', '<leader>LR', "<cmd>LspRestart<cr>", { desc = "[L]SP [R]estart" })
       vim.keymap.set('n', '<leader>LS', "<cmd>LspStart<cr>", { desc = "[L]SP [S]tart" })

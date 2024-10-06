@@ -14,7 +14,6 @@ return {
     "rafamadriz/friendly-snippets", -- useful snippets
     "onsails/lspkind.nvim",         -- vs-code like pictograms
     "hrsh7th/cmp-nvim-lsp",
-    'neovim/nvim-lspconfig',
   },
   config = function()
     local cmp = require("cmp")
@@ -32,6 +31,8 @@ return {
         ['<C-p>'] = cmp.mapping.select_prev_item(),
         ['<Tab>'] = cmp.mapping.select_next_item(),
         ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+        ['<Down>'] = cmp.mapping.select_next_item(),
+        ['<Up>'] = cmp.mapping.select_prev_item(),
       },
       snippet = {
         expand = function(args)
@@ -39,28 +40,16 @@ return {
         end,
       },
       sources = cmp.config.sources({
+        { name = 'nvim_lsp_signature_help' },
+      }, {
         { name = 'luasnip' },
         { name = "nvim_lsp", max_item_count = 50 },
       }, {
-        { name = 'buffer' }
+        { name = 'buffer' },
+        -- { name = 'path' },
       })
     })
 
     vim.cmd("set pumheight=10") -- Limit CMP list
-
-    -- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-    -- An example for configuring `clangd` LSP to use nvim-cmp as a completion engine
-    local lspconfig = require('lspconfig')
-    lspconfig.gopls.setup({ capabilities = capabilities })
-
-    local language_servers = lspconfig.util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
-    for _, ls in ipairs(language_servers) do
-      lspconfig[ls].setup({
-        capabilities = capabilities
-        -- you can add other fields for setting up lsp server in this table
-      })
-    end
   end
 }

@@ -46,3 +46,7 @@ map({ "n", "v" }, "gk", "gg")
 map({ "n", "v" }, "gl", "g_")
 
 map("i", "<M-,>", "<><Esc>i")
+map("n", "<leader>R", function()
+  local word = vim.fn.expand("<cword>")
+  vim.api.nvim_feedkeys(":%s/" .. word .. "/" .. word, 'n', false)
+end)

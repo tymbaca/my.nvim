@@ -33,6 +33,7 @@ return {
     -- In Vim, compat mode is turned on as Lush only works in Neovim.
     dependencies = "rktjmp/lush.nvim"
   },
+  { "ntk148v/habamax.nvim", dependencies = { "rktjmp/lush.nvim" } },
 
   "folke/todo-comments.nvim",
   'sainnhe/everforest',
@@ -40,4 +41,7 @@ return {
   'christoomey/vim-tmux-navigator',
   'rhysd/conflict-marker.vim',
   "sindrets/diffview.nvim",
+
+
+
 }

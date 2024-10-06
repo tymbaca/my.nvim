@@ -22,12 +22,12 @@ return {
     local language_servers = require("lspconfig").util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
 
     -- WARN: maybe bad
-    for _, ls in ipairs(language_servers) do
-      require('lspconfig')[ls].setup({
-        capabilities = capabilities
-        -- you can add other fields for setting up lsp server in this table
-      })
-    end
+    -- for _, ls in ipairs(language_servers) do
+    --   require('lspconfig')[ls].setup({
+    --     capabilities = capabilities
+    --     -- you can add other fields for setting up lsp server in this table
+    --   })
+    -- end
     require('ufo').setup()
   end
 }

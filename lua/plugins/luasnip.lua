@@ -52,9 +52,20 @@ return {
 
     ls.add_snippets("*", {
       s("inst",
-      fmta("instruction<cur>", {
-        cur = i(0)
-      })),
+        fmta("instruction<cur>", {
+          cur = i(0),
+        })),
+    })
+
+    ------------------------------------- C ---------------------------------------
+    -------------------------------------------------------------------------------
+
+    ls.add_snippets("c", {
+      s("for",
+        fmta("for (int i = 0; i << <iter>; i++) {\n\t<cur>\n}", {
+          iter = i(1),
+          cur = i(0),
+        })),
     })
 
     ----------------------------------- OCAML -------------------------------------
@@ -62,13 +73,13 @@ return {
 
     ls.add_snippets("ocaml", {
       s("[|",
-      fmta("[| <cur> |", {
-        cur = i(0)
-      })),
+        fmta("[| <cur> |", {
+          cur = i(0)
+        })),
       s("[",
-      fmta("[ <cur> ", {
-        cur = i(0)
-      })),
+        fmta("[ <cur> ", {
+          cur = i(0)
+        })),
     })
 
     ----------------------------------- YAML --------------------------------------
@@ -76,12 +87,12 @@ return {
 
     ls.add_snippets("yaml", {
       s("task",
-      fmta([[version: 3
+        fmta([[version: 3
 
       tasks:
       default: <cur>]], {
-        cur = i(0)
-      })),
+          cur = i(0)
+        })),
     })
 
     ----------------------------------- RUST --------------------------------------
@@ -89,26 +100,26 @@ return {
 
     ls.add_snippets("rust", {
       s("d",
-      fmta("#[derive(<cur>)]", {
-        cur = i(0),
-      })
+        fmta("#[derive(<cur>)]", {
+          cur = i(0),
+        })
       ),
       s("cmp",
-      fmta("#[derive(Component)]\nstruct <cur>", {
-        cur = i(0),
-      })
+        fmta("#[derive(Component)]\nstruct <cur>", {
+          cur = i(0),
+        })
       ),
       s("sys",
-      fmta([[fn <name>(query: Query<<&<comp>>>) {
+        fmta([[fn <name>(query: Query<<&<comp>>>) {
         for <item> in &query {
           <cur>
         }
       }]], {
-        name = i(1),
-        comp = i(2),
-        item = i(3),
-        cur = i(0),
-      })
+          name = i(1),
+          comp = i(2),
+          item = i(3),
+          cur = i(0),
+        })
       ),
     })
 
@@ -117,56 +128,65 @@ return {
 
     ls.add_snippets("odin", {
       s("---",
-      fmta("//--------------------------------------------------------------------------------------------------\n<cur>", {
-        cur = i(0)
-      })),
+        fmta(
+          "//--------------------------------------------------------------------------------------------------\n<cur>",
+          {
+            cur = i(0)
+          })),
       s("**",
-      fmta("/*\n<cur>*/", {
-        cur = i(0)
-      })),
+        fmta("/*\n<cur>*/", {
+          cur = i(0)
+        })),
       s("ie", fmta("if err != nil {\n\treturn <ret>\n}\n<final>", {
         ret = i(1),
         final = i(0)
       })),
+      s("en", fmta("err != nil <final>", {
+        final = i(0)
+      })),
       s("p",
-      fmta("package<cur>", {
-        cur = i(0)
-      })),
+        fmta("package<cur>", {
+          cur = i(0)
+        })),
       s("i",
-      fmta('import "<cur>"', {
-        cur = i(0)
-      })),
+        fmta('import "<cur>"', {
+          cur = i(0)
+        })),
       s("ic",
-      fmta('import "core:<cur>"', {
-        cur = i(0)
-      })),
+        fmta('import "core:<cur>"', {
+          cur = i(0)
+        })),
       s("iv",
-      fmta('import "vendor:<cur>"', {
-        cur = i(0)
-      })),
+        fmta('import "vendor:<cur>"', {
+          cur = i(0)
+        })),
+      s("irl",
+        fmta('import rl "vendor:raylib"<cur>', {
+          cur = i(0)
+        })),
       s("ib",
-      fmta('import "base:<cur>"', {
-        cur = i(0)
-      })),
+        fmta('import "base:<cur>"', {
+          cur = i(0)
+        })),
       s("rl",
-      fmta('import rl "vendor:raylib"<cur>', {
-        cur = i(0)
-      })),
+        fmta('import rl "vendor:raylib"<cur>', {
+          cur = i(0)
+        })),
       s("pr",
-      fmta('<fn> :: proc(<args>) <cur>', {
-        fn = i(1, "fn"),
-        args = i(2),
-        cur = i(0)
-      })),
+        fmta('<fn> :: proc(<args>) <cur>', {
+          fn = i(1, "fn"),
+          args = i(2),
+          cur = i(0)
+        })),
       s("l",
-      fmta('fmt.println(<cur>)', {
-        cur = i(0)
-      })),
+        fmta('fmt.println(<cur>)', {
+          cur = i(0)
+        })),
       s("lf",
-      fmta('fmt.printf("<fmt>\\n", <cur>)', {
-        fmt = i(1),
-        cur = i(0)
-      })),
+        fmta('fmt.printf("<fmt>\\n", <cur>)', {
+          fmt = i(1),
+          cur = i(0)
+        })),
     })
 
     ------------------------------------ GO ---------------------------------------
@@ -188,6 +208,10 @@ return {
 
       s("ie", fmta("if err != nil {\n\treturn <ret>\n}\n<final>", {
         ret = i(1),
+        final = i(0)
+      })),
+
+      s("en", fmta("err != nil <final>", {
         final = i(0)
       })),
 
@@ -303,20 +327,20 @@ return {
       })),
 
       s("exp",
-      fmta([[<cur>.EXPECT().<fn>(mock.Anything, <arg>).Return(<ret>)]], {
-        cur = i(1),
-        fn = i(2),
-        arg = i(3),
-        ret = i(0),
-      })),
+        fmta([[<cur>.EXPECT().<fn>(mock.Anything, <arg>).Return(<ret>)]], {
+          cur = i(1),
+          fn = i(2),
+          arg = i(3),
+          ret = i(0),
+        })),
 
       s("txmock",
-      fmta(
-      [[<cur>.EXPECT().ExecInTx(mock.Anything, mock.Anything).RunAndReturn(func(ctx context.Context, fn func(context.Context) error) error {
+        fmta(
+          [[<cur>.EXPECT().ExecInTx(mock.Anything, mock.Anything).RunAndReturn(func(ctx context.Context, fn func(context.Context) error) error {
         return fn(ctx)
       })]], {
-        cur = i(0),
-      })),
+            cur = i(0),
+          })),
 
       s("sql", fmta([[
       sql, args, err := builder.ToSql()
@@ -416,24 +440,22 @@ return {
         cur = i(0)
       })),
       s("---",
-      fmta("//--------------------------------------------------------------------------------------------------\n<cur>", {
-        cur = i(0)
-      })),
+        fmta(
+          "//--------------------------------------------------------------------------------------------------\n<cur>",
+          {
+            cur = i(0)
+          })),
 
       s("c", fmta("ctx context.Context<cur>", {
         cur = i(0),
       })),
 
-      s("s", fmta([[type <name> struct {
-        <cur>
-      }]], {
+      s("s", fmta("type <name> struct {\n\t<cur>\n}", {
         name = i(1),
         cur = i(0),
       })),
 
-      s("i", fmta([[type <name> interface {
-        <cur>
-      }]], {
+      s("i", fmta("type <name> interface {\n\t<cur>\n}", {
         name = i(1),
         cur = i(0),
       })),
@@ -472,6 +494,22 @@ return {
       s("geo", fmta([[Expect(err).To(HaveOccurred())<cur>]], {
         cur = i(0),
       })),
+
+      s("sas", fmta([["<name> AS <name_rep>",<cur>]], {
+        name = i(1),
+        name_rep = rep(1),
+        cur = i(0),
+      })),
+
+      s("sex", fmta([[<name> = EXCLUDED.<name_rep>,<cur>]], {
+        name = i(1),
+        name_rep = rep(1),
+        cur = i(0),
+      })),
+
+      s("gf", fmta("go func() {\n\t<cur>\n}()", {
+        cur = i(0),
+      })),
     })
 
 
@@ -504,6 +542,5 @@ return {
     -- vim.api.nvim_set_keymap("i", "<C-S-l>", "<Plug>luasnip-prev-choice", {})
 
     ----------------
-
   end
 }

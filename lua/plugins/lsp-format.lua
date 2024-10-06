@@ -5,7 +5,9 @@ return {
   },
   config = function()
     require("lsp-format").setup {}
-    require("lspconfig").gopls.setup { on_attach = require("lsp-format").on_attach }
+
+    -- this was the problem with correect lsp config
+    -- require("lspconfig").gopls.setup { on_attach = require("lsp-format").on_attach }
 
 
     local function golines() -- TODO: move to go.lua
