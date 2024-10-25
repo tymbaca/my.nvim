@@ -18,6 +18,8 @@ return {
     config = function()
       local lspconfig = require('lspconfig')
       local telescope_builtin = require('telescope.builtin')
+      local configs = require('lspconfig.configs')
+      local util = require('lspconfig.util')
 
       -- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -59,6 +61,17 @@ return {
         },
       })
 
+      configs["protobuf-language-server"] = {
+        default_config = {
+          cmd = { 'protobuf-language-server' },
+          filetypes = { 'proto', 'cpp' },
+          root_fir = util.root_pattern('.git'),
+          single_file_support = true,
+        }
+      }
+
+      lspconfig["protobuf-language-server"].setup {}
+
       vim.keymap.set('n', '<leader>dh', vim.diagnostic.open_float, { desc = '[D]iagnotics [H]over' })
       vim.keymap.set('n', '<leader>de', vim.diagnostic.enable, { desc = '[D]iagnotics [E]nable' })
       vim.keymap.set('n', '<leader>dd', vim.diagnostic.disable, { desc = '[D]iagnotics [D]isable' })
@@ -80,6 +93,7 @@ return {
 
       vim.keymap.set('n', '<leader>LR', "<cmd>LspRestart<cr>", { desc = "[L]SP [R]estart" })
       vim.keymap.set('n', '<leader>LS', "<cmd>LspStart<cr>", { desc = "[L]SP [S]tart" })
+      vim.keymap.set('n', '<leader>LP', "<cmd>LspStop<cr>", { desc = "[L]SP Sto[p]" })
     end
   },
 }

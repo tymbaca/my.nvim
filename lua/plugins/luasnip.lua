@@ -66,6 +66,46 @@ return {
           iter = i(1),
           cur = i(0),
         })),
+      s("case",
+        fmta("case <arg>:\n\t<cur>\n\tbreak;", {
+          arg = i(1),
+          cur = i(0),
+        })),
+      s("typedef",
+        fmta("typedef <type> <cur>;", {
+          type = i(1),
+          cur = i(0),
+        })),
+      s("ts",
+        fmta("typedef struct <name_rep> {\n\t<cur>\n} <name>;", {
+          name = i(1),
+          name_rep = rep(1),
+          cur = i(0),
+        })),
+      s("te",
+        fmta("typedef enum <name_rep> {\n\t<cur>\n} <name>;", {
+          name = i(1),
+          name_rep = rep(1),
+          cur = i(0),
+        })),
+      s("v",
+        fmta("(Vector3){<inner>}<cur>", {
+          inner = i(1),
+          cur = i(0),
+        })),
+      s("vvv",
+        fmta("(Vector3){.x = <x>, .y = <y>, .z = <z>}<cur>", {
+          x = i(1),
+          y = i(2),
+          z = i(3),
+          cur = i(0),
+        })),
+      s("ig",
+        fmta("#ifndef <name>\n#define <name_rep>\n<cur>\n#endif", {
+          name = i(1),
+          name_rep = rep(1),
+          cur = i(0),
+        })),
     })
 
     ----------------------------------- OCAML -------------------------------------
@@ -235,6 +275,11 @@ return {
 
       s("t", fmta("func Test<fn>(t *testing.T) {\n\t<cur>\n}", {
         fn = i(1, "fn"),
+        cur = i(0),
+      })),
+
+      s("tr", fmta('t.Run("<name>", func(t *testing.T) {\n\t<cur>\n})', {
+        name = i(1),
         cur = i(0),
       })),
 

@@ -43,7 +43,7 @@ return {
     })
 
     vim.api.nvim_create_autocmd('BufWritePre', {
-      pattern = { "*.json", "*.lua", "*.rs", "*.odin", "*.ml" },
+      pattern = { "*.json", "*.lua", "*.rs", "*.ml" }, -- "*.odin"
       -- pattern = { "*.json", "*.lua", "*.rs" },
       callback = function()
         vim.lsp.buf.format()

@@ -1,4 +1,5 @@
 require("config.lazy")
 require("config.mappings")
 require("config.colors")
-vim.cmd[[source ~/.config/nvim/lua/config/init.vim]]
+require("config.neovide")
+vim.cmd [[source ~/.config/nvim/lua/config/init.vim]]

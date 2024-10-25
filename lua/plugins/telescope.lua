@@ -8,6 +8,7 @@ return {
     { "<leader>f",        "<cmd>Telescope find_files<cr>" },
     { "<leader>T",        "<cmd>Telescope<cr>" },
     { "<leader>sg",       "<cmd>Telescope live_grep<cr>" },
+    { "<leader>S",        "<cmd>Telescope grep_string<cr>" },
     { "<leader>sc",       function() require('telescope.builtin').colorscheme({ enable_preview = true }) end, desc = "[S]earch [C]olorschemes" },
     { '<leader><leader>', "<cmd>Telescope oldfiles<cr>" },
     { '<leader>gc',       "<cmd>Telescope git_bcommits<cr>",                                                  desc = "Find [G]it this file [C]ommits" },

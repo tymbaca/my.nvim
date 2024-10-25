@@ -2,15 +2,16 @@
 -- vim.cmd.colorscheme('kanagawabones')
 -- vim.cmd.colorscheme('zenwritten')
 -- vim.cmd.colorscheme('forestbones')
-vim.cmd.colorscheme('habamax.nvim')
+-- vim.cmd.colorscheme('habamax.nvim')
 -- vim.cmd.colorscheme('nordbones')
 -- vim.cmd.colorscheme('randombones')
 -- vim.cmd.colorscheme('zenburned')
 -- vim.cmd.colorscheme('neobones')
+-- vim.cmd.colorscheme('zenbones')
+vim.cmd.colorscheme('nordic')
 -- vim.cmd.colorscheme('everforest')
 -- vim.cmd.colorscheme('everforest')
 -- vim.cmd.colorscheme('everforest')
-
 
 vim.opt.guicursor = "i:ver100" -- Cursor Block style always
 vim.o.nu = true
@@ -35,7 +36,7 @@ vim.opt.incsearch = true
 
 vim.opt.termguicolors = true
 
-vim.opt.scrolloff = 8
+vim.opt.scrolloff = 5
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 

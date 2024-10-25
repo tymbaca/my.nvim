@@ -41,7 +41,13 @@ return {
   'christoomey/vim-tmux-navigator',
   'rhysd/conflict-marker.vim',
   "sindrets/diffview.nvim",
-
-
-
+  {
+    "jaimecgomezz/here.term",
+    opts = {
+      mappings = {
+        toggle = "<C-;>",
+        kill = "<C-'>",
+      },
+    },
+  }
 }

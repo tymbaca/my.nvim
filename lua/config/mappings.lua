@@ -50,3 +50,15 @@ map("n", "<leader>R", function()
   local word = vim.fn.expand("<cword>")
   vim.api.nvim_feedkeys(":%s/" .. word .. "/" .. word, 'n', false)
 end)
+
+map("n", "<leader>m", "<cmd>make<cr>")
+
+vim.cmd("map [[ [m")
+vim.cmd("map ]] ]m")
+vim.cmd("map {{ [{")
+vim.cmd("map }} ]}")
+
+vim.cmd [[
+vnoremap <C-r> "hy:s/<C-r>h/<C-r>h/g<left><left>
+vnoremap <S-r> "hy:%s/<C-r>h/<C-r>h/g<left><left>
+]]
