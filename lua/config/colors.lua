@@ -8,10 +8,9 @@
 -- vim.cmd.colorscheme('zenburned')
 -- vim.cmd.colorscheme('neobones')
 -- vim.cmd.colorscheme('zenbones')
-vim.cmd.colorscheme('nordic')
+-- vim.cmd.colorscheme('nordic')
 -- vim.cmd.colorscheme('everforest')
--- vim.cmd.colorscheme('everforest')
--- vim.cmd.colorscheme('everforest')
+vim.cmd.colorscheme('catppuccin-macchiato')
 
 vim.opt.guicursor = "i:ver100" -- Cursor Block style always
 vim.o.nu = true

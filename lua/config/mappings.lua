@@ -27,6 +27,7 @@ map("n", "<leader>Y", [["+Y]])
 map("n", "<leader>s{", [[@s]])
 
 map("n", "<leader>w", "<cmd>w<cr>")
+map("n", "<leader>W", "<cmd>wall<cr>")
 map("n", "<leader>ц", "<cmd>w<cr>")
 
 map("n", "<C-q><C-q>", "<cmd>wqall<cr>")

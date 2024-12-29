@@ -34,11 +34,11 @@ return {
         ['<Down>'] = cmp.mapping.select_next_item(),
         ['<Up>'] = cmp.mapping.select_prev_item(),
       },
-      snippet = {
-        expand = function(args)
-          require("luasnip").lsp_expand(args.body)
-        end,
-      },
+      -- snippet = {
+      --   expand = function(args)
+      --     require("luasnip").lsp_expand(args.body)
+      --   end,
+      -- },
       sources = cmp.config.sources({
         { name = 'nvim_lsp_signature_help' },
       }, {

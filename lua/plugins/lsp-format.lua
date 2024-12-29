@@ -43,10 +43,18 @@ return {
     })
 
     vim.api.nvim_create_autocmd('BufWritePre', {
-      pattern = { "*.json", "*.lua", "*.rs", "*.ml" }, -- "*.odin"
+      pattern = { "*.json", "*.lua", "*.rs", "*.ml" }, -- "*.odin", "*.gleam"
       -- pattern = { "*.json", "*.lua", "*.rs" },
       callback = function()
         vim.lsp.buf.format()
+      end
+    })
+
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      pattern = { "*.ex", "*.exs" },
+      callback = function()
+        -- vim.cmd [[silent exec "!mix format"]]
+        vim.lsp.buf.format({ async = true })
       end
     })
 

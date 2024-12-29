@@ -57,9 +57,46 @@ return {
         })),
     })
 
-    ------------------------------------- C ---------------------------------------
+    ------------------------------------ SQL --------------------------------------
     -------------------------------------------------------------------------------
 
+    ls.add_snippets("sql", {
+      s("ie",
+        fmta("IF EXISTS<cur>", {
+          cur = i(0),
+        })),
+
+      s("ine",
+        fmta("IF NOT EXISTS<cur>", {
+          cur = i(0),
+        })),
+    })
+
+
+    ---------------------------------- Erlang -------------------------------------
+    -------------------------------------------------------------------------------
+
+    ls.add_snippets("erlang", {
+      s("fun",
+        fmta("fun(<args>) ->> <body> end<cur>", {
+          args = i(1),
+          body = i(2),
+          cur = i(0),
+        })),
+    })
+
+    ---------------------------------- Elixir -------------------------------------
+    -------------------------------------------------------------------------------
+
+    ls.add_snippets("elixir", {
+      s("do",
+        fmta("do\n\t<cur>\nend", {
+          cur = i(0),
+        })),
+    })
+
+    ------------------------------------- C ---------------------------------------
+    -------------------------------------------------------------------------------
     ls.add_snippets("c", {
       s("for",
         fmta("for (int i = 0; i << <iter>; i++) {\n\t<cur>\n}", {
@@ -251,6 +288,17 @@ return {
         final = i(0)
       })),
 
+      s("io", fmta("if !ok {\n\treturn <ret>\n}\n<final>", {
+        ret = i(1),
+        final = i(0)
+      })),
+
+      s("iie", fmta("if err := <exec>; err != nil {\n\t<ret>\n}\n<final>", {
+        exec = i(1),
+        ret = i(2),
+        final = i(0),
+      })),
+
       s("en", fmta("err != nil <final>", {
         final = i(0)
       })),
@@ -388,13 +436,14 @@ return {
           })),
 
       s("sql", fmta([[
-      sql, args, err := builder.ToSql()
+      query, args, err := <qb>.ToSql()
       if err != nil {
         return <ret>
       }
       <cur>
       ]], {
-        ret = i(1),
+        qb = i(1),
+        ret = i(2),
         cur = i(0),
       })),
 
@@ -546,7 +595,7 @@ return {
         cur = i(0),
       })),
 
-      s("sex", fmta([[<name> = EXCLUDED.<name_rep>,<cur>]], {
+      s("sex", fmta("<name> = EXCLUDED.<name_rep>,<cur>", {
         name = i(1),
         name_rep = rep(1),
         cur = i(0),
@@ -562,7 +611,7 @@ return {
 
 
     vim.keymap.set("i", "<c-k>", function()
-      if ls.expand_or_jumpable() then
+      if ls.expand_or_jumpable(1) then
         ls.expand_or_jump()
       end
     end)

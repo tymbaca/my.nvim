@@ -37,10 +37,22 @@ return {
 
   "folke/todo-comments.nvim",
   'sainnhe/everforest',
+  "anAcc22/sakura.nvim",
   'AlexvZyl/nordic.nvim',
+  "shaunsingh/nord.nvim",
+  { "catppuccin/nvim",      name = "catppuccin",                  priority = 1000 },
   'christoomey/vim-tmux-navigator',
   'rhysd/conflict-marker.vim',
-  "sindrets/diffview.nvim",
+  {
+    "sindrets/diffview.nvim",
+    config = function()
+      vim.keymap.set("n", "<leader>dfm", "<cmd>DiffviewOpen master<cr>")
+      vim.keymap.set("n", "<leader>df1", "<cmd>DiffviewOpen HEAD~1<cr>")
+      vim.keymap.set("n", "<leader>df2", "<cmd>DiffviewOpen HEAD~2<cr>")
+      vim.keymap.set("n", "<leader>df3", "<cmd>DiffviewOpen HEAD~3<cr>")
+      vim.keymap.set("n", "<C-Q>d", "<cmd>DiffviewClose<cr>")
+    end,
+  },
   {
     "jaimecgomezz/here.term",
     opts = {
@@ -49,5 +61,5 @@ return {
         kill = "<C-'>",
       },
     },
-  }
+  },
 }
