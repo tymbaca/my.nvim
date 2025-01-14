@@ -63,3 +63,8 @@ vim.cmd [[
 vnoremap <C-r> "hy:s/<C-r>h/<C-r>h/g<left><left>
 vnoremap <S-r> "hy:%s/<C-r>h/<C-r>h/g<left><left>
 ]]
+
+local switch_case = require 'config.switch-case'
+
+map('n', '<Leader>cs', switch_case.switch_case,
+  { noremap = true, silent = true })
