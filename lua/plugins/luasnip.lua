@@ -95,6 +95,75 @@ return {
         })),
     })
 
+    ------------------------------------ ZIG --------------------------------------
+    -------------------------------------------------------------------------------
+    ls.add_snippets("zig", {
+      s("i", fmta([[const <name> = std.<pref><name_rep>;<cur>]], {
+        name = i(1),
+        name_rep = rep(1),
+        pref = i(2),
+        cur = i(0),
+      })),
+      s("std", fmta([[const std = @import("std");<cur>]], {
+        cur = i(0),
+      })),
+      s("ip", fmta([[const print = std.debug.print;<cur>]], {
+        cur = i(0),
+      })),
+
+      s("pc", fmta([[pub const <left> = <right>;<cur>]], {
+        left = i(1),
+        right = i(2),
+        cur = i(0),
+      })),
+      s("c", fmta([[const <left> = <right>;<cur>]], {
+        left = i(1),
+        right = i(2),
+        cur = i(0),
+      })),
+      s("v", fmta([[var <left> = <right>;<cur>]], {
+        left = i(1),
+        right = i(2),
+        cur = i(0),
+      })),
+      s("s", fmta("const <name> = struct {\n\t<cur>\n};", {
+        name = i(1),
+        cur = i(0),
+      })),
+      s("al", fmta("allocator: std.mem.Allocator<cur>", {
+        cur = i(0),
+      })),
+      s("l", fmta([[print("<log>\n", .{<args>});<cur>]], {
+        log = i(1),
+        args = i(2),
+        cur = i(0),
+      })),
+      s("arena", fmta("var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);\ndefer arena.deinit();<cur>", {
+        cur = i(0),
+      })),
+      s("fn", fmta("fn <name>(<args>) <ret> {\n\t<cur>\n}", {
+        name = i(1),
+        args = i(2),
+        ret = i(3),
+        cur = i(0),
+      })),
+      s("pfn", fmta("pub fn <name>(<args>) <ret> {\n\t<cur>\n}", {
+        name = i(1),
+        args = i(2),
+        ret = i(3),
+        cur = i(0),
+      })),
+
+      s("te", fmta("try testing.expectEqual(<expect>, <actual>);", {
+        actual = i(1),
+        expect = i(0),
+      })),
+      s("ter", fmta("try testing.expectError(<expect>, <actual>);", {
+        actual = i(1),
+        expect = i(0),
+      })),
+    })
+
     ------------------------------------- C ---------------------------------------
     -------------------------------------------------------------------------------
     ls.add_snippets("c", {
@@ -285,6 +354,12 @@ return {
 
       s("ie", fmta("if err != nil {\n\treturn <ret>\n}\n<final>", {
         ret = i(1),
+        final = i(0)
+      })),
+
+      s("iei", fmta("if errors.Is(err, <err>) {\n\treturn <ret>\n}\n<final>", {
+        err = i(1),
+        ret = i(2),
         final = i(0)
       })),
 
@@ -604,6 +679,16 @@ return {
       s("gf", fmta("go func() {\n\t<cur>\n}()", {
         cur = i(0),
       })),
+      s("df", fmta("defer func() {\n\t<cur>\n}()", {
+        cur = i(0),
+      })),
+      s("sp", fmta("ctx, span := tracer.Start(ctx, \"<span>\")\ndefer span.End()\n<cur>", {
+        span = i(1),
+        cur = i(0),
+      })),
+
+
+      s("initlogger", fmta(require("plugins.bigsnip.go-logger").logger, {})),
     })
 
 

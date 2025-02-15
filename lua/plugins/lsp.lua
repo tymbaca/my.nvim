@@ -75,7 +75,29 @@ return {
           enable_rename = true,
         },
       })
-      lspconfig.zls.setup({})
+
+      -- don't show parse errors in a separate window
+      vim.g.zig_fmt_parse_errors = 0
+      lspconfig.zls.setup {
+        -- Server-specific settings. See `:help lspconfig-setup`
+
+        -- There are two ways to set config options:
+        --   - edit your `zls.json` that applies to any editor that uses ZLS
+        --   - set in-editor config options with the `settings` field below.
+        --
+        -- Further information on how to configure ZLS:
+        -- https://zigtools.org/zls/configure/
+        settings = {
+          zls = {
+            -- Whether to enable build-on-save diagnostics
+            --
+            -- Further information about build-on save:
+            -- https://zigtools.org/zls/guides/build-on-save/
+            enable_build_on_save = true,
+          }
+        }
+      }
+
       lspconfig.gleam.setup({})
       lspconfig.elp.setup({})
       -- lspconfig.elixirls.setup({
@@ -128,6 +150,7 @@ return {
 
       vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = "Go to declaration" })
       vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = "Go to definition" })
+      vim.keymap.set('n', 'gT', vim.lsp.buf.type_definition, { desc = "Go to type definition" })
       vim.keymap.set('n', 'gr', function() telescope_builtin.lsp_references() end, { desc = "List all references" })
       vim.keymap.set('n', 'gi', telescope_builtin.lsp_implementations, { desc = "Go to implementation" })
       vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = "Hover documentation" })

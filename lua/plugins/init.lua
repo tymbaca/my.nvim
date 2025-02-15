@@ -3,7 +3,11 @@ return {
     'windwp/nvim-autopairs',
     -- event = "InsertEnter",
     config = function()
-      require("nvim-autopairs").setup {}
+      local Rule = require('nvim-autopairs.rule')
+      local npairs = require('nvim-autopairs')
+      npairs.setup {}
+
+      npairs.add_rule(Rule("|", "|", "zig"))
     end
   },
   {
@@ -40,7 +44,6 @@ return {
   "anAcc22/sakura.nvim",
   'AlexvZyl/nordic.nvim',
   "shaunsingh/nord.nvim",
-  { "catppuccin/nvim",      name = "catppuccin",                  priority = 1000 },
   'christoomey/vim-tmux-navigator',
   'rhysd/conflict-marker.vim',
   {
@@ -62,4 +65,30 @@ return {
       },
     },
   },
+
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+    config = function()
+      require("catppuccin").setup({
+        -- transparent_background = true,
+      })
+    end
+  },
+
+  "fidian/hexmode",
+  {
+    "xiyaowong/transparent.nvim",
+    config = function()
+      local transparent = require("transparent")
+      transparent.setup {}
+
+      transparent.clear_prefix('NvimTree')
+      vim.keymap.set("n", "<leader>Ut", "<cmd>TransparentToggle<cr>")
+
+      -- vim.cmd("TransparentEnable")
+      vim.cmd("TransparentDisable")
+    end
+  }
 }

@@ -6,7 +6,7 @@ return {
     sibling.setup({
       allow_interline_swaps = false,
     })
-    vim.keymap.set({ "i", "n" }, "<M-[>", sibling.swap_with_left)
-    vim.keymap.set({ "i", "n" }, "<M-]>", sibling.swap_with_right)
+    -- vim.keymap.set({ "i", "n" }, "<M-[>", sibling.swap_with_left)
+    -- vim.keymap.set({ "i", "n" }, "<M-]>", sibling.swap_with_right)
   end,
 }
