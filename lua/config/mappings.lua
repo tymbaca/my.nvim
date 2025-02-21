@@ -59,10 +59,13 @@ vim.cmd("map ]] ]m")
 vim.cmd("map {{ [{")
 vim.cmd("map }} ]}")
 
+map("n", "//", "/<C-r><C-w><cr>")
+
 vim.cmd [[
-vnoremap <C-r> "hy:s/<C-r>h/<C-r>h/g<left><left>
+vnoremap <leader>/ y/<C-R>"<CR>N
 vnoremap <S-r> "hy:%s/<C-r>h/<C-r>h/g<left><left>
 ]]
+-- vnoremap <C-r> "hy:s/<C-r>h/<C-r>h/g<left><left>
 
 local switch_case = require 'config.switch-case'
 

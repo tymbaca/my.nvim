@@ -65,10 +65,11 @@ return {
       lspconfig.ols.setup({
         init_options = {
           checker_args = "-strict-style",
-          -- collections = {
-          --   { name = "shared", path = vim.fn.expand('$HOME/odin-lib') }
-          -- },
+          collections = {
+            { name = "src", path = vim.fn.expand('$PWD/src') }
+          },
           enable_snippets = true,
+          enable_procedure_snippet = true,
           enable_fake_methods = true,
           enable_inlay_hints = true,
           enable_references = true,
