@@ -47,10 +47,10 @@ map({ "n", "v" }, "gk", "gg")
 map({ "n", "v" }, "gl", "g_")
 
 map("i", "<M-,>", "<><Esc>i")
-map("n", "<leader>R", function()
-  local word = vim.fn.expand("<cword>")
-  vim.api.nvim_feedkeys(":%s/" .. word .. "/" .. word, 'n', false)
-end)
+-- map("n", "<leader>R", function()
+--   local word = vim.fn.expand("<cword>")
+--   vim.api.nvim_feedkeys(":%s/" .. word .. "/" .. word, 'n', false)
+-- end)
 
 map("n", "<leader>m", "<cmd>make<cr>")
 
@@ -63,6 +63,7 @@ map("n", "//", "/<C-r><C-w><cr>")
 
 vim.cmd [[
 vnoremap <leader>/ y/<C-R>"<CR>N
+nnoremap <leader>R :%s/<C-r><C-w>/<C-r><C-w>/g<left><left>
 vnoremap <S-r> "hy:%s/<C-r>h/<C-r>h/g<left><left>
 ]]
 -- vnoremap <C-r> "hy:s/<C-r>h/<C-r>h/g<left><left>
