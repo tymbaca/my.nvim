@@ -1,3 +1,20 @@
+local function split(inputstr, sep)
+  if sep == nil then
+    sep = "%s"
+  end
+  local t = {}
+  for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
+    table.insert(t, str)
+  end
+  return t
+end
+
+local function get_current_folder_name()
+  local path = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+  local parts = split(path, "/")
+  return parts[#parts - 1]
+end
+
 return {
   "L3MON4D3/LuaSnip",
   -- follow latest release.
@@ -291,7 +308,8 @@ return {
         final = i(0)
       })),
       s("p",
-        fmta("package<cur>", {
+        fmta("package <name><cur>", {
+          name = f(get_current_folder_name, {}, {}),
           cur = i(0)
         })),
       s("i",
