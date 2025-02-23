@@ -342,6 +342,12 @@ return {
           args = i(2),
           cur = i(0)
         })),
+      s("ff",
+        fmta('<fn> :: proc(<args>) <cur>', {
+          fn = i(1, "fn"),
+          args = i(2),
+          cur = i(0)
+        })),
       s("l",
         fmta('fmt.println(<cur>)', {
           cur = i(0)
@@ -349,6 +355,11 @@ return {
       s("lf",
         fmta('fmt.printf("<fmt>\\n", <cur>)', {
           fmt = i(1),
+          cur = i(0)
+        })),
+      s("s",
+        fmta('<name> :: struct {\n\t<cur>\n}', {
+          name = i(1),
           cur = i(0)
         })),
     })
