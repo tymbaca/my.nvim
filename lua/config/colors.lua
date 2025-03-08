@@ -15,7 +15,7 @@ vim.cmd.colorscheme('neobones')
 
 vim.opt.guicursor = "i:ver100" -- Cursor Block style always
 vim.o.nu = true
-vim.wo.relativenumber = true
+-- vim.wo.relativenumber = true
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4

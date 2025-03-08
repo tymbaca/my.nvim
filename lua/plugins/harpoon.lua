@@ -11,7 +11,7 @@ return {
     vim.keymap.set('n', '<leader>2', function() ui.nav_file(2) end, { desc = "Jump to mark: 2" })
     vim.keymap.set('n', '<leader>3', function() ui.nav_file(3) end, { desc = "Jump to mark: 3" })
     vim.keymap.set('n', '<leader>4', function() ui.nav_file(4) end, { desc = "Jump to mark: 4" })
-    -- vim.keymap.set('n', '<leader>5', function() ui.nav_file(5) end, { desc = "Jump to mark: 5"})
-    -- vim.keymap.set('n', '<leader>6', function() ui.nav_file(6) end, { desc = "Jump to mark: 6"})
+    vim.keymap.set('n', '<leader>5', function() ui.nav_file(5) end, { desc = "Jump to mark: 5" })
+    vim.keymap.set('n', '<leader>6', function() ui.nav_file(6) end, { desc = "Jump to mark: 6" })
   end
 }

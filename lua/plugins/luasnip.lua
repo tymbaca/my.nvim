@@ -258,6 +258,18 @@ return {
         })),
     })
 
+    ls.add_snippets("json", {
+      s("ols",
+        fmta([[{
+	"$schema": "https://raw.githubusercontent.com/DanielGavin/ols/master/misc/ols.schema.json",
+	"collections": [
+		{ "name": "src", "path": "src" }
+	]<cur>
+}]], {
+          cur = i(0),
+        })),
+    })
+
     ----------------------------------- RUST --------------------------------------
     -------------------------------------------------------------------------------
 
@@ -360,6 +372,10 @@ return {
       s("s",
         fmta('<name> :: struct {\n\t<cur>\n}', {
           name = i(1),
+          cur = i(0)
+        })),
+      s("al",
+        fmta('allocator := context.allocator<cur>', {
           cur = i(0)
         })),
     })
@@ -711,8 +727,11 @@ return {
       s("df", fmta("defer func() {\n\t<cur>\n}()", {
         cur = i(0),
       })),
-      s("sp", fmta("ctx, span := tracer.Start(ctx, \"<span>\")\ndefer span.End()\n<cur>", {
+      s("sp", fmta("ctx, span := tracer.Start(ctx, caller.Name()<span>)\ndefer span.End()\n<cur>", {
         span = i(1),
+        cur = i(0),
+      })),
+      s("spe", fmta("tracer.RecordError(ctx, err)<cur>", {
         cur = i(0),
       })),
 
