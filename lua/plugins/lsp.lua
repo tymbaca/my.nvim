@@ -61,6 +61,7 @@ return {
       -- (Optional) Configure lua language server for neovim
       lspconfig.lua_ls.setup({})
       lspconfig.marksman.setup({})
+      lspconfig.glsl_analyzer.setup({})
 
       lspconfig.ols.setup({
         init_options = {
