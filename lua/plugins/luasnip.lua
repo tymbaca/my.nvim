@@ -378,6 +378,14 @@ return {
         fmta('allocator := context.allocator<cur>', {
           cur = i(0)
         })),
+      s("t",
+        fmta([[@(test)
+<fn>_test :: proc(t: ^testing.T) {
+    <cur>
+}]], {
+          fn = i(1),
+          cur = i(0),
+        })),
     })
 
     ------------------------------------ GO ---------------------------------------
