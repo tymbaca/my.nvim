@@ -8,6 +8,7 @@ return {
       operator_mapping = "<leader>c",
       -- Ignore empty lines
       comment_empty = true,
+      comment_chunk_text_object = "ic",
     }
   end
 }

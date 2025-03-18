@@ -81,3 +81,4 @@ autocmd FileType tsv setlocal noexpandtab
 autocmd FileType tsv setlocal tabstop=8
 autocmd FileType tsv setlocal shiftwidth=8
 
+" autocmd FileType odin setlocal wrap=false
