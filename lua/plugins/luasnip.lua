@@ -386,6 +386,10 @@ return {
           fn = i(1),
           cur = i(0),
         })),
+      s("tmp",
+        fmta("context.allocator = context.temp_allocator\ndefer free_all()<cur>", {
+          cur = i(0),
+        })),
     })
 
     ------------------------------------ GO ---------------------------------------
