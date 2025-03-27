@@ -23,7 +23,7 @@ endfunction
 command! -range CamelCase silent! call <SID>Camelize(<range>)
 command! -range SnakeCase silent! call <SID>Snakeize(<range>)
 
-" set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
+set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 nmap р h
 nmap о j
 nmap л k
