@@ -5,4 +5,4 @@ require("config.colors")
 require("config.neovide")
 vim.cmd [[source ~/.config/nvim/lua/config/init.vim]]
 
--- require("langmapper").automapping({ global = true, buffer = true })
+require("langmapper").automapping({ global = true, buffer = true })
