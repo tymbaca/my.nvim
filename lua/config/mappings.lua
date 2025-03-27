@@ -7,7 +7,7 @@ map('n', ';', vim.cmd.noh)                   -- Cancel search highlighting
 map('n', 'gp', function() vim.cmd("b#") end) -- Jump to previous buffer
 
 -- Fast escape from normal mode
-map('i', 'jk', function() vim.cmd("stopinsert") end)
+-- map('i', 'jk', function() vim.cmd("stopinsert") end)
 
 -- Move selected lines
 map("v", "J", ":m '>+1<CR>gv=gv")
