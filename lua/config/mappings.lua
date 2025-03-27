@@ -72,3 +72,6 @@ local switch_case = require 'config.switch-case'
 
 map('n', '<Leader>cs', switch_case.switch_case,
   { noremap = true, silent = true })
+
+map('n', '<leader>xe', "<cmd>!explorer.exe .<cr>")
+map('n', '<leader>xf', "<cmd>!open .<cr>")
