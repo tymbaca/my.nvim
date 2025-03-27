@@ -23,7 +23,32 @@ endfunction
 command! -range CamelCase silent! call <SID>Camelize(<range>)
 command! -range SnakeCase silent! call <SID>Snakeize(<range>)
 
-set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
+" set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
+nmap р h
+nmap о j
+nmap л k
+nmap д l
+
+vmap п g
+nmap п g
+omap р h
+omap д l
+nmap пд gl
+nmap пр gh
+vmap пд gl
+vmap пр gh
+" omap пд gl
+" omap пр gh
+"
+" nmap р h
+" nmap о j
+" nmap л k
+" nmap д l
+" vmap р h
+" vmap о j
+" vmap л k
+" vmap д l
+
 
 autocmd FileType python setlocal tabstop=4
 autocmd FileType python setlocal softtabstop=4

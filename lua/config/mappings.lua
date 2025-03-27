@@ -48,6 +48,11 @@ map({ "n", "v" }, "gj", "G")
 map({ "n", "v" }, "gk", "gg")
 map({ "n", "v" }, "gl", "g_")
 
+map({ "n", "v" }, "пh", "^")
+map({ "n", "v" }, "пj", "G")
+map({ "n", "v" }, "пk", "gg")
+map({ "n", "v" }, "пl", "g_")
+
 map("i", "<M-,>", "<><Esc>i")
 -- map("n", "<leader>R", function()
 --   local word = vim.fn.expand("<cword>")

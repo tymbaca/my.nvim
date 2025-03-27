@@ -31,6 +31,9 @@ return {
         surrounds = {
           ["*"] = {
             add = function()
+              if vim.bo.filetype == "typst" then
+                return { { "*" }, { "*" } }
+              end
               return { { "/*" }, { "*/" } }
             end
           }
