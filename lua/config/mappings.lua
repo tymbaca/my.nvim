@@ -17,6 +17,8 @@ map("v", "K", ":m '<-2<CR>gv=gv")
 map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
 
+map('i', '<C-c>', "<esc>")
+
 -- greatest remap ever
 map("x", "<leader>p", [["_dP]])
 
