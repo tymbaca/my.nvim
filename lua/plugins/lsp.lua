@@ -51,12 +51,11 @@ return {
       configs.protobuf_language_server = {
         default_config = {
           cmd = { 'protobuf-language-server' },
-          filetypes = { 'proto', 'cpp' },
+          filetypes = { 'proto' },
           root_fir = util.root_pattern('.git'),
           single_file_support = true,
         }
       }
-
 
       -- (Optional) Configure lua language server for neovim
       lspconfig.lua_ls.setup({})
@@ -77,6 +76,10 @@ return {
           enable_rename = true,
         },
       })
+
+
+      require('java').setup()
+      lspconfig.jdtls.setup({})
 
       -- don't show parse errors in a separate window
       vim.g.zig_fmt_parse_errors = 0
