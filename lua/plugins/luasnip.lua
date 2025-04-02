@@ -68,25 +68,31 @@ return {
     -------------------------------------------------------------------------------
 
     ls.add_snippets("*", {
-      s("inst",
-        fmta("instruction<cur>", {
-          cur = i(0),
-        })),
+      s("inst", fmta("instruction<cur>", {
+        cur = i(0),
+      })),
+    })
+
+    ----------------------------------- TYPST -------------------------------------
+    -------------------------------------------------------------------------------
+
+    ls.add_snippets("typst", {
+      s("angle", fmta("$angle.l <cur> angle.r$", {
+        cur = i(0),
+      })),
     })
 
     ------------------------------------ SQL --------------------------------------
     -------------------------------------------------------------------------------
 
     ls.add_snippets("sql", {
-      s("ie",
-        fmta("IF EXISTS<cur>", {
-          cur = i(0),
-        })),
+      s("ie", fmta("IF EXISTS<cur>", {
+        cur = i(0),
+      })),
 
-      s("ine",
-        fmta("IF NOT EXISTS<cur>", {
-          cur = i(0),
-        })),
+      s("ine", fmta("IF NOT EXISTS<cur>", {
+        cur = i(0),
+      })),
     })
 
 
@@ -94,22 +100,20 @@ return {
     -------------------------------------------------------------------------------
 
     ls.add_snippets("erlang", {
-      s("fun",
-        fmta("fun(<args>) ->> <body> end<cur>", {
-          args = i(1),
-          body = i(2),
-          cur = i(0),
-        })),
+      s("fun", fmta("fun(<args>) ->> <body> end<cur>", {
+        args = i(1),
+        body = i(2),
+        cur = i(0),
+      })),
     })
 
     ---------------------------------- Elixir -------------------------------------
     -------------------------------------------------------------------------------
 
     ls.add_snippets("elixir", {
-      s("do",
-        fmta("do\n\t<cur>\nend", {
-          cur = i(0),
-        })),
+      s("do", fmta("do\n\t<cur>\nend", {
+        cur = i(0),
+      })),
     })
 
     ------------------------------------ ZIG --------------------------------------
@@ -184,117 +188,102 @@ return {
     ------------------------------------- C ---------------------------------------
     -------------------------------------------------------------------------------
     ls.add_snippets("c", {
-      s("for",
-        fmta("for (int i = 0; i << <iter>; i++) {\n\t<cur>\n}", {
-          iter = i(1),
-          cur = i(0),
-        })),
-      s("case",
-        fmta("case <arg>:\n\t<cur>\n\tbreak;", {
-          arg = i(1),
-          cur = i(0),
-        })),
-      s("typedef",
-        fmta("typedef <type> <cur>;", {
-          type = i(1),
-          cur = i(0),
-        })),
-      s("ts",
-        fmta("typedef struct <name_rep> {\n\t<cur>\n} <name>;", {
-          name = i(1),
-          name_rep = rep(1),
-          cur = i(0),
-        })),
-      s("te",
-        fmta("typedef enum <name_rep> {\n\t<cur>\n} <name>;", {
-          name = i(1),
-          name_rep = rep(1),
-          cur = i(0),
-        })),
-      s("v",
-        fmta("(Vector3){<inner>}<cur>", {
-          inner = i(1),
-          cur = i(0),
-        })),
-      s("vvv",
-        fmta("(Vector3){.x = <x>, .y = <y>, .z = <z>}<cur>", {
-          x = i(1),
-          y = i(2),
-          z = i(3),
-          cur = i(0),
-        })),
-      s("ig",
-        fmta("#ifndef <name>\n#define <name_rep>\n<cur>\n#endif", {
-          name = i(1),
-          name_rep = rep(1),
-          cur = i(0),
-        })),
+      s("for", fmta("for (int i = 0; i << <iter>; i++) {\n\t<cur>\n}", {
+        iter = i(1),
+        cur = i(0),
+      })),
+      s("case", fmta("case <arg>:\n\t<cur>\n\tbreak;", {
+        arg = i(1),
+        cur = i(0),
+      })),
+      s("typedef", fmta("typedef <type> <cur>;", {
+        type = i(1),
+        cur = i(0),
+      })),
+      s("ts", fmta("typedef struct <name_rep> {\n\t<cur>\n} <name>;", {
+        name = i(1),
+        name_rep = rep(1),
+        cur = i(0),
+      })),
+      s("te", fmta("typedef enum <name_rep> {\n\t<cur>\n} <name>;", {
+        name = i(1),
+        name_rep = rep(1),
+        cur = i(0),
+      })),
+      s("v", fmta("(Vector3){<inner>}<cur>", {
+        inner = i(1),
+        cur = i(0),
+      })),
+      s("vvv", fmta("(Vector3){.x = <x>, .y = <y>, .z = <z>}<cur>", {
+        x = i(1),
+        y = i(2),
+        z = i(3),
+        cur = i(0),
+      })),
+      s("ig", fmta("#ifndef <name>\n#define <name_rep>\n<cur>\n#endif", {
+        name = i(1),
+        name_rep = rep(1),
+        cur = i(0),
+      })),
     })
 
     ----------------------------------- OCAML -------------------------------------
     -------------------------------------------------------------------------------
 
     ls.add_snippets("ocaml", {
-      s("[|",
-        fmta("[| <cur> |", {
-          cur = i(0)
-        })),
-      s("[",
-        fmta("[ <cur> ", {
-          cur = i(0)
-        })),
+      s("[|", fmta("[| <cur> |", {
+        cur = i(0)
+      })),
+      s("[", fmta("[ <cur> ", {
+        cur = i(0)
+      })),
     })
 
     ----------------------------------- YAML --------------------------------------
     -------------------------------------------------------------------------------
 
     ls.add_snippets("yaml", {
-      s("task",
-        fmta([[version: 3
+      s("task", fmta([[version: 3
 
       tasks:
       default: <cur>]], {
-          cur = i(0)
-        })),
+        cur = i(0)
+      })),
     })
 
     ls.add_snippets("json", {
-      s("ols",
-        fmta([[{
+      s("ols", fmta([[{
 	"$schema": "https://raw.githubusercontent.com/DanielGavin/ols/master/misc/ols.schema.json",
 	"collections": [
 		{ "name": "src", "path": "src" }
 	]<cur>
 }]], {
-          cur = i(0),
-        })),
+        cur = i(0),
+      })),
     })
 
     ----------------------------------- RUST --------------------------------------
     -------------------------------------------------------------------------------
 
     ls.add_snippets("rust", {
-      s("d",
-        fmta("#[derive(<cur>)]", {
-          cur = i(0),
-        })
+      s("d", fmta("#[derive(<cur>)]", {
+        cur = i(0),
+      })
       ),
-      s("cmp",
-        fmta("#[derive(Component)]\nstruct <cur>", {
-          cur = i(0),
-        })
+      s("cmp", fmta("#[derive(Component)]\nstruct <cur>", {
+        cur = i(0),
+      })
       ),
-      s("sys",
-        fmta([[fn <name>(query: Query<<&<comp>>>) {
+      s("sys", fmta([[fn <name>(query: Query<<&<comp>>>) {
         for <item> in &query {
           <cur>
         }
       }]], {
-          name = i(1),
-          comp = i(2),
-          item = i(3),
-          cur = i(0),
-        })
+        name = i(1),
+        comp = i(2),
+        item = i(3),
+        cur = i(0),
+      })
       ),
     })
 
@@ -308,10 +297,9 @@ return {
           {
             cur = i(0)
           })),
-      s("**",
-        fmta("/*\n<cur>*/", {
-          cur = i(0)
-        })),
+      s("**", fmta("/*\n<cur>*/", {
+        cur = i(0)
+      })),
       s("ie", fmta("if err != nil {\n\treturn <ret>\n}\n<final>", {
         ret = i(1),
         final = i(0)
@@ -319,77 +307,62 @@ return {
       s("en", fmta("err != nil <final>", {
         final = i(0)
       })),
-      s("p",
-        fmta("package <name><cur>", {
-          name = f(get_current_folder_name, {}, {}),
-          cur = i(0)
-        })),
-      s("i",
-        fmta('import "<cur>"', {
-          cur = i(0)
-        })),
-      s("ic",
-        fmta('import "core:<cur>"', {
-          cur = i(0)
-        })),
-      s("iv",
-        fmta('import "vendor:<cur>"', {
-          cur = i(0)
-        })),
-      s("irl",
-        fmta('import rl "vendor:raylib"<cur>', {
-          cur = i(0)
-        })),
-      s("ib",
-        fmta('import "base:<cur>"', {
-          cur = i(0)
-        })),
-      s("rl",
-        fmta('import rl "vendor:raylib"<cur>', {
-          cur = i(0)
-        })),
-      s("pr",
-        fmta('<fn> :: proc(<args>) <cur>', {
-          fn = i(1, "fn"),
-          args = i(2),
-          cur = i(0)
-        })),
-      s("ff",
-        fmta('<fn> :: proc(<args>) <cur>', {
-          fn = i(1, "fn"),
-          args = i(2),
-          cur = i(0)
-        })),
-      s("l",
-        fmta('fmt.println(<cur>)', {
-          cur = i(0)
-        })),
-      s("lf",
-        fmta('fmt.printf("<fmt>\\n", <cur>)', {
-          fmt = i(1),
-          cur = i(0)
-        })),
-      s("s",
-        fmta('<name> :: struct {\n\t<cur>\n}', {
-          name = i(1),
-          cur = i(0)
-        })),
-      s("al",
-        fmta('allocator := context.allocator<cur>', {
-          cur = i(0)
-        })),
-      s("t",
-        fmta([[@(test)
+      s("p", fmta("package <name><cur>", {
+        name = f(get_current_folder_name, {}, {}),
+        cur = i(0)
+      })),
+      s("i", fmta('import "<cur>"', {
+        cur = i(0)
+      })),
+      s("ic", fmta('import "core:<cur>"', {
+        cur = i(0)
+      })),
+      s("iv", fmta('import "vendor:<cur>"', {
+        cur = i(0)
+      })),
+      s("irl", fmta('import rl "vendor:raylib"<cur>', {
+        cur = i(0)
+      })),
+      s("ib", fmta('import "base:<cur>"', {
+        cur = i(0)
+      })),
+      s("rl", fmta('import rl "vendor:raylib"<cur>', {
+        cur = i(0)
+      })),
+      s("pr", fmta('<fn> :: proc(<args>) <cur>', {
+        fn = i(1, "fn"),
+        args = i(2),
+        cur = i(0)
+      })),
+      s("ff", fmta('<fn> :: proc(<args>) <cur>', {
+        fn = i(1, "fn"),
+        args = i(2),
+        cur = i(0)
+      })),
+      s("l", fmta('fmt.println(<cur>)', {
+        cur = i(0)
+      })),
+      s("lf", fmta('fmt.printf("<fmt>\\n", <cur>)', {
+        fmt = i(1),
+        cur = i(0)
+      })),
+      s("s", fmta('<name> :: struct {\n\t<cur>\n}', {
+        name = i(1),
+        cur = i(0)
+      })),
+      s("al", fmta('allocator := context.allocator<cur>', {
+        cur = i(0)
+      })),
+      s("t", fmta([[@(test)
 <fn>_test :: proc(t: ^testing.T) {
     <cur>
 }]], {
-          fn = i(1),
-          cur = i(0),
-        })),
-      s("tmp",
-        fmta("context.allocator = context.temp_allocator\ndefer free_all()<cur>", {
-          cur = i(0),
-        })),
+        fn = i(1),
+        cur = i(0),
+      })),
+      s("tmp", fmta("context.allocator = context.temp_allocator\ndefer free_all()<cur>", {
+        cur = i(0),
+      })),
     })
 
     ------------------------------------ GO ---------------------------------------
@@ -551,13 +524,12 @@ return {
         cur = i(0),
       })),
 
-      s("exp",
-        fmta([[<cur>.EXPECT().<fn>(mock.Anything, <arg>).Return(<ret>)]], {
-          cur = i(1),
-          fn = i(2),
-          arg = i(3),
-          ret = i(0),
-        })),
+      s("exp", fmta([[<cur>.EXPECT().<fn>(mock.Anything, <arg>).Return(<ret>)]], {
+        cur = i(1),
+        fn = i(2),
+        arg = i(3),
+        ret = i(0),
+      })),
 
       s("txmock",
         fmta(
