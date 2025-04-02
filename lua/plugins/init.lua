@@ -7,7 +7,12 @@ return {
       local npairs = require('nvim-autopairs')
       npairs.setup {}
 
-      npairs.add_rule(Rule("|", "|", "zig"))
+      local cond = require('nvim-autopairs.conds')
+      npairs.add_rules({
+        Rule("|", "|", "zig"):with_move(cond.done()),
+        Rule("$", "$", "typst"):with_move(cond.done()),
+        Rule("*", "*", "typst"):with_move(cond.done()),
+      })
     end
   },
   {

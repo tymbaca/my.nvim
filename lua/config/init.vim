@@ -37,17 +37,6 @@ nmap пд gl
 nmap пр gh
 vmap пд gl
 vmap пр gh
-" omap пд gl
-" omap пр gh
-"
-" nmap р h
-" nmap о j
-" nmap л k
-" nmap д l
-" vmap р h
-" vmap о j
-" vmap л k
-" vmap д l
 
 
 autocmd FileType python setlocal tabstop=4
