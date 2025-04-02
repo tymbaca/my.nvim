@@ -61,6 +61,14 @@ return {
       lspconfig.lua_ls.setup({})
       lspconfig.marksman.setup({})
       lspconfig.glsl_analyzer.setup({})
+      lspconfig.tinymist.setup({
+        -- offset_encoding = "utf-8",
+        settings = {
+          formatterMode = "typstyle",
+          exportPdf = "onType",
+          semanticTokens = "disable"
+        }
+      })
 
       lspconfig.ols.setup({
         init_options = {
@@ -78,8 +86,8 @@ return {
       })
 
 
-      require('java').setup()
-      lspconfig.jdtls.setup({})
+      -- require('java').setup()
+      -- lspconfig.jdtls.setup({})
 
       -- don't show parse errors in a separate window
       vim.g.zig_fmt_parse_errors = 0

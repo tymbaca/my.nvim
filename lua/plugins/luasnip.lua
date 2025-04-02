@@ -568,7 +568,7 @@ return {
           })),
 
       s("sql", fmta([[
-      query, args, err := <qb>.ToSql()
+      sql, args, err := <qb>.ToSql()
       if err != nil {
         return <ret>
       }
