@@ -10,8 +10,8 @@ map('n', 'gp', function() vim.cmd("b#") end) -- Jump to previous buffer
 -- map('i', 'jk', function() vim.cmd("stopinsert") end)
 
 -- Move selected lines
-map("v", "J", ":m '>+1<CR>gv=gv")
-map("v", "K", ":m '<-2<CR>gv=gv")
+-- map("v", "J", ":m '>+1<CR>gv=gv")
+-- map("v", "K", ":m '<-2<CR>gv=gv")
 
 -- Centered half-page move
 map("n", "<C-d>", "<C-d>zz")
@@ -55,19 +55,19 @@ map("i", "<M-,>", "<><Esc>i")
 --   vim.api.nvim_feedkeys(":%s/" .. word .. "/" .. word, 'n', false)
 -- end)
 
-map("n", "<leader>m", "<cmd>make<cr>")
+map("n", "<C-m>", "<cmd>make<cr>")
 
 vim.cmd("map [[ [m")
 vim.cmd("map ]] ]m")
 vim.cmd("map {{ [{")
 vim.cmd("map }} ]}")
 
-map("n", "//", "/<C-r><C-w><cr>")
-
 vim.cmd [[
 vnoremap <leader>/ y/<C-R>"<CR>N
 nnoremap <leader>R :%s/<C-r><C-w>/<C-r><C-w>/g<left><left>
+nnoremap <leader><C-R> :s/<C-r><C-w>/<C-r><C-w>/g<left><left>
 vnoremap <S-r> "hy:%s/<C-r>h/<C-r>h/g<left><left>
+vnoremap <S-C-r> "hy:s/<C-r>h/<C-r>h/g<left><left>
 ]]
 -- vnoremap <C-r> "hy:s/<C-r>h/<C-r>h/g<left><left>
 
@@ -78,3 +78,6 @@ map('n', '<Leader>cs', switch_case.switch_case,
 
 map('n', '<leader>xe', "<cmd>!explorer.exe .<cr>")
 map('n', '<leader>xf', "<cmd>!open .<cr>")
+
+
+map('i', '<C-l>', "<right>")

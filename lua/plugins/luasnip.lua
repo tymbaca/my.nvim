@@ -662,7 +662,7 @@ return {
         cur = i(0),
       })),
 
-      s("ni", fmta("errors.New(\"not implemented\")<cur>", {
+      s("ni", fmta("panic(\"not implemented\")<cur>", {
         cur = i(0),
       })),
 
@@ -676,6 +676,10 @@ return {
       })),
 
       s("e", fmta([[fmt.Errorf("<cur>: %w", err)]], {
+        cur = i(0),
+      })),
+
+      s("er", fmta([[eris.Wrap(err, "<cur>")]], {
         cur = i(0),
       })),
 

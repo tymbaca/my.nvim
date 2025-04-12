@@ -1,4 +1,4 @@
-set hlsearch
+:set hlsearch
 
 set nocompatible
 filetype plugin on
