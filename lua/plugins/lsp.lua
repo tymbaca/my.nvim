@@ -25,6 +25,15 @@ return {
       -- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+      -- configs.haskell_language_server = {
+      --   default_config = {
+      --     cmd = { 'haskell-language-server-wrapper --lsp' },
+      --     filetypes = { 'haskell', 'lhaskell' },
+      --     root_fir = util.root_pattern('*.cabal'),
+      --     single_file_support = true,
+      --   }
+      -- }
+
       configs.elm_language_server = {
         default_config = {
           cmd = { 'elm-language-server' },
@@ -58,6 +67,8 @@ return {
       }
 
       -- (Optional) Configure lua language server for neovim
+      -- lspconfig.haskell_language_server.setup({})
+      lspconfig.hls.setup({})
       lspconfig.lua_ls.setup({})
       lspconfig.marksman.setup({})
       lspconfig.glsl_analyzer.setup({})

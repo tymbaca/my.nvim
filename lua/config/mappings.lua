@@ -55,7 +55,7 @@ map("i", "<M-,>", "<><Esc>i")
 --   vim.api.nvim_feedkeys(":%s/" .. word .. "/" .. word, 'n', false)
 -- end)
 
-map("n", "<C-m>", "<cmd>make<cr>")
+map("n", "<leader>m", "<cmd>make<cr>")
 
 vim.cmd("map [[ [m")
 vim.cmd("map ]] ]m")

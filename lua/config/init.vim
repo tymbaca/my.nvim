@@ -95,6 +95,13 @@ autocmd FileType gleam setlocal tabstop=2
 autocmd FileType gleam setlocal softtabstop=2
 autocmd FileType gleam setlocal shiftwidth=2
 
+autocmd FileType haskell setlocal tabstop=2
+autocmd FileType haskell setlocal softtabstop=2
+autocmd FileType haskell setlocal shiftwidth=2
+autocmd FileType lhaskell setlocal tabstop=2
+autocmd FileType lhaskell setlocal softtabstop=2
+autocmd FileType lhaskell setlocal shiftwidth=2
+
 autocmd FileType tsv setlocal noexpandtab
 autocmd FileType tsv setlocal tabstop=8
 autocmd FileType tsv setlocal shiftwidth=8

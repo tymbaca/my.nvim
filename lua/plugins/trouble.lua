@@ -1,6 +1,6 @@
 return {
   "folke/trouble.nvim",
-  dependencies = "nvim-tree/nvim-web-devicons",
+  dependencies = { "nvim-tree/nvim-web-devicons", "folke/todo-comments.nvim" },
   config = function()
     require('trouble').setup({
       action_keys = { -- key mappings for actions in the trouble list
@@ -29,9 +29,6 @@ return {
 
     vim.keymap.set('n', '<leader>tr', '<cmd>Trouble diagnostics toggle<cr>',
       { desc = 'Toggle [T][R]ouble workspace diagnostics' })
-
-    -- TODO-plugin setup
-    require("todo-comments").setup()
 
     vim.keymap.set('n', '<leader>to', '<cmd>Trouble todo toggle<cr>', { desc = 'Toggle [T]rouble [T]ODO' })
   end,

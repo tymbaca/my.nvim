@@ -647,6 +647,9 @@ return {
       s("c", fmta("ctx context.Context<cur>", {
         cur = i(0),
       })),
+      s("ac", fmta("ctx *actor.Context<cur>", {
+        cur = i(0),
+      })),
 
       s("s", fmta("type <name> struct {\n\t<cur>\n}", {
         name = i(1),
@@ -666,6 +669,10 @@ return {
         cur = i(0),
       })),
 
+      s("un", fmta("panic(\"unreachable\")<cur>", {
+        cur = i(0),
+      })),
+
       s("js", fmta([[`json:"<cur>"`]], {
         cur = i(0),
       })),
@@ -676,6 +683,9 @@ return {
       })),
 
       s("e", fmta([[fmt.Errorf("<cur>: %w", err)]], {
+        cur = i(0),
+      })),
+      s("ei", fmta([[errors.Is(err, <cur>)]], {
         cur = i(0),
       })),
 

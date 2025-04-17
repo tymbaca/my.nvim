@@ -56,7 +56,6 @@ return {
   },
   { "ntk148v/habamax.nvim", dependencies = { "rktjmp/lush.nvim" } },
 
-  "folke/todo-comments.nvim",
   'sainnhe/everforest',
   "anAcc22/sakura.nvim",
   'AlexvZyl/nordic.nvim',
@@ -107,5 +106,11 @@ return {
       -- vim.cmd("TransparentEnable")
       vim.cmd("TransparentDisable")
     end
-  }
+  },
+
+  -- {
+  --   'mrcjkb/haskell-tools.nvim',
+  --   version = '^5', -- Recommended
+  --   lazy = false,   -- This plugin is already lazy
+  -- },
 }
