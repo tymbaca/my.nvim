@@ -34,6 +34,8 @@ return {
       --   }
       -- }
 
+
+
       configs.elm_language_server = {
         default_config = {
           cmd = { 'elm-language-server' },
@@ -61,6 +63,15 @@ return {
         default_config = {
           cmd = { 'protobuf-language-server' },
           filetypes = { 'proto' },
+          root_fir = util.root_pattern('.git'),
+          single_file_support = true,
+        }
+      }
+
+      configs.typescript_language_server = {
+        default_config = {
+          cmd = { 'typescript-language-server', '--stdio' },
+          filetypes = { 'javascript', 'typescript' },
           root_fir = util.root_pattern('.git'),
           single_file_support = true,
         }
@@ -96,6 +107,8 @@ return {
         },
       })
 
+
+      lspconfig.typescript_language_server.setup {}
 
       -- require('java').setup()
       -- lspconfig.jdtls.setup({})
