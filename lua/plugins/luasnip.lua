@@ -729,6 +729,10 @@ return {
         span = i(1),
         cur = i(0),
       })),
+      s("sps", fmta('ctx, span := tracer.Start(ctx, "<span>")\ndefer span.End()\n<cur>', {
+        span = i(1),
+        cur = i(0),
+      })),
       s("spe", fmta("tracer.RecordError(ctx, err)<cur>", {
         cur = i(0),
       })),
