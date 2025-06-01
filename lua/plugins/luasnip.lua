@@ -647,6 +647,9 @@ return {
       s("c", fmta("ctx context.Context<cur>", {
         cur = i(0),
       })),
+      s("cb", fmta("ctx := context.Background<cur>", {
+        cur = i(0),
+      })),
       s("ac", fmta("ctx *actor.Context<cur>", {
         cur = i(0),
       })),
