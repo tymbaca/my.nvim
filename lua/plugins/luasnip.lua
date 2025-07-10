@@ -300,12 +300,14 @@ return {
       s("**", fmta("/*\n<cur>*/", {
         cur = i(0)
       })),
-      s("ie", fmta("if err != nil {\n\treturn <ret>\n}\n<final>", {
-        ret = i(1),
-        final = i(0)
+      s("ie", fmta("if <err> != nil {\n\treturn <ret>\n}\n<final>", {
+        err = i(1),
+        ret = i(2),
+        final = i(0),
       })),
-      s("en", fmta("err != nil <final>", {
-        final = i(0)
+      s("en", fmta("<err> != nil <final>", {
+        err = i(1),
+        final = i(0),
       })),
       s("p", fmta("package <name><cur>", {
         name = f(get_current_folder_name, {}, {}),
@@ -647,7 +649,7 @@ return {
       s("c", fmta("ctx context.Context<cur>", {
         cur = i(0),
       })),
-      s("cb", fmta("ctx := context.Background<cur>", {
+      s("cb", fmta("ctx := context.Background()<cur>", {
         cur = i(0),
       })),
       s("ac", fmta("ctx *actor.Context<cur>", {

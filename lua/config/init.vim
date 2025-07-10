@@ -38,6 +38,7 @@ nmap пр gh
 vmap пд gl
 vmap пр gh
 
+set textwidth=0
 
 autocmd FileType python setlocal tabstop=4
 autocmd FileType python setlocal softtabstop=4
