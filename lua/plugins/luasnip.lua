@@ -365,6 +365,10 @@ return {
       s("tmp", fmta("context.allocator = context.temp_allocator\ndefer free_all()<cur>", {
         cur = i(0),
       })),
+      s("io", fmta("if !ok {\n\treturn <ret>\n}\n<final>", {
+        ret = i(1),
+        final = i(0)
+      })),
     })
 
     ------------------------------------ GO ---------------------------------------

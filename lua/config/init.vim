@@ -39,6 +39,7 @@ vmap пд gl
 vmap пр gh
 
 set textwidth=0
+set wrapmargin=0
 
 autocmd FileType python setlocal tabstop=4
 autocmd FileType python setlocal softtabstop=4
@@ -107,4 +108,4 @@ autocmd FileType tsv setlocal noexpandtab
 autocmd FileType tsv setlocal tabstop=8
 autocmd FileType tsv setlocal shiftwidth=8
 
-" autocmd FileType odin setlocal wrap=false
+autocmd FileType odin setlocal textwidth=0
