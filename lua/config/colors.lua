@@ -8,7 +8,7 @@
 -- vim.cmd.colorscheme('zenburned')
 -- vim.cmd.colorscheme('neobones')
 -- vim.cmd.colorscheme('zenbones')
-vim.cmd.colorscheme('nordic')
+-- vim.cmd.colorscheme('nordic')
 -- vim.cmd.colorscheme('nord')
 -- vim.cmd.colorscheme('everforest')
 -- vim.cmd.colorscheme('catppuccin-macchiato')
