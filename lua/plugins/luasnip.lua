@@ -251,6 +251,9 @@ return {
       })),
     })
 
+    ----------------------------------- JSON --------------------------------------
+    -------------------------------------------------------------------------------
+
     ls.add_snippets("json", {
       s("ols", fmta([[{
 	"$schema": "https://raw.githubusercontent.com/DanielGavin/ols/master/misc/ols.schema.json",
