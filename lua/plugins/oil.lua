@@ -9,7 +9,7 @@ return {
       keymaps = {
         ["g?"] = "actions.show_help",
         ["<CR>"] = "actions.select",
-        ["<C-l>"] = "actions.select",
+        ["L"] = "actions.select",
         ["sv"] = { "actions.select", opts = { vertical = true, split = "belowright" }, desc = "Open the entry in a vertical split" },
         ["ss"] = { "actions.select", opts = { horizontal = true }, desc = "Open the entry in a horizontal split" },
         ["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" },
@@ -17,7 +17,7 @@ return {
         ["<C-c>"] = "actions.close",
         ["<C-R>"] = "actions.refresh",
         ["-"] = "actions.parent",
-        ["<C-h>"] = "actions.parent",
+        ["H"] = "actions.parent",
         ["_"] = "actions.open_cwd",
         ["`"] = "actions.cd",
         ["~"] = { "actions.cd", opts = { scope = "tab" }, desc = ":tcd to the current oil directory", mode = "n" },
