@@ -25,6 +25,7 @@ return {
   --     { "<leader>E", "<cmd>NvimTreeFindFile<cr>" },
   --   },
   -- }
+
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
@@ -38,6 +39,7 @@ return {
       { "<leader>e", "<cmd>Neotree toggle<cr>" },
       { "<leader>O", "<cmd>Neotree document_symbols<cr>" },
     },
+
     init = function()
       -- disable netrw at the very start of your init.lua
       vim.g.loaded_netrw = 1
@@ -55,6 +57,7 @@ return {
         end
       })
     end,
+
     ---@module 'neo-tree'
     ---@type neotree.Config
     opts = {
@@ -75,15 +78,5 @@ return {
         last_modified = { enabled = false },
       },
     },
-  },
-  {
-    "antosha417/nvim-lsp-file-operations",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-neo-tree/neo-tree.nvim", -- makes sure that this loads after Neo-tree.
-    },
-    config = function()
-      require("lsp-file-operations").setup()
-    end,
   },
 }
