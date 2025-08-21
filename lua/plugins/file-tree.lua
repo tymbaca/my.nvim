@@ -41,21 +41,8 @@ return {
     },
 
     init = function()
-      -- disable netrw at the very start of your init.lua
       vim.g.loaded_netrw = 1
       vim.g.loaded_netrwPlugin = 1
-      vim.api.nvim_create_autocmd('BufEnter', {
-        -- make a group to be able to delete it later
-        group = vim.api.nvim_create_augroup('NeoTreeInit', { clear = true }),
-        callback = function()
-          local f = vim.fn.expand('%:p')
-          if vim.fn.isdirectory(f) ~= 0 then
-            vim.cmd('Neotree current dir=' .. f)
-            -- neo-tree is loaded now, delete the init autocmd
-            vim.api.nvim_clear_autocmds { group = 'NeoTreeInit' }
-          end
-        end
-      })
     end,
 
     ---@module 'neo-tree'
@@ -72,11 +59,15 @@ return {
           --               -- the current file is changed while the tree is open.
           leave_dirs_open = true, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
         },
-        hijack_netrw_behavior = "disabled",
+        hijack_netrw_behavior = "open_default",
       },
       default_component_configs = {
         last_modified = { enabled = false },
       },
     },
   },
+  -- {
+  --   "mrbjarksen/neo-tree-diagnostics.nvim",
+  --   dependencies = { "nvim-neo-tree/neo-tree.nvim" },
+  -- }
 }
