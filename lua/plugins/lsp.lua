@@ -59,14 +59,16 @@ return {
         }
       }
 
-      configs.protobuf_language_server = {
-        default_config = {
-          cmd = { 'protobuf-language-server' },
-          filetypes = { 'proto' },
-          root_fir = util.root_pattern('.git'),
-          single_file_support = true,
-        }
-      }
+
+      -- TODO: remove?
+      -- configs.protobuf_language_server = {
+      --   default_config = {
+      --     cmd = { 'protobuf-language-server' },
+      --     filetypes = { 'proto' },
+      --     root_fir = util.root_pattern('.git'),
+      --     single_file_support = true,
+      --   }
+      -- }
 
       configs.typescript_language_server = {
         default_config = {
@@ -174,7 +176,7 @@ return {
       })
 
       lspconfig.elm_language_server.setup({})
-      lspconfig.protobuf_language_server.setup({})
+      lspconfig.protols.setup({})
       -- lspconfig.yamlls.setup({})
 
       vim.keymap.set('n', '<leader>dh', vim.diagnostic.open_float, { desc = '[D]iagnotics [H]over' })

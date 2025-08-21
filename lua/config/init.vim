@@ -61,9 +61,9 @@ autocmd FileType templ setlocal tabstop=8
 autocmd FileType templ setlocal softtabstop=8
 autocmd FileType templ setlocal shiftwidth=8
 
-autocmd FileType proto setlocal tabstop=4
-autocmd FileType proto setlocal softtabstop=4
-autocmd FileType proto setlocal shiftwidth=4
+autocmd FileType proto setlocal tabstop=2
+autocmd FileType proto setlocal softtabstop=2
+autocmd FileType proto setlocal shiftwidth=2
 
 autocmd FileType html setlocal tabstop=2
 autocmd FileType html setlocal softtabstop=2

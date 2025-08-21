@@ -55,8 +55,6 @@ map("i", "<M-,>", "<><Esc>i")
 --   vim.api.nvim_feedkeys(":%s/" .. word .. "/" .. word, 'n', false)
 -- end)
 
-map("n", "<leader>m", "<cmd>make<cr>")
-
 vim.cmd("map [[ [m")
 vim.cmd("map ]] ]m")
 vim.cmd("map {{ [{")
@@ -73,11 +71,12 @@ vnoremap <S-C-r> "hy:s/<C-r>h/<C-r>h/g<left><left>
 
 local switch_case = require 'config.switch-case'
 
-map('n', '<Leader>cs', switch_case.switch_case,
-  { noremap = true, silent = true })
+map('n', '<Leader>cs', switch_case.switch_case, { noremap = true, silent = true })
 
 map('n', '<leader>xe', "<cmd>!explorer.exe .<cr>")
 map('n', '<leader>xf', "<cmd>!open .<cr>")
 
-
 map('i', '<C-l>', "<right>")
+-- map('i', '<C-h>', "<left>") -- WARN: conflicts with signature help
+-- map('i', '<C-j>', "<down>")
+-- map('i', '<C-k>', "<up>")
