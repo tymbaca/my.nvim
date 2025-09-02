@@ -40,6 +40,7 @@ vmap пр gh
 
 set textwidth=0
 set wrapmargin=0
+set virtualedit=all
 
 autocmd FileType python setlocal tabstop=4
 autocmd FileType python setlocal softtabstop=4

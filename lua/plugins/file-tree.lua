@@ -37,6 +37,8 @@ return {
     lazy = false,                    -- neo-tree will lazily load itself
     keys = {
       { "<leader>e", "<cmd>Neotree toggle<cr>" },
+      { "<leader>E", "<cmd>Neotree reveal<cr>" },
+      { "<leader>D", "<cmd>Neotree diagnostics<cr>" },
       { "<leader>O", "<cmd>Neotree document_symbols<cr>" },
     },
 
@@ -48,7 +50,8 @@ return {
     ---@module 'neo-tree'
     ---@type neotree.Config
     opts = {
-      sources = { "filesystem", "buffers", "git_status", "document_symbols", },
+      enable_diagnostics = false,
+      sources = { "filesystem", "buffers", "git_status", "document_symbols", "diagnostics" },
       window = {
         width = "30%",
         position = "left",
@@ -63,11 +66,12 @@ return {
       },
       default_component_configs = {
         last_modified = { enabled = false },
+        modified
       },
     },
   },
-  -- {
-  --   "mrbjarksen/neo-tree-diagnostics.nvim",
-  --   dependencies = { "nvim-neo-tree/neo-tree.nvim" },
-  -- }
+  {
+    "mrbjarksen/neo-tree-diagnostics.nvim",
+    dependencies = { "nvim-neo-tree/neo-tree.nvim" },
+  }
 }
