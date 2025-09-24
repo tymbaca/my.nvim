@@ -29,6 +29,6 @@ return {
     })
   end,
   keys = {
-    { "<leader>o", "<cmd>Oil<cr>" },
+    { "<leader>O", "<cmd>Oil<cr>" },
   },
 }

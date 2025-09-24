@@ -39,7 +39,7 @@ return {
       { "<leader>e", "<cmd>Neotree toggle<cr>" },
       { "<leader>E", "<cmd>Neotree reveal<cr>" },
       { "<leader>D", "<cmd>Neotree diagnostics<cr>" },
-      { "<leader>O", "<cmd>Neotree document_symbols<cr>" },
+      { "<leader>o", "<cmd>Neotree document_symbols<cr>" },
     },
 
     init = function()
@@ -63,10 +63,14 @@ return {
           leave_dirs_open = true, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
         },
         hijack_netrw_behavior = "open_default",
+        window = {
+          mappings = {
+            ["/"] = "noop",
+          },
+        }
       },
       default_component_configs = {
         last_modified = { enabled = false },
-        modified
       },
     },
   },

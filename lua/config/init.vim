@@ -41,6 +41,7 @@ vmap пр gh
 set textwidth=0
 set wrapmargin=0
 set virtualedit=all
+let g:omni_sql_no_default_maps = 1
 
 autocmd FileType python setlocal tabstop=4
 autocmd FileType python setlocal softtabstop=4

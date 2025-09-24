@@ -303,7 +303,7 @@ return {
       s("**", fmta("/*\n<cur>*/", {
         cur = i(0)
       })),
-      s("ie", fmta("if <err> != nil {\n\treturn <ret>\n}\n<final>", {
+      s("ie", fmta("if <err>_err != nil {\n\treturn <ret>\n}\n<final>", {
         err = i(1),
         ret = i(2),
         final = i(0),
@@ -357,6 +357,9 @@ return {
       })),
       s("al", fmta('allocator := context.allocator<cur>', {
         cur = i(0)
+      })),
+      s("ca", fmta("context.allocator<cur>", {
+        cur = i(0),
       })),
       s("t", fmta([[@(test)
 <fn>_test :: proc(t: ^testing.T) {
@@ -694,7 +697,13 @@ return {
         cur = i(0),
       })),
 
-      s("e", fmta([[fmt.Errorf("<cur>: %w", err)]], {
+      s("e", fmta([[errors.WithMessage(err, "<cur>")]], {
+        cur = i(0),
+      })),
+      s("ef", fmta([[errors.WithMessagef(err, "<cur>")]], {
+        cur = i(0),
+      })),
+      s("ee", fmta([[fmt.Errorf("<cur>: %w", err)]], {
         cur = i(0),
       })),
       s("ei", fmta([[errors.Is(err, <cur>)]], {
