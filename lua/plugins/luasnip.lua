@@ -322,6 +322,9 @@ return {
       s("ic", fmta('import "core:<cur>"', {
         cur = i(0)
       })),
+      s("is", fmta('import "src:<cur>"', {
+        cur = i(0)
+      })),
       s("iv", fmta('import "vendor:<cur>"', {
         cur = i(0)
       })),
@@ -334,9 +337,7 @@ return {
       s("rl", fmta('import rl "vendor:raylib"<cur>', {
         cur = i(0)
       })),
-      s("pr", fmta('<fn> :: proc(<args>) <cur>', {
-        fn = i(1, "fn"),
-        args = i(2),
+      s("pr", fmta('@(private)<cur>', {
         cur = i(0)
       })),
       s("ff", fmta('<fn> :: proc(<args>) <cur>', {
@@ -374,6 +375,12 @@ return {
       s("io", fmta("if !ok {\n\treturn <ret>\n}\n<final>", {
         ret = i(1),
         final = i(0)
+      })),
+      s("d", fmta("dynamic<cur>", {
+        cur = i(0)
+      })),
+      s("orr", fmta("or_return<cur>", {
+        cur = i(0)
       })),
     })
 

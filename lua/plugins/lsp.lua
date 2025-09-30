@@ -167,6 +167,7 @@ return {
         capabilities = capabilities,
         settings = {
           gopls = {
+            ["local"] = "gitlab-internal.wildberries.ru",
             staticcheck = true,
             gofumpt = true,
             -- usePlaceholders = true,
