@@ -10,8 +10,8 @@ return {
     -- require("lspconfig").gopls.setup { on_attach = require("lsp-format").on_attach }
 
 
-    local function golines() -- TODO: move to go.lua
-      if string.find(vim.bo.filetype, "_test") then
+    local function golines()                        -- TODO: move to go.lua
+      if string.find(vim.bo.filetype, "_test") then -- FIX: "_test" is in the file path, not it filetype
         return
       end
 
