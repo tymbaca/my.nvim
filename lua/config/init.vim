@@ -111,3 +111,5 @@ autocmd FileType tsv setlocal tabstop=8
 autocmd FileType tsv setlocal shiftwidth=8
 
 autocmd FileType odin setlocal textwidth=0
+
+autocmd BufRead,BufNewFile *.go.tmpl set filetype=gotmpl

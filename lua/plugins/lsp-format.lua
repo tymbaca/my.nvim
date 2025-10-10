@@ -38,7 +38,6 @@ return {
         -- golines()
         goimports()
         vim.lsp.buf.format()
-        -- vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
       end
     })
 
@@ -82,6 +81,10 @@ return {
 
     vim.keymap.set('n', '<leader>F', function()
       vim.lsp.buf.format({ async = true })
+    end, { desc = '[D]iagnotics [H]over' })
+
+    vim.keymap.set('n', '<leader>GF', function()
+      vim.lsp.buf.code_action({ context = { only = { 'refactor.rewrite.fillStruct' } }, apply = true })
     end, { desc = '[D]iagnotics [H]over' })
   end
 }

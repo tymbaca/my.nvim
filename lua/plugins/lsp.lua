@@ -70,14 +70,14 @@ return {
       --   }
       -- }
 
-      configs.typescript_language_server = {
-        default_config = {
-          cmd = { 'typescript-language-server', '--stdio' },
-          filetypes = { 'javascript', 'typescript' },
-          root_fir = util.root_pattern('.git'),
-          single_file_support = true,
-        }
-      }
+      -- configs.typescript_language_server = {
+      --   default_config = {
+      --     cmd = { 'typescript-language-server', '--stdio' },
+      --     filetypes = { 'javascript', 'typescript' },
+      --     root_fir = util.root_pattern('.git'),
+      --     single_file_support = true,
+      --   }
+      -- }
 
       -- (Optional) Configure lua language server for neovim
       -- lspconfig.haskell_language_server.setup({})
@@ -110,7 +110,7 @@ return {
       })
 
 
-      lspconfig.typescript_language_server.setup {}
+      -- lspconfig.typescript_language_server.setup {}
 
       -- require('java').setup()
       -- lspconfig.jdtls.setup({})
@@ -165,6 +165,7 @@ return {
 
       lspconfig.gopls.setup({
         capabilities = capabilities,
+        filetypes = { "go", "gomod", "gosum", "template" },
         settings = {
           gopls = {
             ["local"] = "gitlab-internal.wildberries.ru",
