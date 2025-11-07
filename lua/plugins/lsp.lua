@@ -34,8 +34,6 @@ return {
       --   }
       -- }
 
-
-
       configs.elm_language_server = {
         default_config = {
           cmd = { 'elm-language-server' },
@@ -173,6 +171,9 @@ return {
             gofumpt = true,
             -- usePlaceholders = true,
             completeFunctionCalls = true,
+            hints = {
+              ignoredError = true,
+            },
           },
         },
       })
@@ -206,9 +207,12 @@ return {
         { desc = "Code [A]ctions", noremap = true, silent = true }
       )
 
-      vim.keymap.set('n', '<leader>LR', "<cmd>LspRestart<cr>", { desc = "[L]SP [R]estart" })
-      vim.keymap.set('n', '<leader>LS', "<cmd>LspStart<cr>", { desc = "[L]SP [S]tart" })
-      vim.keymap.set('n', '<leader>LP', "<cmd>LspStop<cr>", { desc = "[L]SP Sto[p]" })
+      vim.keymap.set('n', '<leader>lr', "<cmd>LspRestart<cr>", { desc = "[L]SP [R]estart" })
+      vim.keymap.set('n', '<leader>ls', "<cmd>LspStart<cr>", { desc = "[L]SP [S]tart" })
+      vim.keymap.set('n', '<leader>lp', "<cmd>LspStop<cr>", { desc = "[L]SP Sto[p]" })
+      vim.keymap.set('n', '<leader>li', function()
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+      end, { desc = "[L]SP [i]nlay hints" })
     end
   },
 }

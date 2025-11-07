@@ -40,6 +40,9 @@ return {
           vim.keymap.set({ "n" }, "<leader>st", "<cmd>silent StrudelToggle<cr>")
           vim.keymap.set({ "n" }, "<leader>su", "<cmd>silent StrudelUpdate<cr>")
           vim.keymap.set({ "n" }, "<leader>sl", "<cmd>silent StrudelLaunch<cr>")
+
+          vim.keymap.set({ "n", "i" }, "<C-CR>", "<cmd>silent StrudelUpdate<cr>")
+          vim.keymap.set({ "n", "i" }, "<C-.>", "<cmd>silent StrudelStop<cr>")
         end
       })
     end,
