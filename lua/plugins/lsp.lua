@@ -169,10 +169,17 @@ return {
             ["local"] = "gitlab-internal.wildberries.ru",
             staticcheck = true,
             gofumpt = true,
-            -- usePlaceholders = true,
+            usePlaceholders = true,
             completeFunctionCalls = true,
+            templateExtensions = { "go.tmpl" },
+            experimentalPostfixCompletions = true,
             hints = {
               ignoredError = true,
+              parameterNames = true,
+            },
+            codelenses = {
+              generate = true,
+              test = true,
             },
           },
         },
