@@ -17,10 +17,9 @@ return {
       "rachartier/tiny-code-action.nvim",
     },
     config = function()
-      local lspconfig = require('lspconfig')
       local telescope_builtin = require('telescope.builtin')
-      local configs = require('lspconfig.configs')
-      local util = require('lspconfig.util')
+      -- local configs = require('vim.lsp.config.configs')
+      -- local util = require('vim.lsp.config.util')
 
       -- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -34,28 +33,28 @@ return {
       --   }
       -- }
 
-      configs.elm_language_server = {
-        default_config = {
-          cmd = { 'elm-language-server' },
-          -- TODO(ashkan) if we comment this out, it will allow elmls to operate on elm.json. It seems like it could do that, but no other editor allows it right now.
-          filetypes = { 'elm' },
-          root_dir = function(fname)
-            local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
-            if filetype == 'elm' or (filetype == 'json' and fname:match 'elm%.json$') then
-              return util.root_pattern('elm.json')(fname)
-            end
-          end,
-          init_options = {
-            elmReviewDiagnostics = 'off', -- 'off' | 'warning' | 'error'
-            skipInstallPackageConfirmation = false,
-            disableElmLSDiagnostics = false,
-            onlyUpdateDiagnosticsOnSave = false,
-          },
-          capabilities = {
-            offsetEncoding = { 'utf-8', 'utf-16' },
-          },
-        }
-      }
+      -- configs.elm_language_server = {
+      --   default_config = {
+      --     cmd = { 'elm-language-server' },
+      --     -- TODO(ashkan) if we comment this out, it will allow elmls to operate on elm.json. It seems like it could do that, but no other editor allows it right now.
+      --     filetypes = { 'elm' },
+      --     root_dir = function(fname)
+      --       local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
+      --       if filetype == 'elm' or (filetype == 'json' and fname:match 'elm%.json$') then
+      --         return util.root_pattern('elm.json')(fname)
+      --       end
+      --     end,
+      --     init_options = {
+      --       elmReviewDiagnostics = 'off', -- 'off' | 'warning' | 'error'
+      --       skipInstallPackageConfirmation = false,
+      --       disableElmLSDiagnostics = false,
+      --       onlyUpdateDiagnosticsOnSave = false,
+      --     },
+      --     capabilities = {
+      --       offsetEncoding = { 'utf-8', 'utf-16' },
+      --     },
+      --   }
+      -- }
 
 
       -- TODO: remove?
@@ -78,12 +77,12 @@ return {
       -- }
 
       -- (Optional) Configure lua language server for neovim
-      -- lspconfig.haskell_language_server.setup({})
-      lspconfig.hls.setup({})
-      lspconfig.lua_ls.setup({})
-      lspconfig.marksman.setup({})
-      lspconfig.glsl_analyzer.setup({})
-      lspconfig.tinymist.setup({
+      -- vim.lsp.config.haskell_language_server.setup({})
+      vim.lsp.config("hls", {})
+      vim.lsp.config("lua_ls", {})
+      vim.lsp.config("marksman", {})
+      vim.lsp.config("glsl_analyzer", {})
+      vim.lsp.config("tinymist", {
         -- offset_encoding = "utf-8",
         settings = {
           formatterMode = "typstyle",
@@ -92,7 +91,7 @@ return {
         }
       })
 
-      lspconfig.ols.setup({
+      vim.lsp.config("ols", {
         init_options = {
           checker_args = "-strict-style",
           collections = {
@@ -108,15 +107,15 @@ return {
       })
 
 
-      -- lspconfig.typescript_language_server.setup {}
+      -- vim.lsp.config.typescript_language_server.setup {}
 
       -- require('java').setup()
-      -- lspconfig.jdtls.setup({})
+      -- vim.lsp.config.jdtls.setup({})
 
       -- don't show parse errors in a separate window
       vim.g.zig_fmt_parse_errors = 0
-      lspconfig.zls.setup {
-        -- Server-specific settings. See `:help lspconfig-setup`
+      vim.lsp.config("zls", {
+        -- Server-specific settings. See `:help vim.lsp.config-setup`
 
         -- There are two ways to set config options:
         --   - edit your `zls.json` that applies to any editor that uses ZLS
@@ -133,26 +132,25 @@ return {
             enable_build_on_save = true,
           }
         }
-      }
+      })
 
-      lspconfig.gleam.setup({})
-      lspconfig.elp.setup({})
-      -- lspconfig.elixirls.setup({
+      vim.lsp.config("gleam", {})
+      vim.lsp.config("elp", {})
+      -- vim.lsp.config.elixirls.setup({
       --   cmd = { os.getenv("HOME") .. "/.local/share/nvim/mason/packages/elixir-ls/language_server.sh" },
       -- })
-      lspconfig.lexical.setup({
+      vim.lsp.config("lexical", {
         cmd = { os.getenv("HOME") .. "/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh" },
       })
-      lspconfig.ocamllsp.setup({
+      vim.lsp.config("ocamllsp", {
         cmd = { "ocamllsp" },
         filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
-        root_dir = lspconfig.util.root_pattern("*.opam", "esy.json", "package.json", ".git", "dune-project",
-          "dune-workspace"),
+        root_markers = { "*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace" },
       })
 
-      lspconfig.rust_analyzer.setup({})
+      vim.lsp.config("rust_analyzer", {})
 
-      lspconfig.ccls.setup({
+      vim.lsp.config("ccls", {
         cmd = { "ccls" },
         init_options = {
           cache = {
@@ -161,7 +159,7 @@ return {
         }
       })
 
-      lspconfig.gopls.setup({
+      vim.lsp.config("gopls", {
         capabilities = capabilities,
         filetypes = { "go", "gomod", "gosum", "template" },
         settings = {
@@ -169,7 +167,7 @@ return {
             ["local"] = "gitlab-internal.wildberries.ru",
             staticcheck = true,
             gofumpt = true,
-            usePlaceholders = true,
+            -- usePlaceholders = true,
             completeFunctionCalls = true,
             templateExtensions = { "go.tmpl" },
             experimentalPostfixCompletions = true,
@@ -185,9 +183,9 @@ return {
         },
       })
 
-      lspconfig.elm_language_server.setup({})
-      lspconfig.protols.setup({})
-      -- lspconfig.yamlls.setup({})
+      vim.lsp.config("elm_language_server", {})
+      vim.lsp.config("protols", {})
+      -- vim.lsp.config.yamlls.setup({})
 
       vim.keymap.set('n', '<leader>dh', vim.diagnostic.open_float, { desc = '[D]iagnotics [H]over' })
       vim.keymap.set('n', '<leader>de', vim.diagnostic.enable, { desc = '[D]iagnotics [E]nable' })
