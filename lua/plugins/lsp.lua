@@ -185,9 +185,17 @@ return {
 
       vim.lsp.config("elm_language_server", {})
       vim.lsp.config("protols", {})
-      -- vim.lsp.config.yamlls.setup({})
-      
-      vim.lsp.enable({"gopls", "protols", "ols", "lua_ls"})
+      vim.lsp.config("yamlls", {})
+      vim.lsp.config("svelte", {})
+
+      vim.lsp.enable({
+        "gopls",
+        "protols",
+        "ols",
+        "lua_ls",
+        "svelte",
+        "yamlls",
+      })
 
       vim.keymap.set('n', '<leader>dh', vim.diagnostic.open_float, { desc = '[D]iagnotics [H]over' })
       vim.keymap.set('n', '<leader>de', vim.diagnostic.enable, { desc = '[D]iagnotics [E]nable' })

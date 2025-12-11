@@ -75,6 +75,10 @@ autocmd FileType css setlocal tabstop=2
 autocmd FileType css setlocal softtabstop=2
 autocmd FileType css setlocal shiftwidth=2
 
+autocmd FileType svelte setlocal tabstop=2
+autocmd FileType svelte setlocal softtabstop=2
+autocmd FileType svelte setlocal shiftwidth=2
+
 autocmd FileType typst setlocal tabstop=2
 autocmd FileType typst setlocal softtabstop=2
 autocmd FileType typst setlocal shiftwidth=2

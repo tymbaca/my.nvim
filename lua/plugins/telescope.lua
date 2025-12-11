@@ -8,7 +8,7 @@ return {
     { "<leader>f",        "<cmd>Telescope find_files<cr>" },
     { "<leader>T",        "<cmd>Telescope<cr>" },
     { "<leader>sg",       "<cmd>Telescope live_grep<cr>" },
-    { "gf",               "<cmd>Telescope grep_string<cr>" },
+    { "gw",               "<cmd>Telescope grep_string<cr>" },
     { "<leader>m",        "<cmd>Telescope marks<cr>" },
     -- { "<leader>sc",       function() require('telescope.builtin').colorscheme({ enable_preview = true }) end, desc = "[S]earch [C]olorschemes" },
     { '<leader><leader>', "<cmd>Telescope oldfiles<cr>" },

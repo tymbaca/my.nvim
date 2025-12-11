@@ -80,3 +80,5 @@ map('i', '<C-l>', "<right>")
 -- map('i', '<C-h>', "<left>") -- WARN: conflicts with signature help
 -- map('i', '<C-j>', "<down>")
 -- map('i', '<C-k>', "<up>")
+
+map('n', 'gf', 'gF')
