@@ -1,13 +1,17 @@
 return {
   "xiyaowong/transparent.nvim",
+  -- dependencies = "typicode/bg.nvim",
+  -- priority = 800,
+  -- lazy = true,
+  keys = {
+    { "<leader>UT", "<cmd>TransparentToggle<cr>" },
+  },
   config = function()
     local transparent = require("transparent")
     transparent.setup {}
 
-    transparent.clear_prefix('NvimTree')
-    vim.keymap.set("n", "<leader>Ut", "<cmd>TransparentToggle<cr>")
-
-    vim.cmd("TransparentEnable")
-    -- vim.cmd("TransparentDisable")
+    vim.cmd("TransparentDisable")
+    -- transparent.clear_prefix('NvimTree')
+    -- vim.keymap.set("n", "<leader>UT", "<cmd>TransparentToggle<cr>")
   end
 }

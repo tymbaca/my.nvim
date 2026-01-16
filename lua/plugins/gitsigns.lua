@@ -4,7 +4,10 @@ return {
     { "<leader>gd", "<cmd>Gitsigns diffthis<cr>" },
     { "<leader>gs", "<cmd>Gitsigns toggle_signs<cr>" },
   },
+  lazy = false,
   config = function()
-    require("gitsigns").setup {}
+    local gitsigns = require("gitsigns")
+    gitsigns.setup {}
+    gitsigns.toggle_signs()
   end,
 }

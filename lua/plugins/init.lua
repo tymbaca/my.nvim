@@ -101,5 +101,11 @@ return {
   --   lazy = false,   -- This plugin is already lazy
   -- },
 
-  { "typicode/bg.nvim",     lazy = false }
+  {
+    "typicode/bg.nvim",
+    lazy = false,
+    -- dependencies = "xiyaowong/transparent.nvim",
+    -- config = function()
+    -- end,
+  },
 }

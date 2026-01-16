@@ -11,3 +11,10 @@ local filter_notify = function(text, level, opts)
 end
 vim.notify = filter_notify
 vim.deprecate = function() end
+
+--
+-- require("transparent")
+-- vim.cmd("!sleep 1")
+-- vim.cmd("TransparentDisable")
+-- vim.cmd("!sleep 1")
+-- vim.cmd("TransparentEnable")
