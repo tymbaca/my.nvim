@@ -82,3 +82,4 @@ map('i', '<C-l>', "<right>")
 -- map('i', '<C-k>', "<up>")
 
 map('n', 'gf', 'gF')
+map('n', "<leader>mk", "<cmd>make<cr>")

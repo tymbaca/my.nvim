@@ -206,6 +206,7 @@ return {
       end, { desc = "[R]ename the symbol" })
 
       vim.keymap.set('n', 'gd', telescope_builtin.lsp_definitions, { desc = "Go to definition" })
+      vim.keymap.set('n', '<C-LeftMouse>', telescope_builtin.lsp_definitions, { desc = "Go to definition" })
       vim.keymap.set('n', 'gT', telescope_builtin.lsp_type_definitions, { desc = "Go to type definition" })
       vim.keymap.set('n', 'gr', telescope_builtin.lsp_references, { desc = "List all references" })
       vim.keymap.set('n', 'gi', telescope_builtin.lsp_implementations, { desc = "Go to implementation" })

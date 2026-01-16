@@ -382,6 +382,9 @@ return {
       s("orr", fmta("or_return<cur>", {
         cur = i(0)
       })),
+      s("ni", fmta("panic(\"not implemented\")<cur>", {
+        cur = i(0),
+      })),
     })
 
     ------------------------------------ GO ---------------------------------------
