@@ -82,4 +82,8 @@ map('i', '<C-l>', "<right>")
 -- map('i', '<C-k>', "<up>")
 
 map('n', 'gf', 'gF')
+map('n', "gy", function()
+  vim.cmd([[let @+=expand("%") . ":" . line(".")]])
+  vim.cmd([[let @"=expand("%") . ":" . line(".")]])
+end)
 map('n', "<leader>mk", "<cmd>make<cr>")

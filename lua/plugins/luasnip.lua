@@ -356,7 +356,13 @@ return {
         name = i(1),
         cur = i(0)
       })),
-      s("al", fmta('allocator := context.allocator<cur>', {
+      s("al", fmta('allocator<cur>', {
+        cur = i(0)
+      })),
+      s("alc", fmta('allocator := context.allocator<cur>', {
+        cur = i(0)
+      })),
+      s("all", fmta('allocator = allocator<cur>', {
         cur = i(0)
       })),
       s("ca", fmta("context.allocator<cur>", {
