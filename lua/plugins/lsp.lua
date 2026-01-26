@@ -164,7 +164,7 @@ return {
         filetypes = { "go", "gomod", "gosum", "template" },
         settings = {
           gopls = {
-            ["local"] = "gitlab-internal.wildberries.ru",
+            ["local"] = "gitlab.wildberries.ru",
             staticcheck = true,
             gofumpt = true,
             -- usePlaceholders = true,

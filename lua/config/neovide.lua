@@ -1,24 +1,26 @@
 -- Neovide
 -- vim.g.neovide_cursor_vfx_mode = "railgun"
-vim.g.neovide_fullscreen = true
+if vim.g.neovide then
+  vim.opt.linespace = 5
+  vim.g.neovide_fullscreen = true
 
-vim.g.neovide_scale_factor = 1.0
+  vim.g.neovide_scale_factor = 1.0
 
-local change_scale_factor = function(delta)
-  vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
-end
-vim.keymap.set("n", "<C-=>", function()
-  change_scale_factor(1.25)
-end)
-vim.keymap.set("n", "<C-->", function()
-  change_scale_factor(1 / 1.25)
-end)
+  local change_scale_factor = function(delta)
+    vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
+  end
+  vim.keymap.set("n", "<C-=>", function()
+    change_scale_factor(1.25)
+  end)
+  vim.keymap.set("n", "<C-->", function()
+    change_scale_factor(1 / 1.25)
+  end)
 
-vim.cmd [[
+  vim.cmd [[
 " Allow copy paste in neovide
 let g:neovide_input_use_logo = 1
 map <D-v> "+p<CR>
 map! <D-v> <C-R>+
 tmap <D-v> <C-R>+
-vmap <D-c> "+y<CR>
-]]
+vmap <D-c> "+y<CR> ]]
+end

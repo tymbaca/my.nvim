@@ -27,7 +27,7 @@ return {
       end
 
       local fileName = vim.api.nvim_buf_get_name(0)
-      vim.cmd(":silent !goimports -w -local=\"gitlab-internal.wildberries.ru\" " .. fileName)
+      vim.cmd(":silent !goimports -w -local=\"gitlab.wildberries.ru\" " .. fileName)
     end
     vim.keymap.set("n", "<leader>GI", goimports)
 
