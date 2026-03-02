@@ -41,6 +41,14 @@ return {
       end
     })
 
+    -- format on save
+    vim.api.nvim_create_autocmd('BufWritePost', {
+      pattern = '*.zig',
+      callback = function()
+        vim.lsp.buf.format()
+      end
+    })
+
     vim.api.nvim_create_autocmd('BufWritePre', {
       pattern = { "*.json", "*.lua", "*.rs", "*.ml" }, -- "*.odin", "*.gleam"
       -- pattern = { "*.json", "*.lua", "*.rs" },

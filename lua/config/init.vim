@@ -47,6 +47,10 @@ autocmd FileType python setlocal tabstop=4
 autocmd FileType python setlocal softtabstop=4
 autocmd FileType python setlocal shiftwidth=4
 
+autocmd FileType zig setlocal tabstop=4
+autocmd FileType zig setlocal softtabstop=4
+autocmd FileType zig setlocal shiftwidth=4
+
 autocmd FileType typescriptreact setlocal tabstop=2
 autocmd FileType typescriptreact setlocal softtabstop=2
 autocmd FileType typescriptreact setlocal shiftwidth=2
@@ -59,6 +63,14 @@ autocmd FileType go setlocal tabstop=8
 autocmd FileType go setlocal softtabstop=8
 autocmd FileType go setlocal shiftwidth=8
 
+autocmd FileType cpp setlocal tabstop=8
+autocmd FileType cpp setlocal softtabstop=8
+autocmd FileType cpp setlocal shiftwidth=8
+
+autocmd FileType c setlocal tabstop=8
+autocmd FileType c setlocal softtabstop=8
+autocmd FileType c setlocal shiftwidth=8
+
 autocmd FileType templ setlocal tabstop=8
 autocmd FileType templ setlocal softtabstop=8
 autocmd FileType templ setlocal shiftwidth=8
@@ -70,6 +82,14 @@ autocmd FileType proto setlocal shiftwidth=2
 autocmd FileType html setlocal tabstop=2
 autocmd FileType html setlocal softtabstop=2
 autocmd FileType html setlocal shiftwidth=2
+
+autocmd FileType json setlocal tabstop=2
+autocmd FileType json setlocal softtabstop=2
+autocmd FileType json setlocal shiftwidth=2
+
+autocmd FileType jsonc setlocal tabstop=2
+autocmd FileType jsonc setlocal softtabstop=2
+autocmd FileType jsonc setlocal shiftwidth=2
 
 autocmd FileType css setlocal tabstop=2
 autocmd FileType css setlocal softtabstop=2

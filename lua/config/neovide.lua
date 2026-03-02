@@ -2,6 +2,8 @@
 -- vim.g.neovide_cursor_vfx_mode = "railgun"
 if vim.g.neovide then
   vim.opt.linespace = 5
+  vim.g.neovide_cursor_animation_length = 0.050
+
   vim.g.neovide_fullscreen = true
 
   vim.g.neovide_scale_factor = 1.0
@@ -15,6 +17,8 @@ if vim.g.neovide then
   vim.keymap.set("n", "<C-->", function()
     change_scale_factor(1 / 1.25)
   end)
+
+  vim.keymap.del("n", "<C-Q>d")
 
   vim.cmd [[
 " Allow copy paste in neovide

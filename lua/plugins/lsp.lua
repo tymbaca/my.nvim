@@ -103,9 +103,24 @@ return {
           enable_inlay_hints = true,
           enable_references = true,
           enable_rename = true,
+          enable_overload_resolution = true,
+          enable_semantic_tokens = true,
+          enable_auto_import = true,
+          enable_comp_lit_signature_help = true,
         },
       })
 
+
+      vim.lsp.config("arduino_language_server", {
+        filetypes = { "arduino" },
+        cmd = {
+          "arduino-language-server",
+          "-clangd", "/usr/bin/clangd",                   -- Adjust path to clangd if necessary
+          "-cli", "/opt/homebrew/bin/arduino-cli",        -- Adjust path to arduino-cli if necessary
+          "-cli-config", "~/.arduino15/arduino-cli.yaml", -- Adjust path to your cli config
+          "-fqbn", "arduino:avr:nano",                    -- Optional: specify the board FQBN
+        },
+      })
 
       -- vim.lsp.config.typescript_language_server.setup {}
 
@@ -129,7 +144,8 @@ return {
             --
             -- Further information about build-on save:
             -- https://zigtools.org/zls/guides/build-on-save/
-            enable_build_on_save = true,
+            enable_build_on_save = false,
+            enable_argument_placeholders = false,
           }
         }
       })
@@ -165,6 +181,7 @@ return {
         settings = {
           gopls = {
             ["local"] = "gitlab.wildberries.ru",
+            buildFlags = { "-tags=integration" },
             staticcheck = true,
             gofumpt = true,
             -- usePlaceholders = true,
@@ -192,9 +209,11 @@ return {
         "gopls",
         "protols",
         "ols",
+        "zls",
         "lua_ls",
         "svelte",
         "yamlls",
+        "arduino_language_server",
       })
 
       vim.keymap.set('n', '<leader>dh', vim.diagnostic.open_float, { desc = '[D]iagnotics [H]over' })

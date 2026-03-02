@@ -5,9 +5,17 @@ return {
     'nvim-lua/plenary.nvim',
   },
   keys = {
-    { "<leader>f",        "<cmd>Telescope find_files<cr>" },
-    { "<leader>T",        "<cmd>Telescope<cr>" },
-    { "<leader>sg",       "<cmd>Telescope live_grep<cr>" },
+    { "<leader>f",  "<cmd>Telescope find_files<cr>" },
+    { "<leader>T",  "<cmd>Telescope<cr>" },
+    { "<leader>sg", "<cmd>Telescope live_grep<cr>" },
+    { "<leader>sb", function()
+      vim.cmd("Telescope lsp_dynamic_workspace_symbols")
+      -- if vim.bo.filetype == "go" then
+      --   vim.cmd("Telescope lsp_dynamic_workspace_symbols")
+      -- else
+      --   vim.cmd("Telescope lsp_workspace_symbols")
+      -- end
+    end },
     { "gw",               "<cmd>Telescope grep_string<cr>" },
     { "<leader>mr",       "<cmd>Telescope marks<cr>" },
     -- { "<leader>sc",       function() require('telescope.builtin').colorscheme({ enable_preview = true }) end, desc = "[S]earch [C]olorschemes" },

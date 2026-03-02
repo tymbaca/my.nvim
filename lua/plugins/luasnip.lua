@@ -119,10 +119,14 @@ return {
     ------------------------------------ ZIG --------------------------------------
     -------------------------------------------------------------------------------
     ls.add_snippets("zig", {
-      s("i", fmta([[const <name> = std.<pref><name_rep>;<cur>]], {
+      s("is", fmta([[const <name> = std.<pref><name_rep>;<cur>]], {
         name = i(1),
         name_rep = rep(1),
         pref = i(2),
+        cur = i(0),
+      })),
+      s("i", fmta([[const <name> = @import("<cur>");]], {
+        name = i(1),
         cur = i(0),
       })),
       s("std", fmta([[const std = @import("std");<cur>]], {
@@ -162,13 +166,13 @@ return {
       s("arena", fmta("var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);\ndefer arena.deinit();<cur>", {
         cur = i(0),
       })),
-      s("fn", fmta("fn <name>(<args>) <ret> {\n\t<cur>\n}", {
+      s("ff", fmta("fn <name>(<args>) <ret> {\n\t<cur>\n}", {
         name = i(1),
         args = i(2),
         ret = i(3),
         cur = i(0),
       })),
-      s("pfn", fmta("pub fn <name>(<args>) <ret> {\n\t<cur>\n}", {
+      s("pf", fmta("pub fn <name>(<args>) <ret> {\n\t<cur>\n}", {
         name = i(1),
         args = i(2),
         ret = i(3),
@@ -345,6 +349,10 @@ return {
         args = i(2),
         cur = i(0)
       })),
+      s("f", fmta('proc(<args>) <cur>', {
+        args = i(1),
+        cur = i(0)
+      })),
       s("l", fmta('fmt.println(<cur>)', {
         cur = i(0)
       })),
@@ -362,7 +370,7 @@ return {
       s("alc", fmta('allocator := context.allocator<cur>', {
         cur = i(0)
       })),
-      s("all", fmta('allocator = allocator<cur>', {
+      s("all", fmta('allocator: runtime.Allocator<cur>', {
         cur = i(0)
       })),
       s("ca", fmta("context.allocator<cur>", {
@@ -716,20 +724,10 @@ return {
         cur = i(0),
       })),
 
-      s("e", fmta([[errors.WithMessage(err, "<cur>")]], {
-        cur = i(0),
-      })),
-      s("ef", fmta([[errors.WithMessagef(err, "<cur>")]], {
-        cur = i(0),
-      })),
-      s("ee", fmta([[fmt.Errorf("<cur>: %w", err)]], {
+      s("e", fmta([[fmt.Errorf("<cur>: %w", err)]], {
         cur = i(0),
       })),
       s("ei", fmta([[errors.Is(err, <cur>)]], {
-        cur = i(0),
-      })),
-
-      s("er", fmta([[eris.Wrap(err, "<cur>")]], {
         cur = i(0),
       })),
 

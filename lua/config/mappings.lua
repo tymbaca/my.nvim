@@ -87,3 +87,8 @@ map('n', "gy", function()
   vim.cmd([[let @"=expand("%:.") . ":" . line(".")]])
 end)
 map('n', "<leader>mk", "<cmd>make<cr>")
+map('n', "<leader>js", "<cmd>!just<cr>")
+
+-- json escape/unescape
+map('v', "<leader>je", ":!jq -R -s .<cr>", { silent = true })
+map('v', "<leader>ju", ":!jq '. | fromjson'<cr>", { silent = true })
