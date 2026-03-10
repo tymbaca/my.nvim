@@ -316,7 +316,7 @@ return {
         err = i(1),
         final = i(0),
       })),
-      s("p", fmta("package <name><cur>", {
+      s("p", fmta("#+vet explicit-allocators\npackage <name><cur>", {
         name = f(get_current_folder_name, {}, {}),
         cur = i(0)
       })),
@@ -327,6 +327,9 @@ return {
         cur = i(0)
       })),
       s("is", fmta('import "src:<cur>"', {
+        cur = i(0)
+      })),
+      s("il", fmta('import "lib:<cur>"', {
         cur = i(0)
       })),
       s("iv", fmta('import "vendor:<cur>"', {
@@ -397,6 +400,9 @@ return {
         cur = i(0)
       })),
       s("ni", fmta("panic(\"not implemented\")<cur>", {
+        cur = i(0),
+      })),
+      s("exal", fmta("#+vet explicit-allocators<cur>", {
         cur = i(0),
       })),
     })
