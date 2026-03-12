@@ -8,7 +8,7 @@ return {
         zen.toggle({
           window = {
             backdrop = 1,
-            width = 0.6,
+            width = 0.5,
             options = {
               signcolumn = "no",
               -- number = false,
