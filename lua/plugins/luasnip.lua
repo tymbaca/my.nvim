@@ -307,12 +307,12 @@ return {
       s("**", fmta("/*\n<cur>*/", {
         cur = i(0)
       })),
-      s("ie", fmta("if <err>_err != nil {\n\treturn <ret>\n}\n<final>", {
+      s("ie", fmta("if <err>err != nil {\n\treturn <ret>\n}\n<final>", {
         err = i(1),
         ret = i(2),
         final = i(0),
       })),
-      s("en", fmta("<err> != nil <final>", {
+      s("en", fmta("<err>err != nil <final>", {
         err = i(1),
         final = i(0),
       })),
