@@ -64,8 +64,8 @@ vim.cmd [[
 vnoremap <leader>/ y/<C-R>"<CR>N
 nnoremap <leader>R :%s/<C-r><C-w>/<C-r><C-w>/g<left><left>
 nnoremap <leader><C-R> :s/<C-r><C-w>/<C-r><C-w>/g<left><left>
-vnoremap <S-r> "hy:%s/<C-r>h/<C-r>h/g<left><left>
-vnoremap <S-C-r> "hy:s/<C-r>h/<C-r>h/g<left><left>
+vnoremap R "hy:%s/<C-r>h/<C-r>h/g<left><left>
+vnoremap <C-r> "hy:s/<C-r>h/<C-r>h/g<left><left>
 ]]
 -- vnoremap <C-r> "hy:s/<C-r>h/<C-r>h/g<left><left>
 
