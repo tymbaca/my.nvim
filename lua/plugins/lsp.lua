@@ -94,9 +94,6 @@ return {
       vim.lsp.config("ols", {
         init_options = {
           checker_args = "-strict-style",
-          collections = {
-            { name = "src", path = vim.fn.expand('$PWD/src') }
-          },
           enable_snippets = true,
           enable_procedure_snippet = true,
           enable_fake_methods = true,

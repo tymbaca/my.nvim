@@ -262,9 +262,22 @@ return {
       s("ols", fmta([[{
 	"$schema": "https://raw.githubusercontent.com/DanielGavin/ols/master/misc/ols.schema.json",
 	"collections": [
-		{ "name": "src", "path": "src" }
-	]<cur>
-}]], {
+		{ "name": "src", "path": "src" },
+		{ "name": "lib", "path": "lib" }
+	],
+	"enable_document_symbols": true,
+	"enable_hover": true,
+  "enable_snippets": true,
+  "enable_procedure_snippet": true,
+  "enable_fake_methods": true,
+  "enable_inlay_hints": true,
+  "enable_references": true,
+  "enable_rename": true,
+  "enable_overload_resolution": true,
+  "enable_semantic_tokens": true,
+  "enable_auto_import": true,
+  "enable_comp_lit_signature_help": true
+}<cur>]], {
         cur = i(0),
       })),
     })
