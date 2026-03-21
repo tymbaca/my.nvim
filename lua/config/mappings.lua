@@ -88,7 +88,7 @@ map('n', "gy", function()
 end)
 map('n', "<leader>mk", "<cmd>make<cr>")
 map('n', "<leader>js", "<cmd>!just<cr>")
-map('n', '?', [[/\c]])
+map('n', '/', [[/\c]])
 
 -- json escape/unescape
 map('v', "<leader>je", ":!jq -R -s .<cr>", { silent = true })

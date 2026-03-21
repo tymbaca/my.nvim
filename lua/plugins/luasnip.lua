@@ -412,7 +412,10 @@ return {
       s("orr", fmta("or_return<cur>", {
         cur = i(0)
       })),
-      s("ni", fmta("panic(\"not implemented\")<cur>", {
+      s("ni", fmta("unimplemented()<cur>", {
+        cur = i(0),
+      })),
+      s("un", fmta("unreachable()<cur>", {
         cur = i(0),
       })),
       s("exal", fmta("#+vet explicit-allocators<cur>", {
