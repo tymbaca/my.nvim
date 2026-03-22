@@ -127,5 +127,12 @@ return {
 
       require('mfd').enable_cursor_sync()
     end,
-  }
+  },
+
+  {
+    "xiantang/darcula-dark.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
+  },
 }

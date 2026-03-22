@@ -43,6 +43,9 @@ set wrapmargin=0
 set virtualedit=all
 let g:omni_sql_no_default_maps = 1
 
+" disable vertical split line
+set fillchars+=vert:\ 
+
 autocmd FileType python setlocal tabstop=4
 autocmd FileType python setlocal softtabstop=4
 autocmd FileType python setlocal shiftwidth=4
