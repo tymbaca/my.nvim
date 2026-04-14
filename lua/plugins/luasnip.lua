@@ -489,10 +489,10 @@ return {
         cur = i(0),
       })),
 
-      s("tr", fmta('t.Run("<name>", func(t *testing.T) {\n\t<cur>\n})', {
-        name = i(1),
-        cur = i(0),
-      })),
+      -- s("tr", fmta('t.Run("<name>", func(t *testing.T) {\n\t<cur>\n})', {
+      --   name = i(1),
+      --   cur = i(0),
+      -- })),
 
       s("ti", fmta([[
       import (
@@ -785,6 +785,10 @@ return {
       s("df", fmta("defer func() {\n\t<cur>\n}()", {
         cur = i(0),
       })),
+      s("tr", fmta('var tracer = otel.Tracer("<name><cur>")', {
+        name = f(get_current_folder_name, {}, {}),
+        cur = i(0)
+      })),
       s("sp", fmta("ctx, span := tracer.Start(ctx, caller.Name()<span>)\ndefer span.End()\n<cur>", {
         span = i(1),
         cur = i(0),
@@ -793,7 +797,12 @@ return {
         span = i(1),
         cur = i(0),
       })),
-      s("spe", fmta("tracer.RecordError(ctx, err)<cur>", {
+      s("spe", fmta("span.SetStatus(codes.Error, err.Error())<cur>", {
+        cur = i(0),
+      })),
+      s("sr", fmta('"<body_rep>", <body><cur>', {
+        body_rep = rep(1),
+        body = i(1),
         cur = i(0),
       })),
       s("mb", fmta("make([]byte, <cur>)", {

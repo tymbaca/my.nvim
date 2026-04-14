@@ -211,6 +211,7 @@ return {
         "svelte",
         "yamlls",
         "arduino_language_server",
+        "clangd",
       })
 
       vim.keymap.set('n', '<leader>dh', vim.diagnostic.open_float, { desc = '[D]iagnotics [H]over' })
@@ -240,7 +241,7 @@ return {
       )
 
       vim.keymap.set('n', '<leader>lr', "<cmd>LspRestart<cr>", { desc = "[L]SP [R]estart" })
-      vim.keymap.set('n', '<leader>ls', "<cmd>LspStart<cr>", { desc = "[L]SP [S]tart" })
+      -- vim.keymap.set('n', '<leader>ls', "<cmd>LspStart<cr>", { desc = "[L]SP [S]tart" })
       vim.keymap.set('n', '<leader>lp', "<cmd>LspStop<cr>", { desc = "[L]SP Sto[p]" })
       vim.keymap.set('n', '<leader>li', function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())

@@ -26,6 +26,7 @@ return {
     { '<leader>gC',       "<cmd>Telescope git_commits<cr>",                                                desc = "Find [G]it [C]ommits" },
     { '<leader>gb',       "<cmd>Telescope git_branches<cr>",                                               desc = "Find [G]it [B]ranches" },
     { '<leader>gk',       function() require("telescope.builtin").live_grep({ default_text = "<<<" }) end, desc = "Find [G]it [K]onflicts" },
+    { '<leader>ls',       "<cmd>Telescope resume<cr>",                                                     desc = "[L]ast [S]earch" },
   },
   config = function()
     local telescope = require("telescope")
