@@ -10,7 +10,7 @@ local M = {
         ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "elixir", "heex", "html", "odin", "zig", "go" },
         sync_install = false,
         highlight = { enable = true },
-        indent = { enable = true },
+        -- indent = { enable = true },
       })
     end
   }
