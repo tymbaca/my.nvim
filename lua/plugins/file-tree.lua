@@ -38,7 +38,7 @@ return {
     keys = {
       { "<leader>e", "<cmd>Neotree toggle<cr>" },
       { "<leader>E", "<cmd>Neotree reveal<cr>" },
-      { "<leader>D", "<cmd>Neotree diagnostics<cr>" },
+      { "<leader>dl", "<cmd>Neotree diagnostics<cr>" },
       { "<leader>o", "<cmd>Neotree document_symbols<cr>" },
     },
 
