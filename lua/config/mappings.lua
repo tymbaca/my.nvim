@@ -66,6 +66,8 @@ nnoremap <leader>R :%s/<C-r><C-w>/<C-r><C-w>/g<left><left>
 nnoremap <leader><C-R> :s/<C-r><C-w>/<C-r><C-w>/g<left><left>
 vnoremap R "hy:%s/<C-r>h/<C-r>h/g<left><left>
 vnoremap <C-r> "hy:s/<C-r>h/<C-r>h/g<left><left>
+
+set splitbelow
 ]]
 -- vnoremap <C-r> "hy:s/<C-r>h/<C-r>h/g<left><left>
 
@@ -86,10 +88,14 @@ map('n', "gy", function()
   vim.cmd([[let @+=expand("%:.") . ":" . line(".")]])
   vim.cmd([[let @"=expand("%:.") . ":" . line(".")]])
 end)
-map('n', "<leader>mk", "<cmd>make<cr>")
-map('n', "<leader>js", "<cmd>!just<cr>")
+map('n', "<leader>mk", "<cmd>split<cr><cmd>term make<cr>")
+map('n', "<leader>js", "<cmd>split<cr><cmd>term just<cr>")
+map('n', "<leader>te", "<cmd>split<cr><cmd>term<cr>i")
 map('n', '/', [[/\c]])
 
 -- json escape/unescape
 map('v', "<leader>je", ":!jq -R -s .<cr>", { silent = true })
 map('v', "<leader>ju", ":!jq '. | fromjson'<cr>", { silent = true })
+
+map('t', "<ESC>", [[<C-\><C-n>]])
+map('t', "<C-d>", [[<cmd>bd!<cr>]])

@@ -76,8 +76,8 @@ return {
     "jaimecgomezz/here.term",
     opts = {
       mappings = {
-        toggle = "<C-;>",
-        kill = "<C-'>",
+        toggle = "<D-;>",
+        kill = "<D-'>",
       },
     },
   },

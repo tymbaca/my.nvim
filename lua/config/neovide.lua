@@ -3,12 +3,14 @@
 if vim.g.neovide then
   vim.opt.linespace = 5
   vim.g.neovide_cursor_animation_length = 0.050
+  vim.g.neovide_scroll_animation_length = 0.2
 
   -- vim.g.neovide_show_border = true
   vim.g.neovide_macos_simple_fullscreen = true
   vim.g.neovide_padding_top = 70
   -- vim.g.neovide_fullscreen = true
 
+  vim.g.neovide_hide_mouse_when_typing = true
   vim.g.neovide_scale_factor = 1.0
 
   local change_scale_factor = function(delta)

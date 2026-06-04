@@ -3,12 +3,19 @@ return {
   dependencies = {
     "rcarriga/nvim-dap-ui", 
     "nvim-neotest/nvim-nio",
+    "m00qek/baleia.nvim",
   },
   config = function()
+    local baleia = require("baleia").setup({ line_starts_at = 2 })
     local dap = require('dap')
 
     local dapui = require("dapui")
     dapui.setup()
+
+    -- Colorize the REPL when it opens
+    dap.listeners.after.event_initialized["baleia"] = function()
+      baleia.automatically(vim.api.nvim_get_current_buf())
+    end
 
     -- configure codelldb adapter
     dap.adapters.codelldb = {
@@ -27,6 +34,7 @@ return {
         name = "Launch file",
         program = "${workspaceFolder}/bin/debug",
         cwd = '${workspaceFolder}',
+        console = "internalConsole",
       },
     }
 
@@ -35,6 +43,7 @@ return {
     vim.keymap.set("n", "<F3>", dap.step_out)
     vim.keymap.set("n", "<F4>", dap.continue)
     vim.keymap.set("n", "<F5>", dap.restart)
+    vim.keymap.set("n", "<F6>", dapui.toggle)
     vim.keymap.set("n", "<leader>?", function()
       dapui.eval(nil, { enter = true })
     end)
