@@ -14,16 +14,17 @@ return {
     "rafamadriz/friendly-snippets", -- useful snippets
     "onsails/lspkind.nvim",         -- vs-code like pictograms
     "hrsh7th/cmp-nvim-lsp",
+    "ray-x/cmp-treesitter",
   },
   config = function()
     local cmp = require("cmp")
 
     cmp.setup({
-      snippet = {
-        expand = function(args)
-          require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        end
-      },
+      -- snippet = {
+      --   expand = function(args)
+      --     require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+      --   end
+      -- },
       mapping = {
         -- `Enter` key to confirm completion
         ['<CR>'] = cmp.mapping.confirm({ select = false }),
@@ -51,6 +52,7 @@ return {
         -- { name = 'luasnip' },
       }, {
         { name = 'buffer' },
+        { name = 'treesitter' },
         -- { name = 'path' },
       })
     })

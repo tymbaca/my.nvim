@@ -1,6 +1,6 @@
 return {
   'nvim-telescope/telescope.nvim',
-  tag = '0.1.8',
+  -- tag = '0.1.8',
   dependencies = {
     'nvim-lua/plenary.nvim',
   },
@@ -33,7 +33,7 @@ return {
     telescope.setup {
       defaults = {
         preview = {
-          filesize_limit = 0.1, -- MB
+          filesize_limit = 5, -- MB
         },
       },
     }
