@@ -4,7 +4,8 @@ return {
   version = "v0.*",
   dependencies = {
     "ray-x/cmp-treesitter", 
-    { "saghen/blink.compat", version = "*", opts = {} },
+    -- main branch: fixes cmp-treesitter "params (a nil value)" in get_keyword_pattern
+    { "saghen/blink.compat", branch = "main", opts = {} },
   },
   
   opts = {
