@@ -41,3 +41,6 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
+
+-- Disable Neovim's built-in snippet placeholder highlight
+vim.api.nvim_set_hl(0, "SnippetTabstop", { link = "Normal" })
