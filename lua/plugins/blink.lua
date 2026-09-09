@@ -4,20 +4,25 @@ return {
   version = "v0.*",
   
   opts = {
+    snippets = { preset = "luasnip" },
+
     keymap = {
       preset = "none",
-     
+
       ["<CR>"] = { "accept", "fallback" },
       ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
-     
+
       ["<C-n>"] = { "select_next", "fallback" },
       ["<C-p>"] = { "select_prev", "fallback" },
       ["<Down>"] = { "select_next", "fallback" },
       ["<Up>"] = { "select_prev", "fallback" },
+
+      ["<C-k>"] = { "snippet_forward", "fallback" },
+      ["<C-j>"] = { "snippet_backward", "fallback" },
     },
   
     sources = {
-      default = { "lsp", "path", "snippets", "buffer" },
+      default = { "lsp", "path", "buffer" },
     },
   
     -- Replaces 'onsails/lspkind.nvim' (Blink builds icons natively)
@@ -27,6 +32,9 @@ return {
     -- },
   
     completion = {
+      accept = {
+        dot_repeat = false
+      },
       menu = {
         max_height = 6,
         -- draw = {
@@ -37,6 +45,7 @@ return {
       },
       documentation = {
         auto_show = true,
+        auto_show_delay_ms = 0,
       },
     },
   },
