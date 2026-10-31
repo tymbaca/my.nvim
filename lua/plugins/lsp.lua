@@ -56,16 +56,15 @@ return {
       --   }
       -- }
 
-
-      -- TODO: remove?
-      -- configs.protobuf_language_server = {
-      --   default_config = {
-      --     cmd = { 'protobuf-language-server' },
-      --     filetypes = { 'proto' },
-      --     root_fir = util.root_pattern('.git'),
-      --     single_file_support = true,
-      --   }
-      -- }
+      vim.lsp.config("protobuf_lsp", {
+        cmd = { "protobuf-lsp" },
+        filetypes = { 'proto' },
+        -- settings = {
+        --   ["additional-proto-dirs"] = {
+        --     "/path/to/shared/proto/files",
+        --   }
+        -- }
+      })
 
       -- configs.typescript_language_server = {
       --   default_config = {
@@ -104,6 +103,7 @@ return {
           enable_semantic_tokens = true,
           enable_auto_import = true,
           enable_comp_lit_signature_help = true,
+          enable_hover_layout = true,
         },
       })
 
@@ -212,6 +212,7 @@ return {
         "yamlls",
         "arduino_language_server",
         "clangd",
+        "protobuf_lsp",
       })
 
       vim.keymap.set('n', '<leader>dh', vim.diagnostic.open_float, { desc = '[D]iagnotics [H]over' })

@@ -282,6 +282,30 @@ return {
       })),
     })
 
+    ------------------------------------ JUST--------------------------------------
+    -------------------------------------------------------------------------------
+
+    ls.add_snippets("just", {
+      s("odin", fmta([[BUILD_FLAGS := "-collection:src=src -collection:lib=lib"
+OUT := "bin/debug"
+
+run: build
+    ./{{OUT}}
+
+debug: build
+    lldb {{OUT}}
+
+build:
+    @mkdir -p bin
+    @mkdir -p lib
+    odin build src -debug {{BUILD_FLAGS}} -out:{{OUT}}
+
+update-submodules:
+    git submodule update --recursive --remote<cur>]], {
+        cur = i(0),
+      })),
+    })
+
     ----------------------------------- RUST --------------------------------------
     -------------------------------------------------------------------------------
 

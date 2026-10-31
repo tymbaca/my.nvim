@@ -37,5 +37,7 @@ return {
         },
       },
     }
+
+    vim.keymap.set('v', '<leader>sg', '<cmd>Telescope grep_string<CR>', { desc = 'Telescope: Search selection' })
   end
 }

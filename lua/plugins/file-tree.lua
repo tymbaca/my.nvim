@@ -53,7 +53,7 @@ return {
       enable_diagnostics = false,
       sources = { "filesystem", "buffers", "git_status", "document_symbols", "diagnostics" },
       window = {
-        width = "35%",
+        width = "30%",
         position = "left",
       },
       filesystem = {
