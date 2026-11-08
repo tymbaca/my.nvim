@@ -109,8 +109,11 @@ autocmd FileType typst setlocal shiftwidth=2
 " autocmd FileType markdown setlocal wrap
 " autocmd FileType markdown setlocal formatoptions=cqjwa
 " autocmd FileType markdown setlocal formatoptions=tcqjwa
+au FileType markdown setlocal tabstop=2
+au FileType markdown setlocal softtabstop=2
+au FileType markdown setlocal shiftwidth=2
 au FileType markdown setl comments=b:*,b:-,b:+,n:>
-au FileType markdown set textwidth=80
+" au FileType markdown set textwidth=80
 " au FileType markdown setl formatoptions+=r
 au FileType markdown nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
 au FileType markdown nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')

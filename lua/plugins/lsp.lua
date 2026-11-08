@@ -209,6 +209,7 @@ return {
         "zls",
         "lua_ls",
         "svelte",
+        "ts_ls",
         "yamlls",
         "arduino_language_server",
         "clangd",
