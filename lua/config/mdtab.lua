@@ -1,40 +1,29 @@
 -- Per-region indentation for Markdown buffers.
 --
---   * prose (and anything outside a fenced code block): <Tab> inserts 2 spaces,
+--   * prose (anything outside a fenced code block): <Tab> inserts 2 spaces,
 --     > / < shift by 2.
---   * inside a fenced code block: the indentation settings of the block's own
---     filetype are used, i.e. a python block indents with 4 spaces, a lua/js block
---     with 2, and a go block inserts real <Tab> characters.
---   * tabs are *rendered* with the width their language uses, even when one buffer
---     mixes blocks that need different tab widths (go = 8, a 4-wide tab language, ...).
+--   * inside a fenced code block: only the *editing* behaviour follows the block's
+--     language, using the indentation settings of that filetype (python = 4 spaces,
+--     lua/js = 2 spaces, go = real <Tab> characters, ...).
 --
--- How the tab rendering works
--- ---------------------------
--- Neovim keeps a single 'tabstop' per buffer, so mixed-width tab blocks cannot be
--- rendered natively. To get per-block widths the buffer gets a buffer-local
--- 'tabstop' of 1 and every real <Tab> is patched with an inline virtual-text extmark
--- holding (advance - 1) spaces; the tab itself keeps showing as its single blank
--- cell, so the line ends up exactly `advance` cells wide -- the same width it would
--- have in a native buffer of that filetype. Verified against native .go (tabstop 8)
--- and .c (tabstop 4) buffers.
+-- Rendering stays completely standard: nothing here touches 'tabstop', adds
+-- extmarks or otherwise changes how the buffer looks. Tabs are drawn by Neovim with
+-- the buffer's own 'tabstop' (4 for markdown in this config).
 --
--- Side effects worth knowing: 'tabstop' is 1 inside markdown buffers, so anything
--- that computes columns from 'tabstop' (some statusline/tab indicators) sees 1.
--- Text itself is never modified, so files keep their tabs.
+-- Where the per-language settings come from: on first use of a language the real
+-- settings are read from a throwaway buffer with that filetype, so ftplugins and
+-- your own `au FileType` lines are honoured. Results are cached per session.
 
 local api = vim.api
-local ns = api.nvim_create_namespace("mdtab_tabs")
 
 local M = {}
 
 M.config = {
   -- indentation step used for prose and for code blocks of unknown languages
   prose_width = 2,
-  -- paint tabs at their per-language width (sets 'tabstop' = 1 in markdown buffers)
-  render_tabs = true,
-  -- probe the real settings of a code block's filetype in a scratch buffer
+  -- probe the real indentation settings of a code block's filetype
   probe = true,
-  -- re-indent a freshly created line inside a code block in that block's style
+  -- create new lines with the indentation of the code block they land in
   newline_indent = true,
   -- per language overrides, e.g. { javascript = { spaces = 2 }, go = { tabs = 8 } }
   overrides = {},
@@ -95,6 +84,7 @@ local aliases = {
 local scan_cache = {}
 ---@type table<string, table|false>
 local settings_cache = {}
+local known_cache = {}
 
 local function buf_option(buf, name)
   return api.nvim_get_option_value(name, { buf = buf })
@@ -211,8 +201,6 @@ end
 -- ---------------------------------------------------------------------------
 -- per filetype indentation settings
 -- ---------------------------------------------------------------------------
-
-local known_cache = {}
 
 local function is_known_ft_uncached(ft)
   -- never hand a non-token to the runtime-path expansion (see info_lang)
@@ -337,11 +325,10 @@ local function spec_at(buf, row)
     end
   end
 
-  local saved = vim.b[buf].mdtab_saved or {}
   local w = math.max(1, M.config.prose_width)
   return {
     expandtab = true,
-    ts = saved.ts or 4,
+    ts = buf_option(buf, "tabstop"),
     sts = w,
     sw = w,
     step = w,
@@ -350,8 +337,44 @@ local function spec_at(buf, row)
   }
 end
 
+--- <BS>, <C-t> and <C-d> work off 'shiftwidth' / 'softtabstop' / 'expandtab', so
+--- these have to follow the region while editing. Otherwise Backspace inside a go
+--- block deletes markdown's 2 columns out of a tab instead of removing the tab
+--- (a backspace inside the indent deletes back to a 'shiftwidth' boundary).
+local last_sync = {}
+
+local function sync_indent_options(buf, row)
+  local saved = vim.b[buf].mdtab_saved
+  if not saved then
+    return
+  end
+  local spec = spec_at(buf, row or api.nvim_win_get_cursor(0)[1])
+  local et, step
+  if spec.prose then
+    et, step = true, math.max(1, M.config.prose_width)
+  else
+    et = spec.expandtab
+    -- tabs are drawn with the buffer's 'tabstop', so one tab is exactly that wide
+    step = spec.expandtab and (spec.step > 0 and spec.step or spec.shift) or buf_option(buf, "tabstop")
+  end
+  local key = ("%s:%d"):format(et and "et" or "noet", step)
+  if last_sync[buf] == key then
+    return
+  end
+  last_sync[buf] = key
+  if buf_option(buf, "expandtab") ~= et then
+    buf_set(buf, "expandtab", et)
+  end
+  if buf_option(buf, "softtabstop") ~= step then
+    buf_set(buf, "softtabstop", step)
+  end
+  if buf_option(buf, "shiftwidth") ~= step then
+    buf_set(buf, "shiftwidth", step)
+  end
+end
+
 -- ---------------------------------------------------------------------------
--- tab rendering
+-- indentation helpers
 -- ---------------------------------------------------------------------------
 
 --- Display width of `text` when every tab advances by `width`.
@@ -371,180 +394,39 @@ local function display_width(text, width)
   return col
 end
 
-local function paint_line(buf, row, line, width)
-  if width < 1 then
-    return
+--- Re-express a display column in the block's own style.
+local function indent_text(spec, col)
+  local width = spec.ts > 0 and spec.ts or 8
+  if spec.expandtab then
+    return (" "):rep(col)
   end
-  local col, pos = 0, 1
-  while true do
-    local t = line:find("\t", pos, true)
-    if not t then
-      break
-    end
-    col = col + vim.fn.strdisplaywidth(line:sub(pos, t - 1))
-    local advance = width - col % width
-    local pad = advance - 1
-    if pad > 0 then
-      api.nvim_buf_set_extmark(buf, ns, row - 1, t - 1, {
-        end_col = t,
-        virt_text = { { (" "):rep(pad), "Normal" } },
-        virt_text_pos = "inline",
-        hl_mode = "combine",
-      })
-    end
-    col = col + advance
-    pos = t + 1
-  end
+  return ("\t"):rep(math.floor(col / width)) .. (" "):rep(col % width)
 end
 
---- Width to paint tabs with, per line, for the current block structure.
-local function widths(buf, block_list, saved)
-  local in_block = {}
-  for _, b in ipairs(block_list) do
-    local block_spec = b.lang and spec_at(buf, b.start + 1) or nil
-    local width = (block_spec and not block_spec.prose) and block_spec.ts or saved.ts
-    for row = b.start + 1, b.stop - 1 do
-      in_block[row] = width
-    end
+--- Indent for a line that continues `src_row`.
+---@param add_step boolean|nil  indent one level more when the source line opens a block
+local function indent_from(buf, src_row, spec, add_step)
+  local src = (src_row >= 1 and api.nvim_buf_get_lines(buf, src_row - 1, src_row, false)[1]) or ""
+  local width = spec.ts > 0 and spec.ts or 8
+  local step = spec.expandtab and (spec.step > 0 and spec.step or width) or width
+  local trimmed = src:gsub("%s+$", "")
+  local last = trimmed:sub(-1)
+  -- ":" opens a block in space-indented languages (python), not in go
+  local opens = last == "{" or last == "(" or last == "[" or (spec.expandtab and last == ":")
+  local col = display_width(src:match("^[ \t]*") or "", width)
+  if add_step and opens then
+    col = col + step
   end
-  return in_block
-end
-
-local function sig(buf, block_list)
-  local parts = {}
-  for _, b in ipairs(block_list) do
-    local width = ""
-    if b.lang then
-      local spec = spec_at(buf, b.start + 1)
-      if spec and not spec.prose then
-        width = tostring(spec.ts) .. (spec.expandtab and "s" or "t")
-      end
-    end
-    parts[#parts + 1] = (b.lang or "") .. ":" .. width
-  end
-  return table.concat(parts, ",")
-end
-
-M.stats = { full = 0, rows = 0 }
-
--- What is currently painted, and for which line layout: `painted[buf][row0]` is the
--- tab width used on that row, so a repaint can be limited to rows whose width (or
--- content) actually changed. Nothing here ever clears the whole buffer twice.
-local painted = {}
-local last_sig = {}
-local last_count = {}
-
---- Per-row tab width for the current block structure (0-based rows).
-local function width_map(buf, block_list, saved, count)
-  local in_block = widths(buf, block_list, saved)
-  local map = {}
-  for row0 = 0, count - 1 do
-    map[row0] = in_block[row0 + 1] or saved.ts
-  end
-  return map
-end
-
---- Paint tabs. Repaints only the rows that need it: the dirty span from the edit and
---- any row whose block width changed. `dirty` are 0-based, half-open.
-local function render(buf, dirty_first0, dirty_last0)
-  if not api.nvim_buf_is_valid(buf) or not api.nvim_buf_is_loaded(buf) then
-    return
-  end
-  if vim.bo[buf].filetype ~= "markdown" then
-    return
-  end
-  local saved = vim.b[buf].mdtab_saved
-  if not saved then
-    return
-  end
-
-  local lines = api.nvim_buf_get_lines(buf, 0, -1, false)
-  local count = #lines
-
-  if not M.config.render_tabs then
-    api.nvim_buf_clear_namespace(buf, ns, 0, -1)
-    painted[buf], last_sig[buf], last_count[buf] = nil, nil, nil
-    return
-  end
-
-  local block_list = blocks(buf)
-  local current_sig = sig(buf, block_list)
-  local before = painted[buf]
-  local rows = {}
-
-  local fresh = before == nil
-  if fresh or last_sig[buf] ~= current_sig or last_count[buf] ~= count then
-    -- block widths or the line layout changed: find every row whose width differs
-    local map = width_map(buf, block_list, saved, count)
-    for row0 = 0, count - 1 do
-      if fresh or before[row0] ~= map[row0] then
-        rows[row0] = true
-      end
-    end
-    painted[buf] = map
-    last_sig[buf] = current_sig
-    last_count[buf] = count
-  end
-
-  if dirty_first0 ~= nil then
-    local last = math.min(count - 1, (dirty_last0 or (dirty_first0 + 1)) - 1)
-    for row0 = math.max(0, dirty_first0), last do
-      rows[row0] = true
-    end
-  end
-
-  if fresh then
-    api.nvim_buf_clear_namespace(buf, ns, 0, -1)
-    M.stats.full = M.stats.full + 1
-  end
-
-  for row0 in pairs(rows) do
-    if row0 >= 0 and row0 < count then
-      api.nvim_buf_clear_namespace(buf, ns, row0, row0 + 1)
-      M.stats.rows = M.stats.rows + 1
-      local line = lines[row0 + 1]
-      if line and line:find("\t", 1, true) then
-        paint_line(buf, row0 + 1, line, (painted[buf] and painted[buf][row0]) or saved.ts)
-      end
-    end
-  end
-end
-
-local pending = {}
-
---- Coalesce repaint requests into a single pass in the next event-loop tick, so the
---- paint lands in the same redraw as the edit (no visible lag) while typing still
---- only costs the lines that changed. `first0`/`last0` are 0-based, half-open;
---- leaving them out only verifies whether the block widths still match.
-local function schedule_render(buf, first0, last0)
-  local span = pending[buf]
-  if not span then
-    span = { full = false }
-    pending[buf] = span
-    vim.schedule(function()
-      local job = pending[buf]
-      pending[buf] = nil
-      if not api.nvim_buf_is_valid(buf) or not job then
-        return
-      end
-      render(buf, job.first, job.last)
-    end)
-  end
-  if first0 ~= nil then
-    local stop = last0 or (first0 + 1)
-    span.first = span.first and math.min(span.first, first0) or first0
-    span.last = span.last and math.max(span.last, stop) or stop
-  end
+  return indent_text(spec, col)
 end
 
 -- ---------------------------------------------------------------------------
--- indent operations
+-- indent operations (> and <)
 -- ---------------------------------------------------------------------------
 
 local function shift_lines(start_line, end_line, dir)
   local buf = api.nvim_get_current_buf()
-  local saved = vim.b[buf].mdtab_saved
-  if not saved or start_line < 1 or vim.bo[buf].filetype ~= "markdown" then
+  if start_line < 1 or vim.bo[buf].filetype ~= "markdown" then
     return
   end
   end_line = math.min(end_line, api.nvim_buf_line_count(buf))
@@ -578,7 +460,6 @@ local function shift_lines(start_line, end_line, dir)
     buf_set(buf, "expandtab", spec.expandtab)
     local ok, err = pcall(vim.cmd, ("%d,%d%s"):format(group.start, group.stop, dir > 0 and ">" or "<"))
     if not ok then
-      M.last_error = err
       vim.notify("mdtab: shift failed: " .. tostring(err), vim.log.levels.WARN)
     end
     buf_set(buf, "shiftwidth", keep.sw)
@@ -604,10 +485,9 @@ local function tab()
     api.nvim_feedkeys(api.nvim_replace_termcodes("<Tab>", true, false, true), "in", false)
     return
   end
+
   local row, col = unpack(api.nvim_win_get_cursor(0))
   local spec = spec_at(buf, row)
-  local line = api.nvim_get_current_line()
-  local width = spec.ts > 0 and spec.ts or 8
 
   if not spec.expandtab then
     -- <C-v><Tab>: a literal tab, regardless of 'expandtab' / 'softtabstop'
@@ -615,8 +495,9 @@ local function tab()
     return
   end
 
+  local width = spec.ts > 0 and spec.ts or 8
   local step = spec.step > 0 and spec.step or width
-  local cur = display_width(line:sub(1, col), width)
+  local cur = display_width(api.nvim_get_current_line():sub(1, col), width)
   local n = step - cur % step
   if n <= 0 then
     n = step
@@ -625,44 +506,8 @@ local function tab()
 end
 
 -- ---------------------------------------------------------------------------
--- newline / auto indentation
+-- newline indentation
 -- ---------------------------------------------------------------------------
-
---- Column one indent step occupies in this buffer: 'tabstop' is 1 while tabs are
---- painted, so a tab-indented block uses one column per level and Vim rebuilds the
---- indent with exactly that many tabs.
-local function step_cols(spec)
-  if spec.expandtab then
-    return spec.step > 0 and spec.step or spec.ts
-  end
-  return 1
-end
-
---- Re-express a display column in the block's own style.
-local function indent_text(spec, col)
-  local width = spec.ts > 0 and spec.ts or 8
-  if spec.expandtab then
-    return (" "):rep(col)
-  end
-  return ("\t"):rep(math.floor(col / width)) .. (" "):rep(col % width)
-end
-
---- Indent for a line that continues `src_row`.
----@param add_step boolean|nil  indent one level more when the source line opens a block
-local function indent_from(buf, src_row, spec, add_step)
-  local src = (src_row >= 1 and api.nvim_buf_get_lines(buf, src_row - 1, src_row, false)[1]) or ""
-  local width = spec.ts > 0 and spec.ts or 8
-  local step = spec.expandtab and (spec.step > 0 and spec.step or width) or width
-  local trimmed = src:gsub("%s+$", "")
-  local last = trimmed:sub(-1)
-  -- ":" opens a block in space-indented languages (python), not in go
-  local opens = last == "{" or last == "(" or last == "[" or (spec.expandtab and last == ":")
-  local col = display_width(src:match("^[ \t]*") or "", width)
-  if add_step and opens then
-    col = col + step
-  end
-  return indent_text(spec, col)
-end
 
 --- Create a new line the way its code block wants it: tabs for go, 4 spaces for
 --- python, one level deeper after an opening bracket. Prose keeps Vim's own
@@ -670,13 +515,12 @@ end
 ---@param dir integer 1 = below the cursor (o / <CR>), -1 = above (O)
 local function new_line(dir)
   local buf = api.nvim_get_current_buf()
-  if vim.bo[buf].filetype ~= "markdown" or not vim.b[buf].mdtab_saved or not vim.bo[buf].modifiable then
+  if vim.bo[buf].filetype ~= "markdown" or not vim.bo[buf].modifiable then
     return false
   end
 
   local row, col = unpack(api.nvim_win_get_cursor(0))
   local spec = spec_at(buf, row)
-  local src_row = dir > 0 and row or row
   if spec.prose then
     return false
   end
@@ -684,7 +528,6 @@ local function new_line(dir)
   local insert_mode = vim.fn.mode():sub(1, 1) == "i"
   local at_eol = col >= #api.nvim_get_current_line()
   local indent
-
   if dir < 0 then
     indent = indent_from(buf, row, spec, true)
   elseif insert_mode then
@@ -696,9 +539,7 @@ local function new_line(dir)
   if insert_mode and dir > 0 then
     -- split the current line at the cursor
     local line = api.nvim_get_current_line()
-    local before = line:sub(1, col)
-    local after = line:sub(col + 1)
-    api.nvim_buf_set_lines(buf, row - 1, row, false, { before, indent .. after })
+    api.nvim_buf_set_lines(buf, row - 1, row, false, { line:sub(1, col), indent .. line:sub(col + 1) })
     api.nvim_win_set_cursor(0, { row + 1, #indent })
   elseif dir > 0 then
     local count = math.max(1, vim.v.count)
@@ -723,6 +564,8 @@ end
 
 local group = api.nvim_create_augroup("mdtab", { clear = true })
 
+--- Probe the languages used by this buffer up front, so the first <Tab> in a block
+--- does not have to pay for it.
 local function probe_pending_languages(buf)
   local wanted = {}
   for _, b in ipairs(blocks(buf)) do
@@ -742,7 +585,6 @@ local function probe_pending_languages(buf)
         settings_for_ft(ft)
       end
     end
-    render(buf)
   end)
 end
 
@@ -764,6 +606,7 @@ local function map(buf)
     shift_lines(s, e, -1)
     vim.cmd("normal! gv")
   end, { buffer = buf, desc = "Shift left by block indentation" })
+
   -- new lines get the indentation of the code block they are created in
   if M.config.newline_indent then
     vim.keymap.set("i", "<CR>", function()
@@ -812,59 +655,17 @@ local function attach(buf)
     return
   end
 
-  if vim.b[buf].mdtab_attached then
-    schedule_render(buf)
-    return
-  end
-  vim.b[buf].mdtab_attached = true
-
-  if not vim.b[buf].mdtab_saved then
-    vim.b[buf].mdtab_saved = {
-      ts = buf_option(buf, "tabstop"),
-      sts = buf_option(buf, "softtabstop"),
-      sw = buf_option(buf, "shiftwidth"),
-      et = buf_option(buf, "expandtab"),
-    }
-  end
-
-  -- tabs are painted by extmarks, so a 1-wide 'tabstop' keeps the layout honest
-  local want_ts = M.config.render_tabs and 1 or vim.b[buf].mdtab_saved.ts
-  if buf_option(buf, "tabstop") ~= want_ts then
-    buf_set(buf, "tabstop", want_ts)
-  end
-
   if not vim.b[buf].mdtab_mapped then
     vim.b[buf].mdtab_mapped = true
+    vim.b[buf].mdtab_saved = {
+      et = buf_option(buf, "expandtab"),
+      sts = buf_option(buf, "softtabstop"),
+      sw = buf_option(buf, "shiftwidth"),
+    }
     map(buf)
-
+    probe_pending_languages(buf)
   end
-
-  -- watch every change (including API/plugin edits, which do not fire TextChanged)
-  if not vim.b[buf].mdtab_watched then
-    vim.b[buf].mdtab_watched = true
-    api.nvim_buf_attach(buf, false, {
-      on_lines = function(_, _, _, firstline, lastline, new_lastline)
-        -- extmarks of deleted lines survive on the line that takes their place, so
-        -- the repainted range has to cover the old extent as well (plus one line of
-        -- slack), otherwise stale pads pile up and the indent looks doubled
-        local oldlast = (lastline and lastline >= 0) and lastline or new_lastline
-        local lo = math.max(0, firstline - 1)
-        local hi = math.max(firstline + 1, new_lastline, oldlast)
-        schedule_render(buf, lo, hi)
-      end,
-      on_reload = function()
-        schedule_render(buf)
-      end,
-      on_detach = function()
-        pcall(function()
-          vim.b[buf].mdtab_watched = false
-        end)
-      end,
-    })
-  end
-
-  M.render(buf)
-  probe_pending_languages(buf)
+  sync_indent_options(buf, api.nvim_win_get_cursor(0)[1])
 end
 
 --- Forget a buffer that is no longer markdown.
@@ -873,25 +674,24 @@ local function detach(buf)
     return
   end
   vim.b[buf].mdtab_mapped = nil
-  vim.b[buf].mdtab_attached = nil
-  painted[buf], last_sig[buf], last_count[buf] = nil, nil, nil
-  for _, key in ipairs({ { "i", "<Tab>" }, { "x", ">" }, { "x", "<" }, { "n", ">" }, { "n", "<" }, { "o", ">" }, { "o", "<" }, { "n", "o" }, { "n", "O" }, { "i", "<CR>" } }) do
+  -- the new filetype's own settings win; nothing to restore
+  last_sync[buf] = nil
+  vim.b[buf].mdtab_saved = nil
+  for _, key in ipairs({
+    { "i", "<Tab>" },
+    { "x", ">" },
+    { "x", "<" },
+    { "n", ">" },
+    { "n", "<" },
+    { "o", ">" },
+    { "o", "<" },
+    { "n", "o" },
+    { "n", "O" },
+    { "i", "<CR>" },
+  }) do
     pcall(vim.keymap.del, key[1], key[2], { buffer = buf })
   end
-  api.nvim_buf_clear_namespace(buf, ns, 0, -1)
   scan_cache[buf] = nil
-  local saved = vim.b[buf].mdtab_saved
-  vim.b[buf].mdtab_saved = nil
-  if saved then
-  end
-  -- only hand 'tabstop' back if nothing else claimed it
-  if saved and buf_option(buf, "tabstop") == 1 then
-    buf_set(buf, "tabstop", saved.ts)
-  end
-end
-
-function M.render(buf)
-  render(buf)
 end
 
 function M.refresh()
@@ -900,9 +700,7 @@ function M.refresh()
   known_cache = {}
   for _, buf in ipairs(api.nvim_list_bufs()) do
     if api.nvim_buf_is_loaded(buf) and vim.bo[buf].filetype == "markdown" then
-      attach(buf)
-      painted[buf] = nil
-      render(buf)
+      probe_pending_languages(buf)
     end
   end
 end
@@ -934,7 +732,6 @@ end
 function M.setup(opts)
   M.config = vim.tbl_deep_extend("force", M.config, opts or {})
 
-
   api.nvim_create_autocmd("FileType", {
     group = group,
     pattern = "markdown",
@@ -953,12 +750,11 @@ function M.setup(opts)
     end,
   })
 
-  -- normal-mode edits, leaving insert mode and entering the window repaint at once
-  api.nvim_create_autocmd({ "TextChanged", "InsertLeave", "BufWinEnter" }, {
+  api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "InsertEnter" }, {
     group = group,
     callback = function(args)
-      if vim.b[args.buf].mdtab_saved then
-        schedule_render(args.buf)
+      if vim.b[args.buf].mdtab_mapped then
+        sync_indent_options(args.buf, api.nvim_win_get_cursor(0)[1])
       end
     end,
   })
@@ -970,23 +766,12 @@ function M.setup(opts)
     end,
   })
 
-  api.nvim_create_autocmd({ "BufReadPost", "BufWinEnter" }, {
-    group = group,
-    callback = function(args)
-      if vim.b[args.buf].mdtab_saved then
-        attach(args.buf)
-      end
-    end,
-  })
-
   api.nvim_create_user_command("MdTabInfo", M.info, { desc = "Show Markdown indentation rules at cursor" })
-  api.nvim_create_user_command("MdTabRefresh", M.refresh, { desc = "Re-probe indentation settings and re-render tabs" })
+  api.nvim_create_user_command("MdTabRefresh", M.refresh, { desc = "Re-probe indentation settings" })
 
   for _, buf in ipairs(api.nvim_list_bufs()) do
     if api.nvim_buf_is_loaded(buf) and vim.bo[buf].filetype == "markdown" then
       attach(buf)
-      painted[buf] = nil
-      render(buf)
     end
   end
 end

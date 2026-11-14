@@ -117,7 +117,7 @@ autocmd FileType typst setlocal shiftwidth=2
 " autocmd FileType markdown setlocal wrap
 " autocmd FileType markdown setlocal formatoptions=cqjwa
 " autocmd FileType markdown setlocal formatoptions=tcqjwa
-au FileType markdown setlocal tabstop=4
+au FileType markdown setlocal tabstop=8
 au FileType markdown setlocal softtabstop=2
 au FileType markdown setlocal shiftwidth=2
 au FileType markdown setl comments=b:*,b:-,b:+,n:>
