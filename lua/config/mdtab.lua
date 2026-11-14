@@ -34,8 +34,6 @@ M.config = {
   render_tabs = true,
   -- probe the real settings of a code block's filetype in a scratch buffer
   probe = true,
-  -- coalesce repaints while typing (normal-mode edits repaint immediately anyway)
-  render_debounce_ms = 40,
   -- per language overrides, e.g. { javascript = { spaces = 2 }, go = { tabs = 8 } }
   overrides = {},
 }
@@ -397,23 +395,8 @@ local function paint_line(buf, row, line, width)
   end
 end
 
---- Render every tab in the buffer at the width of the block it belongs to.
-local function render(buf)
-  if not api.nvim_buf_is_valid(buf) then
-    return
-  end
-  if vim.bo[buf].filetype ~= "markdown" then
-    return
-  end
-
-  api.nvim_buf_clear_namespace(buf, ns, 0, -1)
-  local saved = vim.b[buf].mdtab_saved
-  if not saved or not M.config.render_tabs then
-    return
-  end
-
-  local lines = api.nvim_buf_get_lines(buf, 0, -1, false)
-  local block_list = blocks(buf)
+--- Width to paint tabs with, per line, for the current block structure.
+local function widths(buf, block_list, saved)
   local in_block = {}
   for _, b in ipairs(block_list) do
     local block_spec = b.lang and spec_at(buf, b.start + 1) or nil
@@ -422,26 +405,86 @@ local function render(buf)
       in_block[row] = width
     end
   end
+  return in_block
+end
 
-  for row, line in ipairs(lines) do
-    if line:find("\t", 1, true) then
+--- Render every tab in the buffer (or only rows `first0`..`last0`, 0-based and
+--- half-open) at the width of the block it belongs to.
+local function render(buf, first0, last0)
+  if not api.nvim_buf_is_valid(buf) then
+    return
+  end
+  if vim.bo[buf].filetype ~= "markdown" then
+    return
+  end
+
+  local lines = api.nvim_buf_get_lines(buf, 0, -1, false)
+  local from = math.max(0, first0 or 0)
+  local to = math.min(#lines, last0 or #lines)
+  api.nvim_buf_clear_namespace(buf, ns, from, to)
+
+  local saved = vim.b[buf].mdtab_saved
+  if not saved or not M.config.render_tabs then
+    return
+  end
+
+  local block_list = blocks(buf)
+  local in_block = widths(buf, block_list, saved)
+
+  for row = from + 1, to do
+    local line = lines[row]
+    if line and line:find("\t", 1, true) then
       paint_line(buf, row, line, in_block[row] or saved.ts)
     end
   end
 end
 
+-- Block structure signature; tab widths of untouched lines only change when a
+-- fence (and thus the structure) changes.
+local structure_sig = {}
+
+local function sig(block_list)
+  local parts = {}
+  for _, b in ipairs(block_list) do
+    parts[#parts + 1] = ("%d-%d-%s"):format(b.start, b.stop, b.lang or "")
+  end
+  return table.concat(parts, ",")
+end
+
 local pending = {}
 
---- Coalesce repaint requests: one render per debounce window, never a backlog.
-local function schedule_render(buf)
-  if pending[buf] then
-    return
+--- Coalesce repaint requests into a single pass in the next event-loop tick, so the
+--- paint lands in the same redraw as the edit (no visible lag) while typing still
+--- only costs the lines that changed. `first0`/`last0` are 0-based, half-open;
+--- leaving them out asks for a full repaint.
+local function schedule_render(buf, first0, last0)
+  local span = pending[buf]
+  if not span then
+    span = { full = false }
+    pending[buf] = span
+    vim.schedule(function()
+      local job = pending[buf]
+      pending[buf] = nil
+      if not api.nvim_buf_is_valid(buf) or not job then
+        return
+      end
+      local block_list = blocks(buf)
+      local current = sig(block_list)
+      if job.full or structure_sig[buf] ~= current then
+        structure_sig[buf] = current
+        render(buf) -- fences moved (or explicit request): every width may have changed
+      elseif job.first then
+        render(buf, job.first, job.last)
+      end
+    end)
   end
-  pending[buf] = true
-  vim.defer_fn(function()
-    pending[buf] = nil
-    render(buf)
-  end, M.config.render_debounce_ms)
+  if first0 == nil then
+    span.full = true
+  else
+    local stop = last0 or (first0 + 1)
+    span.first = span.first and math.min(span.first, first0) or first0
+    span.last = span.last and math.max(span.last, stop) or stop
+  end
 end
 
 -- ---------------------------------------------------------------------------
@@ -630,8 +673,8 @@ local function attach(buf)
   if not vim.b[buf].mdtab_watched then
     vim.b[buf].mdtab_watched = true
     api.nvim_buf_attach(buf, false, {
-      on_lines = function()
-        schedule_render(buf)
+      on_lines = function(_, _, _, firstline, _, new_lastline)
+        schedule_render(buf, firstline, math.max(firstline, new_lastline))
       end,
       on_reload = function()
         schedule_render(buf)
@@ -645,6 +688,7 @@ local function attach(buf)
   end
 
   M.render(buf)
+  structure_sig[buf] = sig(blocks(buf))
   probe_pending_languages(buf)
 end
 
@@ -734,6 +778,7 @@ function M.setup(opts)
       if vim.b[args.buf].mdtab_saved then
         pending[args.buf] = nil
         render(args.buf)
+        structure_sig[args.buf] = sig(blocks(args.buf))
       end
     end,
   })
