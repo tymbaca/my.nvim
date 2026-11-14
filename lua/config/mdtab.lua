@@ -34,6 +34,8 @@ M.config = {
   render_tabs = true,
   -- probe the real settings of a code block's filetype in a scratch buffer
   probe = true,
+  -- re-indent a freshly created line inside a code block in that block's style
+  newline_indent = true,
   -- per language overrides, e.g. { javascript = { spaces = 2 }, go = { tabs = 8 } }
   overrides = {},
 }
@@ -408,47 +410,104 @@ local function widths(buf, block_list, saved)
   return in_block
 end
 
---- Render every tab in the buffer (or only rows `first0`..`last0`, 0-based and
---- half-open) at the width of the block it belongs to.
-local function render(buf, first0, last0)
-  if not api.nvim_buf_is_valid(buf) then
+local function sig(buf, block_list)
+  local parts = {}
+  for _, b in ipairs(block_list) do
+    local width = ""
+    if b.lang then
+      local spec = spec_at(buf, b.start + 1)
+      if spec and not spec.prose then
+        width = tostring(spec.ts) .. (spec.expandtab and "s" or "t")
+      end
+    end
+    parts[#parts + 1] = (b.lang or "") .. ":" .. width
+  end
+  return table.concat(parts, ",")
+end
+
+M.stats = { full = 0, rows = 0 }
+
+-- What is currently painted, and for which line layout: `painted[buf][row0]` is the
+-- tab width used on that row, so a repaint can be limited to rows whose width (or
+-- content) actually changed. Nothing here ever clears the whole buffer twice.
+local painted = {}
+local last_sig = {}
+local last_count = {}
+
+--- Per-row tab width for the current block structure (0-based rows).
+local function width_map(buf, block_list, saved, count)
+  local in_block = widths(buf, block_list, saved)
+  local map = {}
+  for row0 = 0, count - 1 do
+    map[row0] = in_block[row0 + 1] or saved.ts
+  end
+  return map
+end
+
+--- Paint tabs. Repaints only the rows that need it: the dirty span from the edit and
+--- any row whose block width changed. `dirty` are 0-based, half-open.
+local function render(buf, dirty_first0, dirty_last0)
+  if not api.nvim_buf_is_valid(buf) or not api.nvim_buf_is_loaded(buf) then
     return
   end
   if vim.bo[buf].filetype ~= "markdown" then
     return
   end
+  local saved = vim.b[buf].mdtab_saved
+  if not saved then
+    return
+  end
 
   local lines = api.nvim_buf_get_lines(buf, 0, -1, false)
-  local from = math.max(0, first0 or 0)
-  local to = math.min(#lines, last0 or #lines)
-  api.nvim_buf_clear_namespace(buf, ns, from, to)
+  local count = #lines
 
-  local saved = vim.b[buf].mdtab_saved
-  if not saved or not M.config.render_tabs then
+  if not M.config.render_tabs then
+    api.nvim_buf_clear_namespace(buf, ns, 0, -1)
+    painted[buf], last_sig[buf], last_count[buf] = nil, nil, nil
     return
   end
 
   local block_list = blocks(buf)
-  local in_block = widths(buf, block_list, saved)
+  local current_sig = sig(buf, block_list)
+  local before = painted[buf]
+  local rows = {}
 
-  for row = from + 1, to do
-    local line = lines[row]
-    if line and line:find("\t", 1, true) then
-      paint_line(buf, row, line, in_block[row] or saved.ts)
+  local fresh = before == nil
+  if fresh or last_sig[buf] ~= current_sig or last_count[buf] ~= count then
+    -- block widths or the line layout changed: find every row whose width differs
+    local map = width_map(buf, block_list, saved, count)
+    for row0 = 0, count - 1 do
+      if fresh or before[row0] ~= map[row0] then
+        rows[row0] = true
+      end
+    end
+    painted[buf] = map
+    last_sig[buf] = current_sig
+    last_count[buf] = count
+  end
+
+  if dirty_first0 ~= nil then
+    local last = math.min(count - 1, (dirty_last0 or (dirty_first0 + 1)) - 1)
+    for row0 = math.max(0, dirty_first0), last do
+      rows[row0] = true
     end
   end
-end
 
--- Block structure signature; tab widths of untouched lines only change when a
--- fence (and thus the structure) changes.
-local structure_sig = {}
-
-local function sig(block_list)
-  local parts = {}
-  for _, b in ipairs(block_list) do
-    parts[#parts + 1] = ("%d-%d-%s"):format(b.start, b.stop, b.lang or "")
+  if fresh then
+    api.nvim_buf_clear_namespace(buf, ns, 0, -1)
+    M.stats.full = M.stats.full + 1
   end
-  return table.concat(parts, ",")
+
+  for row0 in pairs(rows) do
+    if row0 >= 0 and row0 < count then
+      api.nvim_buf_clear_namespace(buf, ns, row0, row0 + 1)
+      M.stats.rows = M.stats.rows + 1
+      local line = lines[row0 + 1]
+      if line and line:find("\t", 1, true) then
+        paint_line(buf, row0 + 1, line, (painted[buf] and painted[buf][row0]) or saved.ts)
+      end
+    end
+  end
 end
 
 local pending = {}
@@ -456,7 +515,7 @@ local pending = {}
 --- Coalesce repaint requests into a single pass in the next event-loop tick, so the
 --- paint lands in the same redraw as the edit (no visible lag) while typing still
 --- only costs the lines that changed. `first0`/`last0` are 0-based, half-open;
---- leaving them out asks for a full repaint.
+--- leaving them out only verifies whether the block widths still match.
 local function schedule_render(buf, first0, last0)
   local span = pending[buf]
   if not span then
@@ -468,19 +527,10 @@ local function schedule_render(buf, first0, last0)
       if not api.nvim_buf_is_valid(buf) or not job then
         return
       end
-      local block_list = blocks(buf)
-      local current = sig(block_list)
-      if job.full or structure_sig[buf] ~= current then
-        structure_sig[buf] = current
-        render(buf) -- fences moved (or explicit request): every width may have changed
-      elseif job.first then
-        render(buf, job.first, job.last)
-      end
+      render(buf, job.first, job.last)
     end)
   end
-  if first0 == nil then
-    span.full = true
-  else
+  if first0 ~= nil then
     local stop = last0 or (first0 + 1)
     span.first = span.first and math.min(span.first, first0) or first0
     span.last = span.last and math.max(span.last, stop) or stop
@@ -575,6 +625,99 @@ local function tab()
 end
 
 -- ---------------------------------------------------------------------------
+-- newline / auto indentation
+-- ---------------------------------------------------------------------------
+
+--- Column one indent step occupies in this buffer: 'tabstop' is 1 while tabs are
+--- painted, so a tab-indented block uses one column per level and Vim rebuilds the
+--- indent with exactly that many tabs.
+local function step_cols(spec)
+  if spec.expandtab then
+    return spec.step > 0 and spec.step or spec.ts
+  end
+  return 1
+end
+
+--- Re-express a display column in the block's own style.
+local function indent_text(spec, col)
+  local width = spec.ts > 0 and spec.ts or 8
+  if spec.expandtab then
+    return (" "):rep(col)
+  end
+  return ("\t"):rep(math.floor(col / width)) .. (" "):rep(col % width)
+end
+
+--- Indent for a line that continues `src_row`.
+---@param add_step boolean|nil  indent one level more when the source line opens a block
+local function indent_from(buf, src_row, spec, add_step)
+  local src = (src_row >= 1 and api.nvim_buf_get_lines(buf, src_row - 1, src_row, false)[1]) or ""
+  local width = spec.ts > 0 and spec.ts or 8
+  local step = spec.expandtab and (spec.step > 0 and spec.step or width) or width
+  local trimmed = src:gsub("%s+$", "")
+  local last = trimmed:sub(-1)
+  -- ":" opens a block in space-indented languages (python), not in go
+  local opens = last == "{" or last == "(" or last == "[" or (spec.expandtab and last == ":")
+  local col = display_width(src:match("^[ \t]*") or "", width)
+  if add_step and opens then
+    col = col + step
+  end
+  return indent_text(spec, col)
+end
+
+--- Create a new line the way its code block wants it: tabs for go, 4 spaces for
+--- python, one level deeper after an opening bracket. Prose keeps Vim's own
+--- behaviour by feeding the native key.
+---@param dir integer 1 = below the cursor (o / <CR>), -1 = above (O)
+local function new_line(dir)
+  local buf = api.nvim_get_current_buf()
+  if vim.bo[buf].filetype ~= "markdown" or not vim.b[buf].mdtab_saved or not vim.bo[buf].modifiable then
+    return false
+  end
+
+  local row, col = unpack(api.nvim_win_get_cursor(0))
+  local spec = spec_at(buf, row)
+  local src_row = dir > 0 and row or row
+  if spec.prose then
+    return false
+  end
+
+  local insert_mode = vim.fn.mode():sub(1, 1) == "i"
+  local at_eol = col >= #api.nvim_get_current_line()
+  local indent
+
+  if dir < 0 then
+    indent = indent_from(buf, row, spec, true)
+  elseif insert_mode then
+    indent = indent_from(buf, row, spec, at_eol)
+  else
+    indent = indent_from(buf, row, spec, true)
+  end
+
+  if insert_mode and dir > 0 then
+    -- split the current line at the cursor
+    local line = api.nvim_get_current_line()
+    local before = line:sub(1, col)
+    local after = line:sub(col + 1)
+    api.nvim_buf_set_lines(buf, row - 1, row, false, { before, indent .. after })
+    api.nvim_win_set_cursor(0, { row + 1, #indent })
+  elseif dir > 0 then
+    local count = math.max(1, vim.v.count)
+    local lines = {}
+    for _ = 1, count do
+      lines[#lines + 1] = indent
+    end
+    api.nvim_buf_set_lines(buf, row, row, false, lines)
+    api.nvim_win_set_cursor(0, { row + count, #indent })
+    vim.cmd("startinsert")
+  else
+    api.nvim_buf_set_lines(buf, row - 1, row - 1, false, { indent })
+    api.nvim_win_set_cursor(0, { row, #indent })
+    vim.cmd("startinsert")
+  end
+  return true
+end
+
+-- ---------------------------------------------------------------------------
 -- attach
 -- ---------------------------------------------------------------------------
 
@@ -621,6 +764,26 @@ local function map(buf)
     shift_lines(s, e, -1)
     vim.cmd("normal! gv")
   end, { buffer = buf, desc = "Shift left by block indentation" })
+  -- new lines get the indentation of the code block they are created in
+  if M.config.newline_indent then
+    vim.keymap.set("i", "<CR>", function()
+      if vim.fn.pumvisible() == 1 then
+        api.nvim_feedkeys(api.nvim_replace_termcodes("<C-y>", true, false, true), "m", false)
+        return
+      end
+      if not new_line(1) then
+        api.nvim_feedkeys(api.nvim_replace_termcodes("<CR>", true, false, true), "n", false)
+      end
+    end, { buffer = buf, desc = "New line indented like its code block" })
+    for _, key in ipairs({ "o", "O" }) do
+      vim.keymap.set("n", key, function()
+        if not new_line(key == "o" and 1 or -1) then
+          api.nvim_feedkeys(key, "n", false)
+        end
+      end, { buffer = buf, desc = "New line indented like its code block" })
+    end
+  end
+
   -- `>` / `<` become operators (`>j`, `>ap`, ...) backed by shift_lines
   for _, dir in ipairs({ 1, -1 }) do
     local key = dir > 0 and ">" or "<"
@@ -649,6 +812,12 @@ local function attach(buf)
     return
   end
 
+  if vim.b[buf].mdtab_attached then
+    schedule_render(buf)
+    return
+  end
+  vim.b[buf].mdtab_attached = true
+
   if not vim.b[buf].mdtab_saved then
     vim.b[buf].mdtab_saved = {
       ts = buf_option(buf, "tabstop"),
@@ -667,14 +836,21 @@ local function attach(buf)
   if not vim.b[buf].mdtab_mapped then
     vim.b[buf].mdtab_mapped = true
     map(buf)
+
   end
 
   -- watch every change (including API/plugin edits, which do not fire TextChanged)
   if not vim.b[buf].mdtab_watched then
     vim.b[buf].mdtab_watched = true
     api.nvim_buf_attach(buf, false, {
-      on_lines = function(_, _, _, firstline, _, new_lastline)
-        schedule_render(buf, firstline, math.max(firstline, new_lastline))
+      on_lines = function(_, _, _, firstline, lastline, new_lastline)
+        -- extmarks of deleted lines survive on the line that takes their place, so
+        -- the repainted range has to cover the old extent as well (plus one line of
+        -- slack), otherwise stale pads pile up and the indent looks doubled
+        local oldlast = (lastline and lastline >= 0) and lastline or new_lastline
+        local lo = math.max(0, firstline - 1)
+        local hi = math.max(firstline + 1, new_lastline, oldlast)
+        schedule_render(buf, lo, hi)
       end,
       on_reload = function()
         schedule_render(buf)
@@ -688,7 +864,6 @@ local function attach(buf)
   end
 
   M.render(buf)
-  structure_sig[buf] = sig(blocks(buf))
   probe_pending_languages(buf)
 end
 
@@ -698,13 +873,17 @@ local function detach(buf)
     return
   end
   vim.b[buf].mdtab_mapped = nil
-  for _, key in ipairs({ { "i", "<Tab>" }, { "x", ">" }, { "x", "<" }, { "n", ">" }, { "n", "<" }, { "o", ">" }, { "o", "<" } }) do
+  vim.b[buf].mdtab_attached = nil
+  painted[buf], last_sig[buf], last_count[buf] = nil, nil, nil
+  for _, key in ipairs({ { "i", "<Tab>" }, { "x", ">" }, { "x", "<" }, { "n", ">" }, { "n", "<" }, { "o", ">" }, { "o", "<" }, { "n", "o" }, { "n", "O" }, { "i", "<CR>" } }) do
     pcall(vim.keymap.del, key[1], key[2], { buffer = buf })
   end
   api.nvim_buf_clear_namespace(buf, ns, 0, -1)
   scan_cache[buf] = nil
   local saved = vim.b[buf].mdtab_saved
   vim.b[buf].mdtab_saved = nil
+  if saved then
+  end
   -- only hand 'tabstop' back if nothing else claimed it
   if saved and buf_option(buf, "tabstop") == 1 then
     buf_set(buf, "tabstop", saved.ts)
@@ -722,6 +901,8 @@ function M.refresh()
   for _, buf in ipairs(api.nvim_list_bufs()) do
     if api.nvim_buf_is_loaded(buf) and vim.bo[buf].filetype == "markdown" then
       attach(buf)
+      painted[buf] = nil
+      render(buf)
     end
   end
 end
@@ -753,6 +934,7 @@ end
 function M.setup(opts)
   M.config = vim.tbl_deep_extend("force", M.config, opts or {})
 
+
   api.nvim_create_autocmd("FileType", {
     group = group,
     pattern = "markdown",
@@ -776,9 +958,7 @@ function M.setup(opts)
     group = group,
     callback = function(args)
       if vim.b[args.buf].mdtab_saved then
-        pending[args.buf] = nil
-        render(args.buf)
-        structure_sig[args.buf] = sig(blocks(args.buf))
+        schedule_render(args.buf)
       end
     end,
   })
@@ -805,6 +985,8 @@ function M.setup(opts)
   for _, buf in ipairs(api.nvim_list_bufs()) do
     if api.nvim_buf_is_loaded(buf) and vim.bo[buf].filetype == "markdown" then
       attach(buf)
+      painted[buf] = nil
+      render(buf)
     end
   end
 end
