@@ -20,5 +20,12 @@ vim.cmd [[source ~/.config/nvim/lua/config/init.vim]]
 
 require("langmapper").automapping({ global = true, buffer = true })
 
+-- per-region indentation in markdown: 2 spaces in prose, the block filetype's own
+-- settings inside fenced code blocks, and per-block tab widths
+require("config.mdtab").setup({
+  -- e.g. javascript = { spaces = 2 }, make = { tabs = 4 }
+  overrides = {},
+})
+
 require("config.neovide")
 require("config.after")

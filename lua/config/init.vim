@@ -62,6 +62,10 @@ autocmd FileType typescript setlocal tabstop=2
 autocmd FileType typescript setlocal softtabstop=2
 autocmd FileType typescript setlocal shiftwidth=2
 
+autocmd FileType javascript setlocal tabstop=2
+autocmd FileType javascript setlocal softtabstop=2
+autocmd FileType javascript setlocal shiftwidth=2
+
 autocmd FileType go setlocal tabstop=8
 autocmd FileType go setlocal softtabstop=8
 autocmd FileType go setlocal shiftwidth=8
