@@ -102,6 +102,10 @@ autocmd FileType svelte setlocal tabstop=2
 autocmd FileType svelte setlocal softtabstop=2
 autocmd FileType svelte setlocal shiftwidth=2
 
+autocmd FileType c4 setlocal tabstop=2
+autocmd FileType c4 setlocal softtabstop=2
+autocmd FileType c4 setlocal shiftwidth=2
+
 autocmd FileType typst setlocal tabstop=2
 autocmd FileType typst setlocal softtabstop=2
 autocmd FileType typst setlocal shiftwidth=2
@@ -109,7 +113,7 @@ autocmd FileType typst setlocal shiftwidth=2
 " autocmd FileType markdown setlocal wrap
 " autocmd FileType markdown setlocal formatoptions=cqjwa
 " autocmd FileType markdown setlocal formatoptions=tcqjwa
-au FileType markdown setlocal tabstop=2
+au FileType markdown setlocal tabstop=4
 au FileType markdown setlocal softtabstop=2
 au FileType markdown setlocal shiftwidth=2
 au FileType markdown setl comments=b:*,b:-,b:+,n:>

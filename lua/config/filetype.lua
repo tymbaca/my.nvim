@@ -3,5 +3,6 @@ vim.filetype.add({
     vs = "glsl",
     fs = "glsl",
     cql = "cql",
+    c4 = "c4",
   }
 })
