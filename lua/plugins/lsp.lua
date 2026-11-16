@@ -233,12 +233,24 @@ return {
       end, { desc = "List all references" })
       vim.keymap.set('n', 'gI', telescope_builtin.lsp_implementations, { desc = "Go to implementation" })
       vim.keymap.set('n', 'gi', function()
+        -- proto has no LSP path to the Go implementation, resolve it with ripgrep
+        if vim.bo.filetype == "proto" then
+          return require("plugins.custom.rpc-jump").goto_go_impl()
+        end
+        -- on a Go grpc method, offer both the interface it satisfies and the proto rpc
+        if vim.bo.filetype == "go" and require("plugins.custom.rpc-jump").goto_go_contracts() then
+          return
+        end
         telescope_builtin.lsp_implementations({ file_ignore_patterns = { "_test", "_mock" } })
       end, { desc = "Go to implementation" })
       vim.keymap.set('n', 'gm', function()
         local gtm = require("plugins.custom.go-to-methods")
         telescope_builtin.lsp_references({ default_text = gtm.get_method_search_query(vim.bo.filetype) })
       end, { desc = "Go to implementation" })
+      -- one key, both directions: proto rpc -> Go impl, Go impl -> proto rpc
+      vim.keymap.set('n', '<leader>gp', function()
+        require("plugins.custom.rpc-jump").jump()
+      end, { desc = "[G]o between proto rpc and its [P]roto/Go counterpart" })
       vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = "Hover documentation" })
       vim.keymap.set('i', '<c-h>', vim.lsp.buf.signature_help, { desc = "Signature help" })
       vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Jump to prev [D]iagnostic" })
