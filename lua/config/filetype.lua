@@ -4,5 +4,6 @@ vim.filetype.add({
     fs = "glsl",
     cql = "cql",
     c4 = "c4",
+    excalidraw = "excalidraw",
   }
 })
